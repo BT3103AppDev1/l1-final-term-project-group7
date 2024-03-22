@@ -1,7 +1,8 @@
 <template>
     <div id="app">
       <div id="top-bar">
-        <h1>HealthGuru</h1>
+        <img src="@/assets/HealthGuru.png" alt="HealthGuru" class="logo"/>
+        <h1 id="website-name">HealthGuru</h1>
       </div>
       <div id="content-wrapper">
         <div id="nav">

@@ -1,5 +1,9 @@
 @import './base.css';
 
+body {
+  margin: 0px;
+}
+
 #app {
   border: 0px;
   width: 100%;
@@ -12,7 +16,14 @@
   height: 32px;
 }
 
+.logo {
+  height: 48px;
+  align-self: center;
+  padding-right: 15px;
+}
+
 #top-bar {
+  display: flex;
   background-color: #335076;
   color: white;
   padding-left: 150px;
@@ -32,7 +43,7 @@
   width: 100px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 50px); /* Subtract the top bar height */
+  height: calc(100vh - 80px); /* Subtract the top bar height */
 }
 
 #nav a {
