@@ -1,42 +1,38 @@
 <template>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/workouts">Workouts</router-link> |
-      <router-link to="/routines">Routines</router-link> |
-      <router-link to="/meals">Meals</router-link> |
-      <router-link to="/calories">Calories</router-link> |
-      <router-link to="/social">Social</router-link> |
-      <router-link to="/about">About</router-link> 
+    <div id="app">
+      <div id="top-bar">
+        <h1>HealthGuru</h1>
+      </div>
+      <div id="content-wrapper">
+        <div id="nav">
+          <!-- Navigation links -->
+          <router-link to="/">
+            <img src="@/assets/Home-Icon.png" alt="Home Icon" class="icon"/>
+            Home</router-link>
+          <router-link to="/workouts">
+            <img src="@/assets/Workouts-Icon.png" alt="Workouts Icon" class="icon"/>
+            Workouts</router-link>
+          <router-link to="/routines">
+            <img src="@/assets/Routines-Icon.png" alt="Routines Icon" class="icon"/>
+            Routines</router-link>
+          <router-link to="/meals">
+            <img src="@/assets/Meals-Icon.png" alt="Meals Icon" class="icon"/>
+            Meals</router-link>
+          <router-link to="/calories">
+            <img src="@/assets/Calories-Icon.png" alt="Calories Icon" class="icon"/>
+            Calories</router-link>
+          <router-link to="/social">
+            <img src="@/assets/Social-Icon.png" alt="Social Icon" class="icon"/>
+            Social</router-link>
+          <!-- <router-link to="/about">
+            
+            About</router-link> -->
+        </div>
+        <router-view class="router-view"/>
+      </div>
     </div>
-    <router-view/>
-  </template>
-
+</template>
+  
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+  import { RouterLink, RouterView } from 'vue-router'
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: white;
-}
-
-#nav {
-  padding: 30px;
-  background-color: #5B789F;
-}
-
-#nav a {
-  font-weight: bold;
-  color: white;
-}
-
-#nav a.router-link-exact-active {
-  color: white;
-  background-color: #929EAF;
-  padding: 30px;
-}
-</style>
