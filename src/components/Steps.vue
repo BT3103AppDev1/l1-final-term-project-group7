@@ -1,6 +1,6 @@
 <template>
     <Line
-      id="weight_widget"
+      id="steps_widget"
       :options="chartOptions"
       :data="chartData"
     />
@@ -13,7 +13,7 @@
   ChartJS.register(Title, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale)
   
   export default {
-    name: 'weightWidget',
+    name: 'stepsWidget',
     components: { Line },
     data() {
       return {
@@ -21,9 +21,10 @@
         labels: ['16/03', '17/03', '18/03', '19/03', '20/03', '21/03', '22/03'],
         datasets: [
             {
-                backgroundColor: 'rgba(0, 128, 128, 0.5)', // Teal with some transparency for the point backgroun,
+            label: 'Total number of steps',
+            backgroundColor: 'rgba(0, 128, 128, 0.5)', // Teal with some transparency for the point background
             borderColor: '#008080',
-            data: [65.3, 64.5, 64, 65, 65.5, 65.2,65]
+            data: [9807, 10872, 9506, 8574, 10382, 9746, 11358]
             }
         ]
         },
@@ -36,14 +37,14 @@
                 },
                 title: {
                     display: true,
-                    text: 'Weight (kg)',
-                    color: 'white' // Adjust the title color
+                    text: 'Daily Step Count',
+                    color: 'Black' // Adjust the title color
                 }
             },
             scales: {
                 x: {
                     ticks: {
-                        color: 'white' // Adjust the x-axis labels color
+                        color: 'Black' // Adjust the x-axis labels color
                     },
                     grid: {
                         display: false // Adjust the color of the x-axis grid lines
@@ -51,16 +52,16 @@
                 },
                 y: {
                     ticks: {
-                        color: 'white' // Adjust the y-axis labels color
+                        color: 'Black' // Adjust the y-axis labels color
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Adjust the color of the y-axis grid lines
+                        color: 'rgba(0,0,0, 0.1)' // Adjust the color of the y-axis grid lines
                     }
                 }
             }
         },
         mounted() {
-            console.log('mount weight widget')
+            console.log('mount steps widget')
         }
       }
     }
@@ -68,8 +69,8 @@
 </script>
 
 <style scoped>
-#weight_widget {
-  background-color: #404b5a; /* Dark background color */
+#steps_widget {
+  background-color: #dfe2e7; /* Dark background color */
   border-radius: 15px;      /*Rounded corners*/ 
   padding: 20px;            /*Padding around the chart */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth*/
