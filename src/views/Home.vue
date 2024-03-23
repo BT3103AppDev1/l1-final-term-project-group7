@@ -8,6 +8,9 @@
       <div class="chart steps">
         <stepsWidget />
       </div>
+      <div class="chart netCalories">
+        <netCaloriesWidget />
+      </div>
       <div class="calendar">
         <calendarWidget />
       </div>
@@ -21,13 +24,15 @@
   import weightWidget from '@/components/Weight.vue'
   import stepsWidget from '@/components/Steps.vue'
   import calendarWidget from '@/components/Calendar.vue'
+  import netCaloriesWidget from '@/components/NetCalories.vue'
 
   export default {
     name: 'App',
     components: {
       weightWidget,
       stepsWidget,
-      calendarWidget
+      calendarWidget,
+      netCaloriesWidget
     },
     data() {
       return {
@@ -50,7 +55,7 @@
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* creates two columns */
+  grid-template-columns: repeat(3, 1fr); /* creates two columns */
   grid-gap: 20px; /* space between the widgets */
   margin-bottom: 20px; /* space below the grid for any additional content */
 }

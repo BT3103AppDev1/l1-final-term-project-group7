@@ -21,7 +21,7 @@
         labels: ['16/03', '17/03', '18/03', '19/03', '20/03', '21/03', '22/03'],
         datasets: [
             {
-                backgroundColor: 'rgba(0, 128, 128, 0.5)', // Teal with some transparency for the point backgroun,
+            backgroundColor: 'rgba(0, 128, 128, 0.5)', // transparency for the point backgroun,
             borderColor: '#008080',
             data: [65.3, 64.5, 64, 65, 65.5, 65.2,65]
             }
@@ -37,24 +37,24 @@
                 title: {
                     display: true,
                     text: 'Weight (kg)',
-                    color: 'white' // Adjust the title color
+                    color: 'white' 
                 }
             },
             scales: {
                 x: {
                     ticks: {
-                        color: 'white' // Adjust the x-axis labels color
+                        color: 'white'
                     },
                     grid: {
-                        display: false // Adjust the color of the x-axis grid lines
+                        display: false 
                     }
                 },
                 y: {
                     ticks: {
-                        color: 'white' // Adjust the y-axis labels color
+                        color: 'white' 
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Adjust the color of the y-axis grid lines
+                        color: 'rgba(255, 255, 255, 0.1)' 
                     }
                 }
             }
@@ -69,7 +69,7 @@
 
 <style scoped>
 #weight_widget {
-  background-color: #404b5a; /* Dark background color */
+  background-color: #404b5a;
   border-radius: 15px;   
   padding: 20px;          
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth*/
