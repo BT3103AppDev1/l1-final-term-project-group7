@@ -70,8 +70,8 @@
 <style scoped>
 #weight_widget {
   background-color: #404b5a; /* Dark background color */
-  border-radius: 15px;      /*Rounded corners*/ 
-  padding: 20px;            /*Padding around the chart */
+  border-radius: 15px;   
+  padding: 20px;          
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth*/
 }
 </style>

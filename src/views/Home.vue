@@ -2,11 +2,14 @@
   <div class="container">
     <h1>Home Page</h1>
     <div class="grid-container">
-      <div class="widget weight">
+      <div class="chart weight">
         <weightWidget />
       </div>
-      <div class="widget steps">
+      <div class="chart steps">
         <stepsWidget />
+      </div>
+      <div class="calendar">
+        <calendarWidget />
       </div>
       <!-- Add more widgets here as needed -->
     </div>
@@ -17,12 +20,14 @@
 <script>
   import weightWidget from '@/components/Weight.vue'
   import stepsWidget from '@/components/Steps.vue'
+  import calendarWidget from '@/components/Calendar.vue'
 
   export default {
     name: 'App',
     components: {
       weightWidget,
-      stepsWidget
+      stepsWidget,
+      calendarWidget
     },
     data() {
       return {
@@ -49,12 +54,18 @@
   grid-gap: 20px; /* space between the widgets */
   margin-bottom: 20px; /* space below the grid for any additional content */
 }
-.widget{
+.chart{
   min-width: 550px; /* Minimum width for each widget */
   min-height: 300px; 
   border: solid; /* for visual alignmnet purpose */
   align-items: stretch;
   /* padding: 0;
   margin: 0; */
+}
+.calendar{
+  max-width: 300px; /* Minimum width for each widget */
+  min-height: 100px; 
+  border: solid; /* for visual alignmnet purpose */
+  align-items: stretch;
 }
 </style>
