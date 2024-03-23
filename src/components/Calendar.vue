@@ -49,7 +49,7 @@ background-color: #323c4a;
     padding: 5px 12px; 
     margin-top: 5px; 
     max-width: 80%; 
-    font-weight: 500
+    font-weight: 550
   }
   </style>
   

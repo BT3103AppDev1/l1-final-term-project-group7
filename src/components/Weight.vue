@@ -23,7 +23,8 @@
             {
             backgroundColor: 'rgba(0, 128, 128, 0.5)', // transparency for the point backgroun,
             borderColor: '#008080',
-            data: [65.3, 64.5, 64, 65, 65.5, 65.2,65]
+            data: [65.3, 65.1, 64.7, 65, 65.5, 65.2,65],
+            tension: 0.3 // smoothing
             }
         ]
         },

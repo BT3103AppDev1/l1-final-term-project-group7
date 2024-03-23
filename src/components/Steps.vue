@@ -24,7 +24,8 @@
             label: 'Total number of steps',
             backgroundColor: 'rgba(0, 128, 128, 0.5)', // Teal with some transparency for the point background
             borderColor: '#008080',
-            data: [9807, 10872, 9506, 8574, 10382, 9746, 11358]
+            data: [9807, 10872, 9506, 8574, 10382, 9746, 11358],
+            tension: 0.3 // smoothing
             }
         ]
         },
