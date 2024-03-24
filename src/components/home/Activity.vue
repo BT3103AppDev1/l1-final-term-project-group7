@@ -6,17 +6,17 @@
         </p>
       </div>
       <div class="stats">
-        <div class="stat">
+        <div class="stat" id="steps">
           <span class="label">STEPS: 89%</span>
           <span>13050 / 15000</span>
         </div>
-        <div class="stat">
+        <div class="stat" id="exercise_duration">
           <span class="label">DAILY EXERCISE: 75%</span>
           <span>40 / 60 MINUTES</span>
         </div>
-        <div class="stat">
-          <span class="label">TOTAL EXERCISES COMPLETED: 20%</span>
-          <span>50 / 250</span>
+        <div class="stat" id="exercises_completed">
+          <span class="label" >TOTAL EXERCISES COMPLETED: 40%</span>
+          <span>100 / 250</span>
         </div>
       </div>
       <Doughnut 
@@ -56,15 +56,10 @@
             },
             {
                 label: 'Total Exercises Completed',
-                data: [20, 80], // Remaining percentage to complete the circle
+                data: [40, 60], // Remaining percentage to complete the circle
                 backgroundColor: ['rgba(0, 74, 173, 0.8)', 'rgba(0, 74, 173, 0.3)'],
                 borderWidth: 0,
             }
-          ],
-          labels: [
-            'Steps',
-            'Daily Exercise',
-            'Total Exercises Completed'
           ]
         },
         options: {
@@ -85,7 +80,7 @@
     background-color: #89939c;
     border-radius: 10px;
     padding: 20px;
-    color: white;
+    color: whitesmoke;
     display: flex;
     justify-content: space-between; /*Add space between the stats and the doughnut */
     align-items: center;
@@ -101,8 +96,8 @@
     }
     
   .stats {
-    width: 100%; /* Ensure stats take full width of parent */
-    padding-left: 30px; /* Adjust the padding to match your design */
+    width: 100%; 
+    padding-left: 30px; 
     border-left: 1px solid rgba(255, 255, 255, 0.5); /* Separator line */
   }
   
@@ -110,20 +105,46 @@
     font-size: 1.2em; /* Increase the font size of stats */
     margin: 20px 0; /* Space between stat items */
   }
-  
+
+  #steps {
+    color: rgb(221, 34, 78);
+    /* text-shadow:
+    -0.5px -0.5px 0 #000,  
+    0.5px -0.5px 0 #000,
+    -0.5px  0.5px 0 #000,
+    0.5px  0.5px 0 #000; */
+  }
+
+  #exercise_duration {
+    color: rgb(122, 212, 83);
+    /*text-shadow:
+    -0.5px -0.5px 0 #000,  
+    0.5px -0.5px 0 #000,
+    -0.5px  0.5px 0 #000,
+    0.5px  0.5px 0 #000; */
+  }
+
+  #exercises_completed {
+    color: rgba(0, 74, 173, 0.8);
+    /* text-shadow:
+    -0.5px -0.5px 0 #000,  
+    0.5px -0.5px 0 #000,
+    -0.5px  0.5px 0 #000,
+    0.5px  0.5px 0 #000; */
+  }
+
   .label {
     font-weight: bold;
-    display: block; /* Make label a block to break line */
-    color: #ffffff;
-    margin-bottom: 5px; /* Space between label and numbers */
+    display: block; 
+    margin-bottom: 5px; 
   }
 
   #activityWidget {
-  max-width: 600px; /* Set a max-width to the doughnut chart for a smaller appearance */
+  max-width: 30vh; /* Set a max-width to the doughnut chart for a smaller appearance */
+  max-height: 30vh;
   margin-right: 30px;
   margin-bottom: 5px;
   }
-  
-  /* Additional styling as needed */
+
   </style>
   

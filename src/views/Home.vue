@@ -57,22 +57,30 @@
 
 <style scoped>
 .container {
-  max-width: 100%;
+  width:100%;
+  height: 70%;
   margin: 1 auto;
+  padding: 30px;
 }
 
 .top-row, .bottom-row {
-  max-width: 100%;
+  max-width: 90%;
   display: flex;
-  justify-content: space-between; /* Adjusts spacing between child elements */
+  justify-content: space-between;
   margin-bottom: 20px; /* Space between rows */
+  /*border: dashed 2px red; /* visual alignment */
 }
 
 .weight, .steps, .netCalories {
-  min-width: 500px;
-  min-height: 300px;
+  width: 100vh;
+  height: 35vh;
   flex: 1; /* Distribute space evenly */
-  margin-right: 20px; /* Space between widgets */
+  margin-right: 20px;
+}
+
+.calendar, .activity {
+  width: 100vh;
+  height: 35vh;
 }
 
 .activity {
