@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <h3>{{ muscle }}</h3>
+  <div class="exercise-list-container">
+    <h1>{{ muscle }}</h1>
     <ul>
-      <li v-for="exercise in exercises[muscle]" :key="exercise.name" @click="selectExercise(exercise)">
+      <li v-for="exercise in exercises[muscle]" 
+          :key="exercise.name" 
+          @click="selectExercise(exercise)"
+          :class="{ selected: selectedExercise === exercise }">
         {{ exercise.name }}
       </li>
     </ul>
     <div v-if="selectedExercise">
-      <h4>{{ selectedExercise.name }}</h4>
+      <h2>{{ selectedExercise.name }}</h2>
       <p>{{ selectedExercise.description }}</p>
       <ol>
         <li v-for="(step, index) in selectedExercise.steps" :key="index">{{ step }}</li>
@@ -23,15 +26,15 @@ export default {
   data() {
     return {
       exercises: {
-        arms: [
+        Arms: [
           { name: 'Bicep Curl', description: 'Description for Bicep Curl', steps: ['Step 1', 'Step 2', 'Step 3'] },
           { name: 'Tricep Row', description: 'Description for Tricep Row', steps: ['Step 1', 'Step 2', 'Step 3'] }
         ],
-        back: [
+        Back: [
           { name: 'Lat Pulldown', description: 'Description for Lat Pulldown', steps: ['Step 1', 'Step 2', 'Step 3'] },
           { name: 'Bentover Rows', description: 'Description for Bentover Rows', steps: ['Step 1', 'Step 2', 'Step 3'] }
         ],
-        legs: [
+        Legs: [
           { name: 'Squats', description: 'Description for Squats', steps: ['Step 1', 'Step 2', 'Step 3'] },
           { name: 'Lunges', description: 'Description for Lunges', steps: ['Step 1', 'Step 2', 'Step 3'] }
         ]
@@ -41,13 +44,34 @@ export default {
   },
   methods: {
     selectExercise(exercise) {
-      this.selectedExercise = exercise;
+      if (this.selectedExercise === exercise) {
+        this.selectedExercise = null; // Hide exercise description if clicked again
+      } else {
+        this.selectedExercise = exercise; // Show exercise description if not already selected
+      }
     }
   },
-  watch: {
-    muscle() {
-      this.selectedExercise = null; // Reset selected exercise when muscle changes
-    }
-  }
 };
 </script>
+
+<style scoped>
+.exercise-list-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.exercise-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.exercise-list-container li {
+  cursor: pointer;
+}
+
+.selected {
+  text-decoration: underline;
+}
+</style>

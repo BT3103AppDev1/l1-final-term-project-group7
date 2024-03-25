@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      muscleSelected: ''
+      muscleSelected: 'Arms' // Update muscleSelected to test different muscle groups ('Arms', 'Back', 'Legs')
     };
   }
 };
