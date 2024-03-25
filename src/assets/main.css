@@ -3,6 +3,52 @@
 body {
   margin: 0px;
   background-color: #98c4e8;
+  height: 100vh;
+  display: flex;
+}
+
+#app {
+  height: 100%;
+}
+
+#top-bar {
+  position: fixed;
+  display: flex;
+  background-color: #335076;
+  color: white;
+  padding-left: 150px;
+  height: 80px;
+  width: 100%;
+  align-content: center;
+  z-index: 9999;
+}
+
+#main {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 80px;
+}
+
+#nav {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  background-color: #335076;
+  height: 100%;
+  width: 120;
+  overflow-y: auto;
+  scrollbar-color: #657e93 #98c4e8;
+}
+
+#content {
+  flex-basis: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100%;
+  padding: 0 50px;
+  margin-left: 100px;
 }
 
 #app {
@@ -24,44 +70,11 @@ body {
   padding-right: 15px;
 }
 
-#top-bar {
-  position: fixed;
-  display: flex;
-  background-color: #335076;
-  color: white;
-  padding-left: 150px;
-  width: 100%;
-  height: 80px;
-  align-content: center;
-}
-
-#main {
-  margin-top: 80px;
-}
-
-#nav {
-  position: fixed;
-  padding: 0px;
-  background-color: #335076;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
-  scrollbar-color: #5B789F #82afd3;
-}
-
 #nav a {
   font-weight: bold;
   color: white;
   padding: 20%;
   text-align: center;
-}
-
-#content {
-  display: flex;
-  justify-content: flex-end;
-  margin-left: 100px;
-  padding: 0 50px;
 }
 
 .router-link {
@@ -79,17 +92,4 @@ a,
 #nav a.router-link-exact-active {
   color: white;
   background-color: #142c49;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: #5B789F;
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
 }
