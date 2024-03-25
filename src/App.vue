@@ -36,3 +36,18 @@
 <script setup>
   import { RouterLink, RouterView } from 'vue-router'
 </script>
+
+<style scoped>
+  @media (hover: hover) {
+    a:hover {
+      background-color: #5B789F;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      display: flex;
+      place-items: center;
+    }
+  }
+</style>
