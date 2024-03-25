@@ -1,23 +1,22 @@
 <template>
-  <h1>Workouts Page</h1>
+  <div>
+    <h1>Workouts Page</h1>
+    <ExerciseList :muscle="muscleSelected" />
+  </div>
 </template>
-  
-<script>
-  
-  export default {
-    name: 'App',
-    components: {
 
-    },
-    data() {
-      return {
-        refreshComp: 0
-      }
-    },
-    methods: {
-      change() {
-        this.refreshComp += 1
-      }
-    }
+<script>
+import ExerciseList from '@/components/ExerciseList.vue';
+
+export default {
+  name: 'Workouts',
+  components: {
+    ExerciseList
+  },
+  data() {
+    return {
+      muscleSelected: ''
+    };
   }
+};
 </script>
