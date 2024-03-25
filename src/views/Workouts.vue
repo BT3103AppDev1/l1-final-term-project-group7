@@ -1,13 +1,16 @@
 <template>
-  <h1>Workouts Page</h1>
+  <div class="container">
+    <workoutInfo />
+  </div>
 </template>
   
 <script>
-  
+  import WorkoutInfo from '@/components/WorkoutInfo.vue';
+
   export default {
     name: 'App',
     components: {
-
+      WorkoutInfo
     },
     data() {
       return {
@@ -21,3 +24,11 @@
     }
   }
 </script>
+
+<style scoped>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
