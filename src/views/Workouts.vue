@@ -6,7 +6,7 @@
 
     <ExerciseList :muscle="muscleGroup"/>
 
-    <div class="container">
+    <div class="container"> <!-- Note to Davy: use @exerciseSelected to listen to emits for selected exercise from ExerciseList.vue -->
       <p @click="change" id="displaySample" v-if="!showWorkoutInfo">Display Sample Workout</p>
       <transition name="fade">
         <!-- Listen for the close event -->
@@ -42,7 +42,6 @@ export default {
     change() {
       this.showWorkoutInfo = !this.showWorkoutInfo;
     },
-
   }
 };
 </script>

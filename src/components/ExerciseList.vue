@@ -39,15 +39,16 @@ export default {
           { name: 'Lunges', description: 'Description for Lunges', steps: ['Step 1', 'Step 2', 'Step 3'] }
         ]
       },
-      selectedExercise: null
+      selectedExercise: ""
     };
   },
   methods: {
     selectExercise(exercise) {
       if (this.selectedExercise === exercise) {
-        this.selectedExercise = null; // Hide exercise description if clicked again
+        this.selectedExercise = ""; // Hide exercise description if clicked again
       } else {
         this.selectedExercise = exercise; // Show exercise description if not already selected
+        this.$emit('exerciseSelected', this.selectedExercise)
       }
     }
   },
