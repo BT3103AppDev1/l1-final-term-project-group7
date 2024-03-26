@@ -59,7 +59,6 @@
 .container {
   max-width: 100%;
   margin: 1 auto;
-  padding: 30px;
 }
 
 .top-row, .bottom-row {
@@ -91,5 +90,4 @@
   padding: 10px;
 }
 
-/* Clear the borders used for visual alignment if they were just for development purposes */
 </style>

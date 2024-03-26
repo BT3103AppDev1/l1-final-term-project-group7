@@ -4,7 +4,7 @@
         <img src="@/assets/HealthGuru.png" alt="HealthGuru" class="logo"/>
         <h1 id="website-name">HealthGuru</h1>
       </div>
-      <div id="content-wrapper">
+      <div id="main">
         <div id="nav">
           <!-- Navigation links -->
           <router-link to="/">
@@ -25,11 +25,10 @@
           <router-link to="/social">
             <img src="@/assets/Social-Icon.png" alt="Social Icon" class="icon"/>
             Social</router-link>
-          <!-- <router-link to="/about">
-            
-            About</router-link> -->
         </div>
-        <router-view class="router-view"/>
+        <div id="content">
+            <router-view class="router-view"/>
+        </div>
       </div>
     </div>
 </template>
@@ -37,3 +36,18 @@
 <script setup>
   import { RouterLink, RouterView } from 'vue-router'
 </script>
+
+<style scoped>
+  @media (hover: hover) {
+    a:hover {
+      background-color: #5B789F;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      display: flex;
+      place-items: center;
+    }
+  }
+</style>

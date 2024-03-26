@@ -13,7 +13,7 @@
     data() {
       return {
         workouts: [
-          { id: 1, date: 'TODAY, 23 Mar', activity: 'PUSH WORKOUT' },
+          { id: 1, date: 'TODAY, 23 MAR', activity: 'PUSH WORKOUT' },
           { id: 2, date: 'TOMORROW', activity: 'PULL WORKOUT' },
           { id: 3, date: 'MONDAY,  25 MAR', activity: 'RUN' },
         ]
@@ -31,7 +31,7 @@
   }
   
   .day {
-background-color: #323c4a; 
+    background-color: #323c4a; 
     border-radius: 10px; 
     margin-bottom: 10px; 
     padding: 10px 15px; 
