@@ -13,65 +13,62 @@
 <script>
 import 'firebase/compat/auth';
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+//import { useRouter } from "vue-router";
 import firebase from "@/uifire.js"
-import { getAuth } from 'firebase/auth';
-const auth = getAuth()
   
 export default {
-    setup() {
-        const email = ref("");
-        const password = ref("");
-        const router = useRouter();
-        const errorMessage = ref("");
+    data() {
+        return {
+            user: false,
+            email: "",
+            password: "",
+            errorMessage: "",
+        }
+    },
 
-        const signIn = () => {
-            firebase.auth().signInWithEmailAndPassword(email.value, password.value)
+    mounted() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                console.log(user);
+                this.user = user;
+                // Optional: Redirect the user after sign-in
+                // this.$router.push('/');
+            }
+        })
+    },
+
+    methods: {
+        signIn() {
+            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 .then(() => {
                 console.log("Successfully signed in!");
-                router.push('/');
+                this.$router.push('/');
                 })
                 .catch((error) => {
                     console.error(error.code);
                     switch(error.code) {
-                        case "auth/invalid-email":
-                            errorMessage.value = "Invalid email";
-                            break;
-                        case "auth/user-not-found":
-                            errorMessage.value = "No user found";
-                            break;
-                        case "auth/wrong-password":
-                            errorMessage.value = "Incorrect password";
-                            break;
                         default:
-                            errorMessage.value = "Incorrect email or password";
+                            this.errorMessage = "Incorrect email or password";
                     }
+                    this.$forceUpdate();
                 });
-        };
+        },
 
-        const signInWithGoogle = () => {
+        signInWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
                     console.log(result.user);
-                    router.push("/");
+                    this.$router.push("/");
                 })
                 .catch((error) => {
                     console.error(error.code)
                     alert(error.message)
                 });
         }
-
-
-        return {
-            email,
-            password,
-            signIn,
-            signInWithGoogle,
-            errorMessage,
-        };
     }
 }
+
 </script>
 <style scoped>
 #firebaseui-auth-container{
