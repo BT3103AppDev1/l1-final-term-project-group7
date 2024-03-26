@@ -12,8 +12,6 @@
   </template>
 <script>
 import 'firebase/compat/auth';
-import { ref } from "vue";
-//import { useRouter } from "vue-router";
 import firebase from "@/uifire.js"
   
 export default {
@@ -40,7 +38,7 @@ export default {
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
                 .then(() => {
                     console.log("Successfully registered!");
-                    //this.$router.push('/');
+                    this.$router.push('/');
                 })
                 .catch((error) => {
                     console.error(error.code);
@@ -48,7 +46,7 @@ export default {
                         case "auth/email-already-in-use":
                             this.errorMessage = "Email is in use";
                             break;
-                        case "auth/weak-password)":
+                        case "auth/weak-password":
                             this.errorMessage = "Password should have at least 6 characters";
                         default:
                             this.errorMessage = "Invalid email or password";
@@ -56,10 +54,10 @@ export default {
                     this.$forceUpdate();
                 });
         },
-
+        
         signInWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
+            firebase.auth().signInWithPopup(provider)   
                 .then((result) => {
                     console.log(result.user);
                     this.$router.push("/");
