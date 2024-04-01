@@ -27,11 +27,11 @@
 </template>
   
 <script>
-  import weightWidget from '@/components/Weight.vue'
-  import stepsWidget from '@/components/Steps.vue'
-  import calendarWidget from '@/components/Calendar.vue'
-  import netCaloriesWidget from '@/components/NetCalories.vue'
-  import activtyWidget from '@/components/Activity.vue'
+  import weightWidget from '@/components/home/Weight.vue'
+  import stepsWidget from '@/components/home/Steps.vue'
+  import calendarWidget from '@/components/home/Calendar.vue'
+  import netCaloriesWidget from '@/components/home/NetCalories.vue'
+  import activtyWidget from '@/components/home/Activity.vue'
 
   export default {
     name: 'App',

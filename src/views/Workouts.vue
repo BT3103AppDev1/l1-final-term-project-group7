@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import SelectMuscle from '@/components/SelectMuscle.vue';
-import ExerciseList from '@/components/ExerciseList.vue';
-import WorkoutInfo from '@/components/WorkoutInfo.vue';
+import SelectMuscle from '@/components/workouts/SelectMuscle.vue';
+import ExerciseList from '@/components/workouts/ExerciseList.vue';
+import WorkoutInfo from '@/components/workouts/WorkoutInfo.vue';
 
 export default {
   name: 'Workouts',
