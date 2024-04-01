@@ -57,45 +57,60 @@
 
 <style scoped>
 .container {
-  width:100%;
-  height: 70%;
-  margin: 1 auto;
+  max-width: 100%;
+  margin: 0 auto; /* centers the container */
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 85vh; /* Adjust the height calculation based on the header/footer height */
+  overflow: hidden; /* Prevents overflow */
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill the container height */
+  justify-content: space-between; /* Distributes space between rows */
 }
 
 .top-row, .bottom-row {
-  max-width: 90%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px; /* Space between rows */
-  /*border: dashed 2px red; /* visual alignment */
+  justify-content: space-between; /* Distributes space between widgets */
 }
 
-.weight, .steps, .netCalories {
-  width: 100vh;
-  height: 35vh;
-  flex: 1; /* Distribute space evenly */
-  margin-right: 20px;
+.weight, .steps, .netCalories, .activity, .calendar {
+  margin-right: 20px; /* Add margin to the right of each widget */
+  flex-grow: 1; /* Widgets will grow to take up available space */
 }
 
-.calendar, .activity {
-  width: 100vh;
-  height: 35vh;
+/* Last child of each row should not have a right margin */
+.top-row > div:last-child, .bottom-row > div:last-child {
+  margin-right: 0;
 }
 
+/* Adjust the flex-basis for activity and calendar widgets */
 .activity {
-  flex: 2; /* Takes 3 times more space than calendar */
+  flex-basis: 60%; /* Takes up a larger base space when space allows */
 }
 
 .calendar {
-  flex: 1; 
-  margin-left: 20px; /* Space between activity and calendar widgets */
+  flex-basis: 30%; /* Takes up a smaller base space when space allows */
+  margin-right: 0; /* Ensures there's no margin on the right of the last element */
 }
 
-.chart, .activity, .calendar {
-  /* Common styles for widgets */
-  border-radius: 10px;
-  padding: 10px;
-}
+/* Responsive settings */
+@media (max-width: 768px) {
+  .top-row, .bottom-row {
+    flex-direction: column;
+  }
 
+  .weight, .steps, .netCalories, .activity, .calendar {
+    margin-right: 0;
+    margin-bottom: 10px; /* Add margin at the bottom instead for mobile */
+  }
+
+  .top-row > div, .bottom-row > div {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
 </style>

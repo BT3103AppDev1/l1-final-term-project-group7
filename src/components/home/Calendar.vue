@@ -24,7 +24,7 @@
   
   <style scoped>
   .calendar-widget {
-    height: 85%;
+    height: 80%;
     background-color: #404b5a;
     border-radius: 15px; 
     padding: 20px; 

@@ -57,7 +57,7 @@
             {
                 label: 'Total Exercises Completed',
                 data: [40, 60], // Remaining percentage to complete the circle
-                backgroundColor: ['rgba(0, 74, 173, 0.8)', 'rgba(0, 74, 173, 0.3)'],
+                backgroundColor: ['rgba(45,137,239,0.8)', 'rgba(45,137,239,0.3)'],
                 borderWidth: 0,
             }
           ]
@@ -77,7 +77,7 @@
   
   <style scoped>
   .activity-widget {
-    background-color: #89939c;
+    background-color: #404b5a;
     border-radius: 10px;
     padding: 20px;
     color: whitesmoke;
@@ -123,9 +123,9 @@
     -0.5px  0.5px 0 #000,
     0.5px  0.5px 0 #000; */
   }
-
+  
   #exercises_completed {
-    color: rgba(0, 74, 173, 0.8);
+    color: rgba(45,137,239,0.8);
     /* text-shadow:
     -0.5px -0.5px 0 #000,  
     0.5px -0.5px 0 #000,
