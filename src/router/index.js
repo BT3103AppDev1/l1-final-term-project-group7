@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Home from '/src/views/Home.vue'
 
 const router = createRouter({
@@ -7,42 +8,50 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import('../views/Register.vue')
+      component: () => import('../views/Register.vue'),
+      meta: { requiresAuth: false }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/Login.vue')
+      component: () => import('../views/Login.vue'),
+      meta: { requiresAuth: false }
     },
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true }
     },
     {
       path: '/workouts',
       name: 'workouts',
-      component: () => import('../views/Workouts.vue')
+      component: () => import('../views/Workouts.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/routines',
       name: 'routines',
-      component: () => import('../views/Routines.vue')
+      component: () => import('../views/Routines.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/meals',
       name: 'meals',
-      component: () => import('../views/Meals.vue')
+      component: () => import('../views/Meals.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/calories',
       name: 'calories',
-      component: () => import('../views/Calories.vue')
+      component: () => import('../views/Calories.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/social',
       name: 'social',
-      component: () => import('../views/Social.vue')
+      component: () => import('../views/Social.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
@@ -55,4 +64,26 @@ const router = createRouter({
   ]
 })
 
+
+function checkAuthState() {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      unsubscribe(); // Unsubscribe after getting the auth state to avoid memory leaks
+      resolve(user);
+    });
+  });
+}
+
+router.beforeEach(async (to, from, next) => {
+  const user = await checkAuthState();
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !user) {
+    next('/login');
+  } else if (!requiresAuth && user) {
+    next('/');
+  } else {
+    next();
+  }
+});
 export default router

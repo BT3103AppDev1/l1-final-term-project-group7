@@ -25,6 +25,7 @@
           <router-link to="/social">
             <img src="@/assets/Social-Icon.png" alt="Social Icon" class="icon"/>
             Social</router-link>
+            <button v-if="user" @click="logOut">Log Out</button>
         </div>
         <div id="content">
             <router-view class="router-view"/>
@@ -34,7 +35,22 @@
 </template>
   
 <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { ref } from 'vue';
+import router from './router';
+
+const user = ref(null);
+const auth = getAuth();
+
+onAuthStateChanged(auth, (u) => {
+  user.value = u;
+});
+
+const logOut = async () => {
+  await signOut(auth);
+  router.push('/login')
+}
 </script>
 
 <style scoped>
