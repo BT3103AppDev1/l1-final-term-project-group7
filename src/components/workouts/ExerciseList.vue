@@ -1,5 +1,6 @@
 <template>
   <div class="exercise-list-container">
+    <!-- <h1>Exercises By Type:</h1> -->
     <h1>{{ muscle }}</h1>
     <ul>
       <li v-for="exercise in exercises[muscle]" 
@@ -9,13 +10,13 @@
         {{ exercise.name }}
       </li>
     </ul>
-    <div v-if="selectedExercise">
+    <!-- <div v-if="selectedExercise">
       <h2>{{ selectedExercise.name }}</h2>
       <p>{{ selectedExercise.description }}</p>
       <ol>
         <li v-for="(step, index) in selectedExercise.steps" :key="index">{{ step }}</li>
       </ol>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -58,9 +59,11 @@ export default {
 <style scoped>
 .exercise-list-container {
   background-color: white;
-  padding: 20px;
+  padding: 0px 20px;
   border-radius: 10px;
   border: 1px solid #ccc;
+  min-height: 100%;
+  min-width: 250px;
 }
 
 .exercise-list-container ul {
@@ -74,5 +77,9 @@ export default {
 
 .selected {
   text-decoration: underline;
+}
+
+h1 {
+  text-wrap: nowrap;
 }
 </style>

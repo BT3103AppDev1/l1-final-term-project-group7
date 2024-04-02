@@ -1,7 +1,7 @@
 <template>
    <div class="container">
-      <h1>Click to select muscle</h1>
-      <div class="anatomyContainer" style="background-color: pink;">
+      <div class="anatomyContainer" style="background-color: white;">
+         <h1>Click to select muscle</h1>
          <svg width="100%" height="100%" viewBox="0 0 176 207" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <rect id="Artboard1" x="0" y="0" width="175.551" height="206.785" style="fill:none;"/>
       <g id="Back-Muscles">
@@ -91,10 +91,29 @@ export default {
 }
 </script>
 <style scoped>
-path {
-    fill: #404040;
+.container {
+
 }
+
+.anatomyContainer {
+   border-radius: 10px;
+   padding: 0 20%;
+   height: 100%;
+}
+
+h1 {
+   display: flex;
+   justify-content: center;
+   margin: 0 20px;
+   padding: 20px;
+   white-space: nowrap;
+}
+
+path {
+   fill: #404040;
+}
+
 path:hover {
-    fill:orangered;
+   fill:orangered;
 }
 </style>

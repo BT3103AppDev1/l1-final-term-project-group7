@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h1>Workouts Page</h1>
-
-    <SelectMuscle @muscleSelected="selectMuscle($event)"/>
-
-    <ExerciseList :muscle="muscleGroup"/>
+    <div id="muscle-view">
+      <div id="select-muscle">
+        <SelectMuscle @muscleSelected="selectMuscle($event)"/>
+      </div>
+      <div id="exercise-list">
+        <ExerciseList :muscle="muscleGroup"/>
+      </div>
+    </div>
 
     <div class="container"> <!-- Note to Davy: use @exerciseSelected to listen to emits for selected exercise from ExerciseList.vue -->
       <p @click="change" id="displaySample" v-if="!showWorkoutInfo">Display Sample Workout</p>
@@ -47,6 +50,22 @@ export default {
 </script>
 
 <style scoped>  
+  #muscle-view {
+  display: flex;
+  height: 70%;
+  margin: 30px 0px;
+  justify-content: center;
+  overflow-x: visible; /* Enables horizontal scrolling */
+  gap: 30px; /* Ensures a minimum gap of 30px between children */
+}
+
+  #select-muscle {  
+    min-width: 60%;
+  }
+
+  #exercise-list {
+  }
+
   #displaySample {
     cursor: pointer;
   }
