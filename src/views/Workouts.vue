@@ -2,14 +2,14 @@
   <div>
     <div id="muscle-view">
       <div id="select-muscle">
-        <SelectMuscle @muscleSelected="selectMuscle($event)"/>
+        <SelectMuscle @muscleSelected="selectMuscle($event)" @exerciseList="updateExercises"/>
       </div>
       <div id="exercise-list">
-        <ExerciseList :muscle="muscleGroup"/>
+        <ExerciseList :muscle="muscleGroup" :exercises="exercises"/>
       </div>
     </div>
 
-    <div class="container"> <!-- Note to Davy: use @exerciseSelected to listen to emits for selected exercise from ExerciseList.vue -->
+    <div class="pop-up"> <!-- Note to Davy: use @exerciseSelected to listen to emits for selected exercise from ExerciseList.vue -->
       <p @click="change" id="displaySample" v-if="!showWorkoutInfo">Display Sample Workout</p>
       <transition name="fade">
         <!-- Listen for the close event -->
@@ -35,12 +35,16 @@ export default {
   data() {
     return {
       muscleGroup: "",
-      showWorkoutInfo: false
+      showWorkoutInfo: false,
+      exercises: []
     };
   },
   methods: {
     selectMuscle(muscle) {
-      this.muscleGroup = muscle
+      this.muscleGroup = muscle;
+    },
+    updateExercises(exercises) {
+      this.exercises = exercises; // Update the exercises data property
     },
     change() {
       this.showWorkoutInfo = !this.showWorkoutInfo;

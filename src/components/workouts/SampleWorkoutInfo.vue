@@ -15,16 +15,14 @@
       </a>
       <div id="img-and-desc">
         <div class="exercise">
-          <!-- <img src="@/assets/LateralPulldown.webp" alt="pulldown"> -->
-          <img :src="exerciseImage" alt="Exercise image">
+          <img src="@/assets/LateralPulldown.webp" alt="pulldown">
         </div>
         <div id="description">
           <ol>
-            <li v-for="(step, index) in exerciseSteps" :key="index">{{ step }}</li>
-            <!-- <li>Grasp the bar with a wide grip with an overhand, knuckles-up grip.</li>
+            <li>Grasp the bar with a wide grip with an overhand, knuckles-up grip.</li>
             <li>Pull the bar down until it's approximately level with the chin.</li>
             <li>Squeeze the shoulder blades together while maintaining square shoulders.</li>
-            <li>Slowly return the bar to the starting position while controlling its gradual ascent.</li> -->
+            <li>Slowly return the bar to the starting position while controlling its gradual ascent.</li>
           </ol>
         </div>
       </div>
@@ -43,9 +41,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    exerciseName: String,
-    exerciseImage: String,
-    exerciseSteps: Array,
   },
   methods: {
     hideWorkoutInfo() {
