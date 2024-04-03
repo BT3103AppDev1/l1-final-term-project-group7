@@ -1,25 +1,23 @@
 <template>
+  <h1>Home Page</h1>
   <div class="container">
-    <h1>Home Page</h1>
-    <div class="grid-container">
-      <div class="top-row">
-        <div class="chart weight">
-          <weightWidget />
-        </div>
-        <div class="chart steps">
-          <stepsWidget />
-        </div>
-        <div class="chart netCalories">
-          <netCaloriesWidget />
-        </div>
+    <div class="top-row">
+      <div class="chart weight">
+        <weightWidget />
       </div>
-      <div class="bottom-row">
-        <div class="activity">
-          <activtyWidget />
-        </div>
-        <div class="calendar">
-          <calendarWidget />
-        </div>
+      <div class="chart steps">
+        <stepsWidget />
+      </div>
+      <div class="chart netCalories">
+        <netCaloriesWidget />
+      </div>
+    </div>
+    <div class="bottom-row">
+      <div class="activity">
+        <activtyWidget />
+      </div>
+      <div class="calendar">
+        <calendarWidget />
       </div>
     </div>
   </div>
@@ -57,30 +55,30 @@
 
 <style scoped>
 .container {
-  max-width: 100%;
-  margin: 0 auto; /* centers the container */
-  padding: 30px;
   display: flex;
+  margin: 0 auto;
   flex-direction: column;
-  height: 85vh; /* Adjust the height calculation based on the header/footer height */
+  height: 85%; /* Fill the container height */
+  justify-content: space-around; /*Distributes space between rows */
   overflow: hidden; /* Prevents overflow */
-}
-
-.grid-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Fill the container height */
-  justify-content: space-between; /* Distributes space between rows */
+  /* border: solid 2px red; */
 }
 
 .top-row, .bottom-row {
   display: flex;
-  justify-content: space-between; /* Distributes space between widgets */
+  justify-content: space-around; /* Distributes space between widgets */
+  /* border: solid 2px blue; */
 }
 
-.weight, .steps, .netCalories, .activity, .calendar {
-  margin-right: 20px; /* Add margin to the right of each widget */
-  flex-grow: 1; /* Widgets will grow to take up available space */
+.chart {
+  flex: 1; /* Each chart will grow to take up equal space */
+  margin-right: 2%; /*space between the charts */
+  height: 25vh;
+}
+
+.activity, .calendar {
+  margin-right: 3%; /* Add margin to the right of each widget */
+  flex: 1; 
 }
 
 /* Last child of each row should not have a right margin */
@@ -90,11 +88,11 @@
 
 /* Adjust the flex-basis for activity and calendar widgets */
 .activity {
-  flex-basis: 60%; /* Takes up a larger base space when space allows */
+  flex-basis: 65%; /* Takes up a larger base space when space allows */
 }
 
 .calendar {
-  flex-basis: 30%; /* Takes up a smaller base space when space allows */
+  flex-basis: 35%; /* Takes up a smaller base space when space allows */
   margin-right: 0; /* Ensures there's no margin on the right of the last element */
 }
 

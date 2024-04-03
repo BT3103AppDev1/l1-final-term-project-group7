@@ -63,7 +63,8 @@
           ]
         },
         options: {
-          responsive: false,
+          responsive: true,
+          maintainAspectRatio: false,
           cutoutPercentage: 100, // Increase this number to make the chart more like a ring
           legend: {
             display: false // Hides the legend
@@ -78,11 +79,11 @@
   <style scoped>
   .activity-widget {
     background-color: #404b5a;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 20px;
     color: whitesmoke;
     display: flex;
-    justify-content: space-between; /*Add space between the stats and the doughnut */
+    justify-content: space-around; /*Add space between the stats and the doughnut */
     align-items: center;
     max-height: 80%;
   }
@@ -97,13 +98,17 @@
     
   .stats {
     width: 100%; 
-    padding-left: 30px; 
+    padding-left: 5%; 
+    padding-right: 5%;
     border-left: 1px solid rgba(255, 255, 255, 0.5); /* Separator line */
+    font-size: 1em;
+    /* border: dashed */
   }
   
   .stat {
     font-size: 1.2em; /* Increase the font size of stats */
-    margin: 20px 0; /* Space between stat items */
+    margin: 3% 0; /* Space between stat items */
+    /* border : solid */
   }
 
   #steps {
@@ -140,10 +145,12 @@
   }
 
   #activityWidget {
-  max-width: 30vh; /* Set a max-width to the doughnut chart for a smaller appearance */
+  max-width: 30vh; /*Set a max-width to the doughnut chart for a smaller appearance */
   max-height: 30vh;
   margin-right: 30px;
   margin-bottom: 5px;
+  width: 100%;
+  /* border: solid; */
   }
 
   </style>

@@ -14,7 +14,7 @@
       return {
         workouts: [
           { id: 1, date: 'TODAY, 23 MAR', activity: 'PUSH WORKOUT' },
-          { id: 2, date: 'TOMORROW', activity: 'PULL WORKOUT' },
+          { id: 2, date: 'TOMORROW 24 MAR', activity: 'PULL WORKOUT' },
           { id: 3, date: 'MONDAY,  25 MAR', activity: 'RUN' },
         ]
       };

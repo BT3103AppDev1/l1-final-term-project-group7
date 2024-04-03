@@ -73,7 +73,6 @@
 #steps_widget {
   background-color: #dfe2e7;
   border-radius: 15px;       
-  padding: 20px;            
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth*/
 }
 </style>
