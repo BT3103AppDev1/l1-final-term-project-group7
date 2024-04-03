@@ -1,5 +1,8 @@
 <template>
-  <h1>Social Page</h1>
+  <div>
+    <h1>Social Page</h1>
+    <achievements></achievements>
+  </div>
 </template>
   
 <script>
