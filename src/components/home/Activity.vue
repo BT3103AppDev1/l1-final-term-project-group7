@@ -69,7 +69,6 @@
           legend: {
             display: false // Hides the legend
           },
-          // You can add more options to customize your chart
         }
       };
     }
@@ -89,9 +88,9 @@
   }
 
   .title {
-    font-size: 1.3em; /* Larger font size for the title */
+    font-size: 1.3em; 
     font-weight: bold;
-    margin-bottom: 20px; /* Space below the title */
+    margin-bottom: 20px; 
     margin-right: 20px;
     margin-left: 10px
     }
