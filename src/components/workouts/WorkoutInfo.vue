@@ -1,8 +1,9 @@
 <template>
-  <div class="workout-info">
+  <div class="workout-info" v-if="showWorkout">
     <div id="title-row">
-      <h1 id="workout-title">Lateral Pulldown</h1>
+      <h1 id="workout-title">{{ exerciseName }}</h1>
       <a href="#" class="clickable-img-wrapper">
+        <!-- Consider dynamically changing icons based on user actions like liking an exercise -->
         <img src="@/assets/Like-Icon.webp" alt="likeIcon" class="icon">
       </a>
       <a @click.prevent="hideWorkoutInfo" class="clickable-img-wrapper">
@@ -15,17 +16,16 @@
       </a>
       <div id="img-and-desc">
         <div class="exercise">
-          <!-- <img src="@/assets/LateralPulldown.webp" alt="pulldown"> -->
+          <!-- You might want to set a default image or handle dynamically -->
           <img :src="exerciseImage" alt="Exercise image">
         </div>
         <div id="description">
-          <ol>
-            <li v-for="(step, index) in exerciseSteps" :key="index">{{ step }}</li>
-            <!-- <li>Grasp the bar with a wide grip with an overhand, knuckles-up grip.</li>
-            <li>Pull the bar down until it's approximately level with the chin.</li>
-            <li>Squeeze the shoulder blades together while maintaining square shoulders.</li>
-            <li>Slowly return the bar to the starting position while controlling its gradual ascent.</li> -->
-          </ol>
+          <!-- Assuming instructions are a string that you'll split into steps -->
+          <ul>
+            <li v-for="(step, index) in exerciseSteps.split('.').filter(step => step.trim())" :key="index">
+              {{ step.trim() }}.
+            </li>
+          </ul>
         </div>
       </div>
       <a href="#" class="clickable-img-wrapper">
@@ -39,17 +39,13 @@
 export default {
   name: 'workoutInfo',
   props: {
-    showWorkout: {
-      type: Boolean,
-      default: true,
-    },
+    showWorkout: Boolean,
     exerciseName: String,
     exerciseImage: String,
-    exerciseSteps: Array,
+    exerciseSteps: String, // Adjusted to accept a string
   },
   methods: {
     hideWorkoutInfo() {
-      // Emit an event to the parent component
       this.$emit('close');
       console.log("Hiding workout info");
     },
@@ -126,5 +122,8 @@ a {
   margin: 50px auto;
   padding: 20px 20px 0px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 70vw;
+  height: 60vh;
+  overflow-y: scroll;
 }
 </style>
