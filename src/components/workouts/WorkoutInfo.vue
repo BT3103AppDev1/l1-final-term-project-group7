@@ -11,16 +11,17 @@
       </a>
     </div>
     <div class="exercise-content">
-      <a href="#" class="clickable-img-wrapper">
+      <!-- <a href="#" class="clickable-img-wrapper">
         <img src="@/assets/Left-Icon.webp" alt="leftIcon" class="arrows" id="left">
-      </a>
+      </a> -->
       <div id="img-and-desc">
-        <div class="exercise">
-          <!-- You might want to set a default image or handle dynamically -->
+        <!-- <div class="exercise">
           <img :src="exerciseImage" alt="Exercise image">
+        </div> -->
+        <div class="youtube-link-container">
+          <a :href="youtubeLink" target="_blank">Video Demonstration</a>
         </div>
         <div id="description">
-          <!-- Assuming instructions are a string that you'll split into steps -->
           <ul>
             <li v-for="(step, index) in exerciseSteps.split('.').filter(step => step.trim())" :key="index">
               {{ step.trim() }}.
@@ -28,14 +29,16 @@
           </ul>
         </div>
       </div>
-      <a href="#" class="clickable-img-wrapper">
+      <!-- <a href="#" class="clickable-img-wrapper">
         <img src="@/assets/Right-Icon.webp" alt="rightIcon" class="arrows" id="right">
-      </a>
+      </a> -->
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'workoutInfo',
   props: {
@@ -44,16 +47,63 @@ export default {
     exerciseImage: String,
     exerciseSteps: String, // Adjusted to accept a string
   },
+  data() {
+    return {
+      youtubeLink: '', 
+    };
+  },
   methods: {
     hideWorkoutInfo() {
       this.$emit('close');
       console.log("Hiding workout info");
     },
+    async fetchYoutubeLink(searchQuery) {
+      const options = {
+        method: 'GET',
+        url: 'https://youtube-v31.p.rapidapi.com/search',
+        params: {
+          q: searchQuery, // Use the searchQuery passed to the method
+          part: 'snippet,id',
+          regionCode: 'US',
+          maxResults: '1', // Fetch only the first result
+          order: 'date'
+        },
+        headers: {
+          'X-RapidAPI-Key': 'ab77cb18d8msha789c05491d526cp1e5bf9jsna3322edfdf9a',
+          'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await axios.request(options);
+        if (response.data.items.length > 0) {
+          const videoId = response.data.items[0].id.videoId;
+          this.youtubeLink = `https://www.youtube.com/watch?v=${videoId}`; 
+        }
+      } catch (error) {
+        console.error('Error fetching YouTube link:', error);
+      }
+    }
   },
+  created() {
+    this.fetchYoutubeLink(this.exerciseName);
+    console.log("fetched youtube link")
+  }
 };
 </script>
 
 <style scoped>
+.workout-info {
+  background-color: #dfe2e7;
+  border-radius: 15px;
+  margin: 50px auto;
+  padding: 20px 20px 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 70vw;
+  height: 60vh;
+  overflow-y: scroll;
+}
+
 .clickable-img-wrapper {
   display: inline-block;
   transition: transform .2s; /* Animation */
@@ -100,30 +150,22 @@ a {
   width: 100%;
 }
 
-.exercise {
-  display: flex;
-  justify-content: center;
-}
-
-.exercise img {
-  width: auto;
-  max-height: 40vh;
-}
-
 #description {
   display: flex;
   justify-content: center;
   padding-top: 20px;
 }
 
-.workout-info {
-  background-color: #dfe2e7;
-  border-radius: 15px;
-  margin: 50px auto;
-  padding: 20px 20px 0px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 70vw;
-  height: 60vh;
-  overflow-y: scroll;
+.youtube-link-container {
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.youtube-link-container a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.youtube-link-container a:hover {
+  text-decoration: underline;
 }
 </style>

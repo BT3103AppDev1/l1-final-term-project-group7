@@ -61,10 +61,8 @@ export default {
       this.showWorkoutInfo = true;
     },
     getExerciseImage(exerciseName) {
-      // Placeholder for image path logic based on exercise name
-      // Implement your logic here to determine the image path
-      // For example, return a static asset's path based on the exercise name
-      return `/path/to/your/images/${exerciseName}.webp`; // Example path, adjust as necessary
+      // Removed, replaced with youtube link to exercise
+      return `src/assets/WorkoutImages/${exerciseName}.webp`;
     },
     handleLoading(loading) {
     this.loading = loading; 

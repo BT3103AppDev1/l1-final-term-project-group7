@@ -3,6 +3,7 @@
     <h1>{{ capitalizeFirstLetter(muscle) }}</h1>
     <p v-if="loading">Loading...</p>
     <ul v-else>
+      <h4>Click on an exercise to view its description:</h4>
       <li v-for="exercise in exercises" :key="exercise.id" @click="selectExercise(exercise)">
         {{ exercise.name }}
       </li>
