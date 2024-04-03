@@ -3,11 +3,12 @@
 </template>
   
 <script>
-  
-  export default {
-    name: 'App',
-    components: {
+import Achievements from '@/components/social/Achievements.vue';
 
+  export default {
+    name: 'Social',
+    components: {
+      Achievements
     },
     data() {
       return {
