@@ -1,46 +1,46 @@
 <template>
-    <div class="calories-input-widget">
-      <div class="calories-input">
-        <label for="meal-select" class="input-label">Calories Input</label>
-        <div class="search-container">
-          <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon">
-          <input type="search" class="search-input" placeholder="Select meals..." v-model="selectedMeal">
-        </div>
-        <!-- Dropdown placeholder -->
-        <ul>
-          <li v-for="meal in meals" :key="meal.id" @click="addMeal(meal)">
+  <div class="calories-input-widget">
+    <!-- Calories Input -->
+    <div class="calories-input">
+      <label for="meal-select" class="input-label">Calories Input</label>
+      <div class="search-container">
+        <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon"> <!-- replace with search icon-->
+        <select v-model="selectedMeal" class="dropdown">
+          <option disabled value="">Select meals...</option>
+          <option v-for="meal in meals" :key="meal.id" :value="meal">
             {{ meal.name }} ({{ meal.calories }} kcal)
-          </li>
-        </ul>
-        <div class="selected-items">
-          <div v-for="(meal, index) in selectedMeals" :key="index" class="selected-item">
-            {{ meal.name }}: {{ meal.calories }} kcal
-          </div>
-          <div class="total-calories">Total: {{ totalInputCalories }} kcal</div>
-        </div>
+          </option>
+        </select>
       </div>
-  
-      <div class="calories-burnt">
-        <label for="workout-select" class="input-label">Calories Burnt</label>
-        <div class="search-container">
-          <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon">
-          <input type="search" class="search-input" placeholder="Select workouts..." v-model="selectedWorkout">
-        </div>
-        <!-- Dropdown placeholder -->
-        <ul>
-          <li v-for="workout in workouts" :key="workout.id" @click="addWorkout(workout)">
-            {{ workout.name }} (-{{ workout.calories }} kcal)
-          </li>
-        </ul>
-        <div class="selected-items">
-          <div v-for="(workout, index) in selectedWorkouts" :key="index" class="selected-item">
-            {{ workout.name }}: -{{ workout.calories }} kcal
-          </div>
-          <div class="total-calories">Total: {{ totalBurntCalories }} kcal</div>
-        </div>
-      </div>
+      <ul>
+        <li v-for="(meal, index) in selectedMeals" :key="index">
+          {{ meal.name }}: {{ meal.calories }} kcal
+        </li>
+      </ul>
+      <div class="total-calories">Total: {{ totalInputCalories }} kcal</div>
     </div>
-  </template>
+
+    <!-- Calories Burnt -->
+    <div class="calories-burnt">
+      <label for="workout-select" class="input-label">Calories Burnt</label>
+      <div class="search-container">
+        <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon"> <!-- replace with search icon-->
+        <select v-model="selectedWorkout" class="dropdown">
+          <option disabled value="">Select workouts...</option>
+          <option v-for="workout in workouts" :key="workout.id" :value="workout">
+            {{ workout.name }} (-{{ workout.calories }} kcal)
+          </option>
+        </select>
+      </div>
+      <ul>
+        <li v-for="(workout, index) in selectedWorkouts" :key="index">
+          {{ workout.name }}: -{{ workout.calories }} kcal
+        </li>
+      </ul>
+      <div class="total-calories">Total: {{ totalBurntCalories }} kcal</div>
+    </div>
+  </div>
+</template>
   
   <script>
   export default {
@@ -52,13 +52,13 @@
         selectedMeals: [],
         selectedWorkouts: [],
         meals: [
-          // Placeholder data
+          // Placeholder data -- to fill with API
           { id: 1, name: 'Chicken Salad', calories: 350 },
           { id: 2, name: 'Beef Steak', calories: 450 },
           // Add more meals
         ],
         workouts: [
-          // Placeholder data
+          // Placeholder data -- to fill with API
           { id: 1, name: 'Running', calories: 300 },
           { id: 2, name: 'Swimming', calories: 400 },
           // Add more workouts
@@ -66,11 +66,14 @@
       };
     },
     methods: {
-      addMeal(meal) {
-        this.selectedMeals.push(meal);
-      },
-      addWorkout(workout) {
-        this.selectedWorkouts.push(workout);
+      addSelectedItem(type) {
+        if (type === 'meal' && this.selectedMeal) {
+          this.selectedMeals.push(this.selectedMeal);
+          this.selectedMeal = null; // Reset the selection
+        } else if (type === 'workout' && this.selectedWorkout) {
+          this.selectedWorkouts.push(this.selectedWorkout);
+          this.selectedWorkout = null; // Reset the selection
+        }
       },
     },
     computed: {
@@ -79,8 +82,20 @@
       },
       totalBurntCalories() {
         return this.selectedWorkouts.reduce((total, workout) => total - workout.calories, 0);
-      }
-    }
+      },
+    },
+    watch: {
+      selectedMeal(newMeal) {
+        if (newMeal) {
+          this.addSelectedItem('meal');
+        }
+      },
+      selectedWorkout(newWorkout) {
+        if (newWorkout) {
+          this.addSelectedItem('workout');
+        }
+      },
+    },
   };
   </script>
   
@@ -99,10 +114,10 @@
   
   .input-label {
     font-weight: bold;
-    font-size: 2em; /* Example font size change */
-    color: #1c43c2; /* Example color change */
-    margin-bottom: 0.5rem; /* Space below the label */
-    display: block; /* Ensures the label takes up the full width */
+    font-size: 2em;
+    color: #1c43c2; 
+    margin-bottom: 0.5rem; 
+    display: block; 
   }
 
   .search-container { 
@@ -110,12 +125,13 @@
    padding: 2%; 
   }
 
-  .search-input {
+  .dropdown {
     border: 2px solid #1c43c2; 
     border-radius: 20px; 
     padding: 10px 20px 10px 40px; /* Left padding to make room for the icon */
     width: calc(100% - 20px); /* Adjust width to account for icon width */
     outline: none; /* Removes the default focus outline */
+    font-size: 1em;
   }
 
   .search-icon {
@@ -129,40 +145,33 @@
   }
 
   ul {
-  list-style: none; /* Removes the default list bullets */
-  padding: 0; /* Removes the default padding */
-  margin: 0; /* Aligns the list to the container */
+  list-style: none;
+  padding: 0; 
+  margin: 0;
 }
 
   li {
-    display: flex; /* Makes it possible to align items in a row */
-    align-items: center; /* Aligns items vertically */
-    padding: 0.5rem 2rem; /* Padding for each list item */
-    margin: 8px 0; /* Margin around each list item */
-    background-color: #ffffff; /* Background color for each list item */
-    border-radius: 10px; /* Rounded corners for each list item */
-    position: relative; /* Establishes a positioning context for pseudo-elements */
+    display: flex; 
+    align-items: center; 
+    padding: 0.5rem 2rem; 
+    margin: 8px 0; 
+    background-color: #ffffff; 
+    border-radius: 10px; 
+    position: relative; 
   }
 
   ul li::before {
-    content: ''; /* Necessary for a pseudo-element */
-    width: 8px; /* Width of the bullet point */
-    height: 8px; /* Height of the bullet point */
-    background-color: #000000; /* Bullet point color */
-    border-radius: 50%; /* Makes it circular */
+    content: ''; 
+    width: 8px;
+    height: 8px; 
+    background-color: #1c43c2; 
+    border-radius: 50%; 
     position: absolute; /* Positions it relative to the list item */
     left: 10px; /* Distance from the left side of the list item */
   }
 
   ul li:last-child {
     border-bottom: none; /* Removes bottom border from the last item */
-  }
-
-  .selected-items {
-    background-color: #fff;
-    border-radius: 10px;
-    margin-top: 1rem;
-    padding: 1rem;
   }
   
   .total-calories { 
