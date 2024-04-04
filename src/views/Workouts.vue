@@ -20,7 +20,8 @@
       <WorkoutInfo
         :showWorkout="showWorkoutInfo"
         :exerciseName="selectedExercise.name"
-        :exerciseImage="getExerciseImage(selectedExercise.name)"
+        :exerciseDifficulty="selectedExercise.difficulty"
+        :exerciseType="selectedExercise.type"
         :exerciseSteps="selectedExercise.instructions"
         @close="showWorkoutInfo = false"
       />
@@ -74,7 +75,6 @@ export default {
 <style scoped>  
   #muscle-view {
   display: flex;
-  height: 70%;
   margin: 30px 0px;
   justify-content: center;
   overflow-x: visible; 
@@ -82,7 +82,7 @@ export default {
 }
 
   #select-muscle {  
-    min-width: 60%;
+    min-width: 55%;
   }
 
   .overlay {

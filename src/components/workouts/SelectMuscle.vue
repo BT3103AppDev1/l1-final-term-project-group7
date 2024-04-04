@@ -127,7 +127,7 @@ export default {
 .anatomyContainer {
   border-radius: 10px;
   padding: 0 20%;
-  height: 100%;
+  min-height: 100%;
 }
 
 h1 {
@@ -143,6 +143,6 @@ path {
 }
 
 path:hover {
-  fill:orangered;
+  fill:#5B789F;
 }
 </style>

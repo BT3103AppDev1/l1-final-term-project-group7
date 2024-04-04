@@ -15,9 +15,9 @@
         <img src="@/assets/Left-Icon.webp" alt="leftIcon" class="arrows" id="left">
       </a> -->
       <div id="img-and-desc">
-        <!-- <div class="exercise">
-          <img :src="exerciseImage" alt="Exercise image">
-        </div> -->
+        <p>Difficulty: {{ this.$capitalizeFirstLetter(exerciseDifficulty) }}<br>
+          Type: {{ this.$capitalizeFirstLetter(exerciseType) }}
+        </p>
         <div class="youtube-link-container">
           <a :href="youtubeLink" target="_blank">Video Demonstration</a>
         </div>
@@ -44,7 +44,8 @@ export default {
   props: {
     showWorkout: Boolean,
     exerciseName: String,
-    exerciseImage: String,
+    exerciseDifficulty: String,
+    exerciseType: String,
     exerciseSteps: String, // Adjusted to accept a string
   },
   data() {
@@ -62,7 +63,7 @@ export default {
         method: 'GET',
         url: 'https://youtube-v31.p.rapidapi.com/search',
         params: {
-          q: searchQuery, // Use the searchQuery passed to the method
+          q: searchQuery,
           part: 'snippet,id',
           regionCode: 'US',
           maxResults: '1', // Fetch only the first result
@@ -113,10 +114,6 @@ export default {
   transform: scale(1.5);
 }
 
-a {
-  padding: 0;
-}
-
 .arrows {
   height: 64px;
   margin: 10px;
@@ -154,10 +151,6 @@ a {
   display: flex;
   justify-content: center;
   padding-top: 20px;
-}
-
-.youtube-link-container {
-  margin-top: 20px; /* Adjust as needed */
 }
 
 .youtube-link-container a {

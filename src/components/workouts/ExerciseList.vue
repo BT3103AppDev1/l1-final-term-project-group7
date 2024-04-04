@@ -1,6 +1,6 @@
 <template>
   <div class="exercise-list-container">
-    <h1>{{ capitalizeFirstLetter(muscle) }}</h1>
+    <h1>{{ this.$capitalizeFirstLetter(muscle) }}</h1>
     <p v-if="loading">Loading...</p>
     <ul v-else>
       <h4>Click on an exercise to view its description:</h4>
@@ -17,17 +17,11 @@ export default {
   props: {
     muscle: String,
     exercises: Array,
-    loading: Boolean, // Ensure 'loading' is defined here
-  }, // Receive `muscle` and `exercises` as props from the parent component
+    loading: Boolean, // Boolean to check if data from API call is loading
+  },
   methods: {
     selectExercise(exercise) {
-      // Emit the selected exercise to the parent component when an exercise is clicked
       this.$emit('exerciseSelected', exercise);
-    },
-    capitalizeFirstLetter(string) {
-      // Utility method to capitalize the first letter of the muscle name
-      if (!string) return '';
-      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   },
 };
@@ -50,11 +44,6 @@ export default {
 
 .exercise-list-container li {
   cursor: pointer;
-}
-
-/* Style for the selected item if needed */
-.selected {
-  text-decoration: underline;
 }
 
 h1 {
