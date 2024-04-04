@@ -30,6 +30,18 @@
           { title: 'Nutrition Novice:', description: 'Complete your first dietary challenge' }
         ]
       };
+    },
+    methods: {
+        getIconPath(title) {
+            const imagePaths = {
+                'First Steps:': require('@/assets/FirstSteps.png'),
+                'Consistency Champ:': require('@/assets/ConsistencyChamp.png'),
+                'Social Butterfly:': require('@/assets/SocialButterfly.png'),
+                'Goal Getter:': require('@/assets/GoalGetter.png'),
+                'Nutrition Novice:': require('@/assets/NutritionNovice.png')
+            };
+            return imagePaths[title];
+        }
     }
   };
   </script>
@@ -47,6 +59,12 @@
     color: #ffffff;
     margin-bottom: 10px;
   }
+
+  .achievement-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
   
   .up-next {
     display: flex;
