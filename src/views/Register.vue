@@ -7,58 +7,58 @@
     <p v-if="errorMessage">{{ errorMessage }}</p>
     <p><button @click="register">Submit</button></p>
     <p><button @click="registerWithGoogle">Register With Google</button></p>
+    <p><button @click="goToLogin">Have an Account? Log in here</button></p>
     <h3 id="pagecontent">HealthGuru is a .... </h3>
 </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import firebaseApp  from '@/firebase.js'; 
 
-export default {
-    data() {
-        return {
-        email: "",
-        password: "",
-        errorMessage: "",
-        };
-    },
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+const auth = getAuth(firebaseApp);
 
-    methods: {
-        async register() {
-        try {
-            const auth = getAuth(firebaseApp);
-            await createUserWithEmailAndPassword(auth, this.email, this.password);
-            console.log("Successfully registered!");
-            this.$router.push('/');
-        } catch (error) {
-            console.error(error.code);
-            this.errorMessage = this.getErrorMessage(error.code);
-        }
-        },
-
-        async registerWithGoogle() {
-        try {
-            const auth = getAuth(firebaseApp);
-            const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            console.log(result.user);
-            this.$router.push("/");
-        } catch (error) {
-            console.error(error.code);
-            this.errorMessage = "Failed to sign in with Google.";
-        }
-        },
-
-        getErrorMessage(code) {
+const register = async () => {
+    try {
+        await createUserWithEmailAndPassword(auth, email.value, password.value);
+        console.log("Successfully registered!");
+        router.push('/');
+    } catch (error) {
+        console.error(error.code);
         switch(code) {
-            case "auth/email-already-in-use": return "Email is in use";
-            case "auth/weak-password": return "Password should have at least 6 characters";
-            default: return "Invalid email or password";
-        }
+            case "auth/email-already-in-use": 
+                errorMessage.value = "Email is in use";
+            case "auth/weak-password": 
+                errorMessage.value = "Password should have at least 6 characters";
+            default: 
+                errorMessage.value = "Invalid email or password";
         }
     }
 }
+
+
+const registerWithGoogle = async () => {
+    try {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+        console.log("Successfully registered with Google!");
+        router.push("/");
+    } catch (error) {
+        console.error(error.code);
+        errorMessage.value = "Failed to register with Google.";
+    }
+}
+      
+const goToLogin = async () => {
+    router.push('/login');
+}
+
 </script>
 
 <style scoped>
