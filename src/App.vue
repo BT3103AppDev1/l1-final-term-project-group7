@@ -1,9 +1,6 @@
 <template>
     <div id="app">
-      <div id="top-bar">
-        <img src="@/assets/HealthGuru.png" alt="HealthGuru" class="logo"/>
-        <h1 id="website-name">HealthGuru</h1>
-      </div>
+      <Topbar />
       <div id="main">
         <div id="nav">
           <!-- Navigation links -->
@@ -35,6 +32,7 @@
 </template>
   
 <script setup>
+import Topbar from "@/views/TopBar.vue"
 import { RouterLink, RouterView } from 'vue-router';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { ref } from 'vue';
@@ -66,4 +64,5 @@ const logOut = async () => {
       place-items: center;
     }
   }
+
 </style>
