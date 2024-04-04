@@ -7,8 +7,10 @@
         <div class="progress-text">11.0% of achievements unlocked!</div>
       </div>
       <div class="achievement" v-for="(achievement, index) in achievements" :key="index">
-        <div class="achievement-title">{{ achievement.title }}</div>
-        <div class="achievement-description">{{ achievement.description }}</div>
+        <div class="achievement-item">
+            <div class="achievement-title">{{ achievement.title }}</div>
+            <div class="achievement-description">{{ achievement.description }}</div>
+        </div>
       </div>
     </div>
   </template>
@@ -51,7 +53,7 @@ export default {
 }
 
 .progress-bar {
-  width: 70%; /* Adjust as needed based on progress */
+  width: 11%; /* Adjust as needed based on progress */
   height: 20px;
   background-color: #2ecc71; /* Green color */
   border-radius: 10px;
@@ -66,6 +68,11 @@ export default {
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
 }
 
 .achievement-title {
