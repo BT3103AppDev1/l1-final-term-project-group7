@@ -1,13 +1,14 @@
 <template>
-<h1>Routines Page</h1>
+  <WorkoutContainer />
 </template>
   
 <script>
+import WorkoutContainer from '@/components/routines/WorkoutContainer.vue';
   
   export default {
-    name: 'App',
+    name: 'Routines',
     components: {
-
+      WorkoutContainer
     },
     data() {
       return {
