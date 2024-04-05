@@ -32,9 +32,22 @@ export default {
   #searchBar{
     display: flex;
     align-items: center;
-    position: absolute;
-    left: 75%;
-    
+    left: 80%;
+    margin-left: 950px;
   }
 
+  #top-bar {
+    display: flex;
+    position: fixed;
+    background-color: #335076;
+    color: white;
+    padding-left: 120px;
+    height: 80px;
+    width: 100%;
+    justify-content: flex;
+  }
+
+  .Options {
+    margin-left: 30px;
+  }
 </style>

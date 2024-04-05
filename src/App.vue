@@ -64,5 +64,17 @@ const logOut = async () => {
       place-items: center;
     }
   }
+  
+  .TopBar {
+  position: fixed;
+  display: flex;
+  background-color: #335076;
+  color: white;
+  padding-left: 120px;
+  height: 80px;
+  width: 100%;
+  align-content: center;
+  z-index: 9999;
+  }
 
 </style>
