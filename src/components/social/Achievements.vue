@@ -1,23 +1,34 @@
 <template>
-    <div class="achievements">
+    <div class="achievements-container">
       <h1 class="achievements-heading">Achievements</h1>
-      <div class="up-next">
-        Up Next:
-      </div>
       <div class="progress-container">
-        <div class="progress-text">11.0% of achievements unlocked!</div>
-        <div class="progress-bar"></div>
+        <h2 class="up-next">Up Next:</h2>
+        <div class="progress-bar-container">
+          <div class="progress-text">11.0% of achievements unlocked!</div>
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: progressWidth }"></div>
+          </div>
+        </div>
       </div>
       <div class="achievement" v-for="(achievement, index) in achievements" :key="index">
         <div class="achievement-item">
-          <div class="achievement-title">{{ achievement.title }}</div>
-          <div class="achievement-description">{{ achievement.description }}</div>
+          <img :src="getIconPath(achievement.title)" class="achievement-icon" alt="Icon">
+          <div class="achievement-details">
+            <div class="achievement-title">{{ achievement.title }}</div>
+            <div class="achievement-description">{{ achievement.description }}</div>
+          </div>
         </div>
       </div>
     </div>
   </template>
   
   <script>
+  import FirstSteps from '@/assets/FirstSteps.png';
+  import ConsistencyChamp from '@/assets/ConsistencyChamp.png';
+  import SocialButterfly from '@/assets/SocialButterfly.png';
+  import GoalGetter from '@/assets/GoalGetter.png';
+  import NutritionNovice from '@/assets/NutritionNovice.png';
+  
   export default {
     name: 'Achievements',
     data() {
@@ -28,83 +39,103 @@
           { title: 'Social Butterfly:', description: 'Make 10 friends on HeathGuru' },
           { title: 'Goal Getter:', description: 'Set and achieve your first calorie goal' },
           { title: 'Nutrition Novice:', description: 'Complete your first dietary challenge' }
-        ]
+        ],
+        progressWidth: '11%'
       };
     },
     methods: {
-        getIconPath(title) {
-            const imagePaths = {
-                'First Steps:': require('@/assets/FirstSteps.png'),
-                'Consistency Champ:': require('@/assets/ConsistencyChamp.png'),
-                'Social Butterfly:': require('@/assets/SocialButterfly.png'),
-                'Goal Getter:': require('@/assets/GoalGetter.png'),
-                'Nutrition Novice:': require('@/assets/NutritionNovice.png')
-            };
-            return imagePaths[title];
+      getIconPath(title) {
+        switch (title) {
+          case 'First Steps:':
+            return FirstSteps;
+          case 'Consistency Champ:':
+            return ConsistencyChamp;
+          case 'Social Butterfly:':
+            return SocialButterfly;
+          case 'Goal Getter:':
+            return GoalGetter;
+          case 'Nutrition Novice:':
+            return NutritionNovice;
+          default:
+            return '';
         }
+      }
     }
   };
   </script>
   
   <style scoped>
-  .achievements {
+  .achievements-container {
     text-align: center;
     background-color: #335076;
     border-radius: 20px;
     padding: 20px;
   }
-  
-  .achievements-heading,
-  .up-next {
+
+  .achievements-heading {
     color: #ffffff;
-    margin-bottom: 10px;
+    margin-top: 10px;
   }
 
-  .achievement-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-  
-  .up-next {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align "Up Next" to the left */
-    font-weight: bold;
-  }
   
   .progress-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
-    margin-left: 10px;
     margin-bottom: 10px;
+  }
+  
+  .up-next {
+    color: #ffffff;
+    margin-right: 10px;
+  }
+  
+  .progress-text {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #ffffff;
+    white-space: nowrap;
+    margin-right: 5px;
   }
   
   .progress-bar {
     height: 20px;
     background-color: #ffffff;
     border-radius: 10px;
-    width: 11%;
+    width: 210px;
     margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
   }
   
-  .progress-text {
-    font-size: 0.9em;
-    color: #ffffff;
-    white-space: nowrap;
-    margin-right: 5px;
+  .progress-fill {
+    background-color: #007bff; /* Blue color for progress */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 10px;
   }
   
   .achievement {
     background-color: #ffffff;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 30px;
+    padding: 8px 10px;
     margin-bottom: 10px;
   }
   
   .achievement-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .achievement-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+  }
+  
+  .achievement-details {
     display: flex;
     align-items: center;
   }
@@ -119,5 +150,4 @@
     text-align: left;
     margin-left: 5px;
   }
-  </style>
-  
+  </style>  
