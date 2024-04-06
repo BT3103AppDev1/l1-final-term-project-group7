@@ -7,12 +7,13 @@
         <div id="searchBar">
           <input type="text" v-model="input" placeholder="Search..." class="search-input"/>
         </div>
-        <Options/>
+        <Options class="options" v-if="user" @logged-out="handleLogout"/>
     </nav>
 </template>
 
 <script>
 import Options from  "@/components/topbar/Options.vue"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "Topbar",
@@ -20,6 +21,28 @@ export default {
   components: {
     Options
   },
+
+  data() {
+      return {
+        user: false,
+      }
+  },
+
+  mounted() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        this.user = user;
+    }
+    })
+  },
+
+  methods: {
+    handleLogout() {
+      this.user = false;
+      this.$forceUpdate();
+    }
+  }
 }
 </script>
 
@@ -33,7 +56,7 @@ export default {
     display: flex;
     align-items: center;
     left: 80%;
-    margin-left: 950px;
+    margin-left: 1000px;
   }
 
   #top-bar {
@@ -47,7 +70,11 @@ export default {
     justify-content: flex;
   }
 
-  .Options {
-    margin-left: 30px;
+  .options {
+    position: absolute;
+    right: -100px;
   }
+
+  
+
 </style>
