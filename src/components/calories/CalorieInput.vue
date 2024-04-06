@@ -4,17 +4,18 @@
     <div class="calories-input">
       <label for="meal-select" class="input-label">Calories Input</label>
       <div class="search-container">
-        <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon"> <!-- replace with search icon-->
+        <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- replace with search icon-->
         <select v-model="selectedMeal" class="dropdown">
           <option disabled value="">Select meals...</option>
           <option v-for="meal in meals" :key="meal.id" :value="meal">
             {{ meal.name }} ({{ meal.calories }} kcal)
           </option>
         </select>
-      </div>
+      </div>  
       <ul>
-        <li v-for="(meal, index) in selectedMeals" :key="index">
-          {{ meal.name }}: {{ meal.calories }} kcal
+        <li v-for="(meal, index) in selectedMeals" :key="index" class="list-item">
+          <span>{{ meal.name }}: {{ meal.calories }} kcal</span>
+          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(index)">
         </li>
       </ul>
       <div class="total-calories">Total: {{ totalInputCalories }} kcal</div>
@@ -24,7 +25,7 @@
     <div class="calories-burnt">
       <label for="workout-select" class="input-label">Calories Burnt</label>
       <div class="search-container">
-        <img src="@/assets/Left-Icon.webp" alt="Search" class="search-icon"> <!-- replace with search icon-->
+        <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- replace with search icon-->
         <select v-model="selectedWorkout" class="dropdown">
           <option disabled value="">Select workouts...</option>
           <option v-for="workout in workouts" :key="workout.id" :value="workout">
@@ -33,8 +34,9 @@
         </select>
       </div>
       <ul>
-        <li v-for="(workout, index) in selectedWorkouts" :key="index">
-          {{ workout.name }}: -{{ workout.calories }} kcal
+        <li v-for="(workout, index) in selectedWorkouts" :key="index" class="list-item">
+          <span>{{ workout.name }}: -{{ workout.calories }} kcal </span>
+          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(index)">
         </li>
       </ul>
       <div class="total-calories">Total: {{ totalBurntCalories }} kcal</div>
@@ -75,6 +77,12 @@
           this.selectedWorkout = null; // Reset the selection
         }
       },
+      removeMeal(index) {
+        this.selectedMeals.splice(index, 1);
+      },
+      removeWorkout(index) {
+        this.selectedWorkouts.splice(index, 1);
+      }
     },
     computed: {
       totalInputCalories() {
@@ -128,7 +136,7 @@
   .dropdown {
     border: 2px solid #1c43c2; 
     border-radius: 20px; 
-    padding: 10px 20px 10px 40px; /* Left padding to make room for the icon */
+    padding: 10px 40px 10px 40px; /* Left padding to make room for the icon */
     width: calc(100% - 20px); /* Adjust width to account for icon width */
     outline: none; /* Removes the default focus outline */
     font-size: 1em;
@@ -136,7 +144,7 @@
 
   .search-icon {
     position: absolute; 
-    left: 10px; 
+    left: 25px; 
     top: 50%; 
     transform: translateY(-50%); 
     width: 20px; 
@@ -158,6 +166,23 @@
     background-color: #ffffff; 
     border-radius: 10px; 
     position: relative; 
+  }
+
+  .list-item {
+    display: flex; 
+    justify-content: space-between; /* Arrange content and delete button on opposite ends */
+    align-items: center; 
+    padding: 0.5rem 2rem; 
+    margin: 8px 0; 
+    background-color: #ffffff; 
+    border-radius: 10px; 
+  }
+
+  .delete-icon {
+    cursor: pointer; /* Change cursor to pointer when hovering over the icon */
+    width: 20px; /* Set width for the delete icon */
+    height: 20px; /* Set height for the delete icon */
+    margin-left: 10px
   }
 
   ul li::before {

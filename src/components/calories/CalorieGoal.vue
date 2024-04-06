@@ -1,6 +1,6 @@
 <template>
     <div class="calorieGoalWidget">
-      <img src="@/assets/Calories-Icon.png" alt="Target Icon" class="goalIcon" />
+      <img src="@/assets/Target-Icon.png" alt="Target Icon" class="goalIcon" />
       <div class="goalInfo">
         <div class="calories">
           <span>CURRENT CALORIE GOAL: </span>
@@ -59,41 +59,44 @@
   color: whitesmoke;
   display: flex;
   align-items: center;
-  max-width: 70%;
-  max-height: 15vh;
   justify-content: space-around;
+  max-width: 65%; /* Ensuring the widget does not exceed the parent width */
+  max-height: 15vh;
 }
 
 .goalInfo {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  /* border: solid; */
+  flex-shrink: 1; /* Allows this element to shrink if necessary */
+  max-width: calc(100% - 50vh); /* Adjust based on the size of the doughnut and icon */
 }
 
 .goalIcon {
-  width: 10vh; /* Adjust as necessary */
-  margin-right: 6vh;
-  margin-left: 3vh;
+  width: 10vh;
+  margin-right: 2vh; /* Reduced margin to save space */
 }
 
-.calories {
-  font-size: 2em; 
+.calories, .calories-value {
+  font-size: 2em;
   font-weight: bold;
+  white-space: nowrap; /* Keeps the text on a single line */
+  overflow: hidden; /* Prevents text from spilling over */
+  text-overflow: ellipsis; /* Adds an ellipsis to indicate hidden overflow text */
+  max-width: 100%; /* Ensures the text does not exceed its container */
 }
 
 .calories-value {
-  display: block;
   color: #76c442; /* Adjust color to match the progress ring */
+  display: block; /* Makes the element a block to occupy its own line */
 }
 
 #CalorieGoalDoughnut {
-  max-width: 40vh; /*Set a max-width to the doughnut chart for a smaller appearance */
-  max-height: 50vh;
-  margin-right: 5vh;
-  margin-bottom: 5px;
-  flex-grow: 1;
-  /* border:solid red; */
+  max-width: 30vh; /* Adjust width of the doughnut */
+  max-height: 30vh; /* Adjust height of the doughnut */
+  margin-right: 2vh; /* Reduced margin to save space */
+  flex-grow: 0; /* Prevents the doughnut from growing */
+  flex-shrink: 0; /* Prevents the doughnut from shrinking */
 }
   </style>
   
