@@ -92,10 +92,11 @@ export default {
 <style scoped>
 .container {
   position:relative;
-  background-color:pink;
+  background-color:#dfe2e7;
   width: 500px;
   height: 500px;
   padding-left: 1em;
+  border-radius: 10px;
 }
 .topContainer {
   display:inline;

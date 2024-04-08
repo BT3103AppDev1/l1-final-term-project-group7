@@ -2,7 +2,7 @@
 	<div>
 
 		<div class="clickable" @click="handleClick">
-			<h1>{{ mealInfo['strMeal'] }}</h1>
+			<h1>{{ "Featured: " + mealInfo['strMeal'] }}</h1>
 		</div>
 
 		<div class="overlay" v-if="showOverlay">
@@ -74,15 +74,21 @@ export default {
 
 <style scoped>
 .clickable {
-	background-color: green;
+	display: flex;
+	margin: 0px;
+	padding: 0px;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+	align-self: stretch;
 }
-
 .container {
 	position: relative;
-	background-color: pink;
+	background-color: #dfe2e7;
 	width: 500px;
 	height: 500px;
 	padding-left: 1em;
+	border-radius: 10px;
 }
 
 .topContainer {
@@ -106,7 +112,6 @@ export default {
 	transition: transform .2s;
 	/* Animation */
 }
-
 .overlay {
 	position: fixed;
 	top: 0;
@@ -118,9 +123,9 @@ export default {
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
+	cursor: initial;
 	/* Ensure popup is above content */
 }
-
 pre {
 	white-space: pre-wrap;
 	font-size: medium;

@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <MealType mealType = "Vegan" @mealSelected="selectMeal($event)"/>
-    <MealType mealType = "Vegetarian" @mealSelected="selectMeal($event)"/>
-    <MealType mealType = "Chicken" @mealSelected="selectMeal($event)"/>
-    <MealType mealType = "Pasta" @mealSelected="selectMeal($event)"/>
-    <MealType mealType = "Seafood" @mealSelected="selectMeal($event)"/>
-    <FeaturedMeal :mealInfo = "randomMeal1"/>
-    <FeaturedMeal :mealInfo = "randomMeal2"/>
-    <MealList
-      class="overlay"
-      :mealType = this.selectedMealType
-      v-if="showMeals"
-      @close="showMeals = false"
-    />
+  <div class="container">
+    <div class="featuredMealsContainer">
+      <FeaturedMeal class="clickable" :mealInfo="randomMeal1" />
+      <FeaturedMeal class="clickable" :mealInfo="randomMeal2" />
+    </div>
+
+    <div class="mealsCointainer">
+      <MealType class="clickable" mealType="Vegan" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" mealType="Vegetarian" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" mealType="Chicken" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" mealType="Pasta" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" mealType="Seafood" @mealSelected="selectMeal($event)" />
+      <MealList class="overlay" :mealType=this.selectedMealType v-if="showMeals" @close="showMeals = false" />
+    </div>
   </div>
 </template>
   
@@ -40,11 +40,11 @@ import axios from 'axios';
     },
     async mounted() {
       const response1 = await axios.get('https://www.themealdb.com/api/json/v1/1/random.php');
-      response1.data['meals'][0]['strMeal'] = "Featured: " + response1.data['meals'][0]['strMeal'];
+      // response1.data['meals'][0]['strMeal'] = "Featured: " + response1.data['meals'][0]['strMeal'];
       this.randomMeal1 = response1.data['meals'][0];
 
       const response2 = await axios.get('https://www.themealdb.com/api/json/v1/1/random.php');
-      response2.data['meals'][0]['strMeal'] = "Featured: " + response2.data['meals'][0]['strMeal'];
+      // response2.data['meals'][0]['strMeal'] = "Featured: " + response2.data['meals'][0]['strMeal'];
       this.randomMeal2 = response2.data['meals'][0];
     },
     methods: {
@@ -57,8 +57,28 @@ import axios from 'axios';
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.featuredMealsContainer {
+  display: flex;
+  align-items: center;
+}
+.mealsCointainer {
+  display: flex;
+
+}
 .clickable {
-    background-color: green;
+  display: flex;
+  background-color: white;
+  min-width: 200px;
+  min-height: 200px;
+  flex-grow: 1;
+  justify-content: center;
+  border-radius: 10px;
+  margin:10px;
+  cursor: pointer;
 }
 
 .fade-enter-active, .fade-leave-active {
