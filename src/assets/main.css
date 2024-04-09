@@ -11,12 +11,12 @@ body {
   height: 100%;
 }
 
-#top-bar {
+#topBar {
   position: fixed;
   display: flex;
-  background-color: #335076;
+  background-color: white;
   color: white;
-  padding-left: 150px;
+  padding-left: 120px;
   height: 80px;
   width: 100%;
   align-content: center;

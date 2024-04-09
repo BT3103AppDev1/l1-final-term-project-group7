@@ -1,9 +1,6 @@
 <template>
     <div id="app">
-      <div id="top-bar">
-        <img src="@/assets/HealthGuru.png" alt="HealthGuru" class="logo"/>
-        <h1 id="website-name">HealthGuru</h1>
-      </div>
+      <Topbar />
       <div id="main">
         <div id="nav">
           <!-- Navigation links -->
@@ -34,7 +31,7 @@
 </template>
   
 <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
+import Topbar from "@/views/TopBar.vue"
 </script>
 
 <style scoped>
@@ -50,4 +47,17 @@
       place-items: center;
     }
   }
+  
+  .TopBar {
+  position: fixed;
+  display: flex;
+  background-color: #335076;
+  color: white;
+  padding-left: 120px;
+  height: 80px;
+  width: 100%;
+  align-content: center;
+  z-index: 9999;
+  }
+
 </style>
