@@ -1,19 +1,31 @@
 <template>
   <div>
-    <h1>Workouts Page</h1>
-
-    <SelectMuscle @muscleSelected="selectMuscle($event)"/>
-
-    <ExerciseList :muscle="muscleGroup"/>
-
-    <div class="container"> <!-- Note to Davy: use @exerciseSelected to listen to emits for selected exercise from ExerciseList.vue -->
-      <p @click="change" id="displaySample" v-if="!showWorkoutInfo">Display Sample Workout</p>
-      <transition name="fade">
-        <!-- Listen for the close event -->
-        <workoutInfo v-if="showWorkoutInfo" @close="showWorkoutInfo = false" />
-      </transition>
+    <div id="muscle-view">
+      <div id="select-muscle">
+        <SelectMuscle 
+          @muscleSelected="selectMuscle" 
+          @exerciseList="updateExercises" 
+          @loading="handleLoading" />
+      </div>
+      <div id="exercise-list">
+        <ExerciseList 
+          :muscle="muscleGroup" 
+          :exercises="exercises"
+          :loading="loading"
+          @exerciseSelected="handleExerciseSelected"/>
+      </div>
     </div>
 
+    <div v-if="showWorkoutInfo && selectedExercise" class="overlay">
+      <WorkoutInfo
+        :showWorkout="showWorkoutInfo"
+        :exerciseName="selectedExercise.name"
+        :exerciseDifficulty="selectedExercise.difficulty"
+        :exerciseType="selectedExercise.type"
+        :exerciseSteps="selectedExercise.instructions"
+        @close="showWorkoutInfo = false"
+      />
+    </div>
   </div>
 </template>
 
@@ -27,26 +39,65 @@ export default {
   components: {
     SelectMuscle,
     ExerciseList,
-    WorkoutInfo
+    WorkoutInfo, 
   },
   data() {
     return {
       muscleGroup: "",
-      showWorkoutInfo: false
+      exercises: [],
+      selectedExercise: null, 
+      showWorkoutInfo: false, // Controls the visibility of WorkoutInfo
+      loading: false,
     };
   },
   methods: {
     selectMuscle(muscle) {
-      this.muscleGroup = muscle
+      this.muscleGroup = muscle;
     },
-    change() {
-      this.showWorkoutInfo = !this.showWorkoutInfo;
+    updateExercises(exercises) {
+      this.exercises = exercises;
     },
-  }
+    handleExerciseSelected(exercise) {
+      this.selectedExercise = exercise;
+      this.showWorkoutInfo = true;
+    },
+    getExerciseImage(exerciseName) {
+      // Removed, replaced with youtube link to exercise
+      return `src/assets/WorkoutImages/${exerciseName}.webp`;
+    },
+    handleLoading(loading) {
+    this.loading = loading; 
+    },
+  },
 };
 </script>
 
 <style scoped>  
+  #muscle-view {
+  display: flex;
+  margin: 30px 0px;
+  justify-content: center;
+  overflow-x: visible; 
+  gap: 30px; 
+}
+
+  #select-muscle {  
+    min-width: 55%;
+  }
+
+  .overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure popup is above content */
+  }
+
   #displaySample {
     cursor: pointer;
   }
