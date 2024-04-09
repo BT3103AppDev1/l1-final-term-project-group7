@@ -1,25 +1,23 @@
 <template>
+  <h1>Home Page</h1>
   <div class="container">
-    <h1>Home Page</h1>
-    <div class="grid-container">
-      <div class="top-row">
-        <div class="chart weight">
-          <weightWidget />
-        </div>
-        <div class="chart steps">
-          <stepsWidget />
-        </div>
-        <div class="chart netCalories">
-          <netCaloriesWidget />
-        </div>
+    <div class="top-row">
+      <div class="chart weight">
+        <weightWidget />
       </div>
-      <div class="bottom-row">
-        <div class="activity">
-          <activtyWidget />
-        </div>
-        <div class="calendar">
-          <calendarWidget />
-        </div>
+      <div class="chart steps">
+        <stepsWidget />
+      </div>
+      <div class="chart netCalories">
+        <netCaloriesWidget />
+      </div>
+    </div>
+    <div class="bottom-row">
+      <div class="activity">
+        <activtyWidget />
+      </div>
+      <div class="calendar">
+        <calendarWidget />
       </div>
     </div>
   </div>
@@ -57,37 +55,60 @@
 
 <style scoped>
 .container {
-  max-width: 100%;
-  margin: 1 auto;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  height: 85%; /* Fill the container height */
+  justify-content: space-around; /*Distributes space between rows */
+  overflow: hidden; /* Prevents overflow */
+  /* border: solid 2px red; */
 }
 
 .top-row, .bottom-row {
-  max-width: 100%;
   display: flex;
-  justify-content: space-between; /* Adjusts spacing between child elements */
-  margin-bottom: 20px; /* Space between rows */
+  justify-content: space-around; /* Distributes space between widgets */
+  /* border: solid 2px blue; */
 }
 
-.weight, .steps, .netCalories {
-  min-width: 500px;
-  min-height: 300px;
-  flex: 1; /* Distribute space evenly */
-  margin-right: 20px; /* Space between widgets */
+.chart {
+  flex: 1; /* Each chart will grow to take up equal space */
+  margin-right: 2%; /*space between the charts */
+  height: 25vh;
 }
 
+.activity, .calendar {
+  margin-right: 3%; /* Add margin to the right of each widget */
+  flex: 1; 
+}
+
+/* Last child of each row should not have a right margin */
+.top-row > div:last-child, .bottom-row > div:last-child {
+  margin-right: 0;
+}
+
+/* Adjust the flex-basis for activity and calendar widgets */
 .activity {
-  flex: 2; /* Takes 3 times more space than calendar */
+  flex-basis: 65%; /* Takes up a larger base space when space allows */
 }
 
 .calendar {
-  flex: 1; 
-  margin-left: 20px; /* Space between activity and calendar widgets */
+  flex-basis: 35%; /* Takes up a smaller base space when space allows */
+  margin-right: 0; /* Ensures there's no margin on the right of the last element */
 }
 
-.chart, .activity, .calendar {
-  /* Common styles for widgets */
-  border-radius: 10px;
-  padding: 10px;
-}
+/* Responsive settings */
+@media (max-width: 768px) {
+  .top-row, .bottom-row {
+    flex-direction: column;
+  }
 
+  .weight, .steps, .netCalories, .activity, .calendar {
+    margin-right: 0;
+    margin-bottom: 10px; /* Add margin at the bottom instead for mobile */
+  }
+
+  .top-row > div, .bottom-row > div {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
 </style>
