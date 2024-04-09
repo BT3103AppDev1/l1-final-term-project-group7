@@ -1,16 +1,17 @@
 <template>
   <div class="container">
+
     <div class="featuredMealsContainer">
-      <FeaturedMeal class="clickable" :mealInfo="randomMeal1" />
-      <FeaturedMeal class="clickable" :mealInfo="randomMeal2" />
+      <FeaturedMeal class="clickablef" :mealInfo="randomMeal1" />
+      <FeaturedMeal class="clickablef" :mealInfo="randomMeal2" />
     </div>
 
     <div class="mealsCointainer">
-      <MealType class="clickable" mealType="Vegan" @mealSelected="selectMeal($event)" />
-      <MealType class="clickable" mealType="Vegetarian" @mealSelected="selectMeal($event)" />
-      <MealType class="clickable" mealType="Chicken" @mealSelected="selectMeal($event)" />
-      <MealType class="clickable" mealType="Pasta" @mealSelected="selectMeal($event)" />
-      <MealType class="clickable" mealType="Seafood" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" id="vegan" mealType="Vegan" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" id="vegetarian" mealType="Vegetarian" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" id="chicken" mealType="Chicken" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" id="pasta" mealType="Pasta" @mealSelected="selectMeal($event)" />
+      <MealType class="clickable" id="seafood" mealType="Seafood" @mealSelected="selectMeal($event)" />
       <MealList class="overlay" :mealType=this.selectedMealType v-if="showMeals" @close="showMeals = false" />
     </div>
   </div>
@@ -63,32 +64,47 @@ import axios from 'axios';
 }
 .featuredMealsContainer {
   display: flex;
-  align-items: center;
+
 }
 .mealsCointainer {
   display: flex;
 
 }
-.clickable {
+.clickable, .clickablef {
   display: flex;
-  background-color: white;
   min-width: 200px;
   min-height: 200px;
-  flex-grow: 1;
   justify-content: center;
   border-radius: 10px;
   margin:10px;
   cursor: pointer;
+  flex-basis: 50%;
 }
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 0.25s ease;
-  }
-
-  .fade-enter-from, .fade-leave-to {
-    opacity: 0;
-  }
-
+.clickablef {
+  background-image: url("@/assets/FeaturedMealImage.jpg");
+  background-size: cover;
+}
+#vegan {
+  background-image: url("@/assets/VeganImage.jpg");
+  background-size: cover;
+}
+#vegetarian {
+  background-image: url("@/assets/VegetarianImage.jpg");
+  background-size: cover;
+}
+#chicken {
+  background-image: url("@/assets/ChickenImage.jpg");
+  background-size: cover;
+}
+#seafood {
+  background-image: url("@/assets/SeafoodImage.jpg");
+  background-size: cover;
+}
+#pasta {
+  background-image: url("@/assets/PastaImage.jpg");
+  background-size: cover;
+}
 .overlay {
   position: fixed;
   top: 0;

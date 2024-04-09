@@ -5,7 +5,9 @@
         <div class="topContainer">
           <h1>{{ mealName }}</h1>
           <div class="buttonsContainer">
-            <button @click.prevent="closeRecipe" v-if="!showList">close</button>
+            <button @click.prevent="closeRecipe" v-if="!showList" class="clickable-img-wrapper">
+            <img src="@/assets/BackArrow-Icon.webp" class="icon">
+            </button>
             <button @click.prevent="hidePopup" class="clickable-img-wrapper">
               <img src="@/assets/Cross-Icon.png" alt="crossButton" class="icon">
             </button>
@@ -107,13 +109,17 @@ export default {
 }
 .buttonsContainer {
   position: absolute;
-  top: 1%;
-  right: 1%;
+  top: 2%;
+  right: 2%;
 }
 .clickable-img-wrapper {
   background-color: rgba(255, 255, 255, 0);
   border: none;
   transition: transform .2s; /* Animation */
+}
+
+.clickable-img-wrapper:hover {
+  cursor: pointer;
 }
 pre {
     white-space: pre-wrap;

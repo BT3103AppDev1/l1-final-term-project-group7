@@ -1,6 +1,6 @@
 <template>
     <div class="clickable" @click="handleClick">
-        <h1>{{ mealName }}</h1>
+        <h1 style="color: white;">{{ mealName }}</h1>
     </div>
 </template>
 

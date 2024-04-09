@@ -2,7 +2,7 @@
 	<div>
 
 		<div class="clickable" @click="handleClick">
-			<h1>{{ "Featured: " + mealInfo['strMeal'] }}</h1>
+			<h1 style="text-align: center; color: white;">{{ "Featured: " + mealInfo['strMeal'] }}</h1>
 		</div>
 
 		<div class="overlay" v-if="showOverlay">
@@ -76,12 +76,11 @@ export default {
 .clickable {
 	display: flex;
 	margin: 0px;
-	padding: 0px;
+	padding: 15px;
 	align-items: center;
 	justify-content: center;
-	flex-grow: 1;
-	align-self: stretch;
 }
+
 .container {
 	position: relative;
 	background-color: #dfe2e7;
@@ -102,8 +101,8 @@ export default {
 }
 .buttonsContainer {
 	position: absolute;
-	top: 1%;
-	right: 1%;
+	top: 2%;
+	right: 2%;
 }
 
 .clickable-img-wrapper {
@@ -111,6 +110,9 @@ export default {
 	border: none;
 	transition: transform .2s;
 	/* Animation */
+}
+.clickable-img-wrapper:hover {
+	cursor: pointer;
 }
 .overlay {
 	position: fixed;
