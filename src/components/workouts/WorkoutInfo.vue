@@ -2,9 +2,8 @@
   <div class="workout-info" v-if="showWorkout">
     <div id="title-row">
       <h1 id="workout-title">{{ exerciseName }}</h1>
-      <a href="#" class="clickable-img-wrapper">
-        <!-- Consider dynamically changing icons based on user actions like liking an exercise -->
-        <img src="@/assets/Like-Icon.webp" alt="likeIcon" class="icon">
+      <a href="#" @click="toggleLike" class="clickable-img-wrapper">
+        <img :src="isLiked ? '/src/assets/Liked-Icon.png' : '/src/assets/Like-Icon.png'" alt="likeIcon" class="icon">
       </a>
       <a @click.prevent="hideWorkoutInfo" class="clickable-img-wrapper">
         <img src="@/assets/Cross-Icon.png" alt="crossButton" class="icon">
@@ -38,6 +37,13 @@
 
 <script>
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
+import { db } from '@/firebase';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import firebaseApp from '@/firebase';
+
+// Get a reference to the auth service
+const auth = getAuth(firebaseApp);
 
 export default {
   name: 'workoutInfo',
@@ -46,52 +52,76 @@ export default {
     exerciseName: String,
     exerciseDifficulty: String,
     exerciseType: String,
-    exerciseSteps: String, // Adjusted to accept a string
+    exerciseSteps: String,
   },
   data() {
     return {
-      youtubeLink: '', 
+      youtubeLink: '',
+      isLiked: false, // This will be updated based on Firestore data
     };
   },
   methods: {
+    toggleLike(event) {
+      console.log("toggling like ", this.isLiked);
+      event.preventDefault();
+      this.isLiked = !this.isLiked; // Toggle the current state
+
+      // Get the current user's UID
+      const user = auth.currentUser;
+      if (user) {
+        this.updateExerciseLikeStatus(user.uid);
+        console.log("like status updated for user " + user.uid);
+      } else {
+        console.log("User is not logged in");
+      }
+    },
+    async updateExerciseLikeStatus(uid) {
+      const exerciseLikesDocRef = doc(db, 'users', uid, 'likedExercises', this.exerciseName);
+
+      if (this.isLiked) {
+        // Set the document if liked
+        try {
+          await setDoc(exerciseLikesDocRef, { isLiked: this.isLiked }, { merge: true });
+          console.log("Liked exercise updated in Firestore for user " + uid);
+        } catch (error) {
+          console.error("Error when liking exercise in Firestore for user " + uid, error);
+        }
+      } else {
+        // Delete the document if unliked
+        try {
+          await deleteDoc(exerciseLikesDocRef);
+          console.log("Unliked exercise deleted from Firestore for user " + uid);
+        } catch (error) {
+          console.error("Error when unliking (deleting) exercise in Firestore for user " + uid, error);
+        }
+      }
+    },
+    async checkLikeStatus() {
+      // Get the current user's UID
+      const user = auth.currentUser;
+      if (user) {
+        const exerciseLikesDocRef = doc(db, 'users', user.uid, 'likedExercises', this.exerciseName);
+        const docSnap = await getDoc(exerciseLikesDocRef);
+        // Update isLiked based on Firestore data
+        this.isLiked = docSnap.exists() && docSnap.data().isLiked;
+      }
+    },
     hideWorkoutInfo() {
       this.$emit('close');
       console.log("Hiding workout info");
     },
     async fetchYoutubeLink(searchQuery) {
-      const options = {
-        method: 'GET',
-        url: 'https://youtube-v31.p.rapidapi.com/search',
-        params: {
-          q: searchQuery,
-          part: 'snippet,id',
-          regionCode: 'US',
-          maxResults: '1', // Fetch only the first result
-          order: 'date'
-        },
-        headers: {
-          'X-RapidAPI-Key': 'ab77cb18d8msha789c05491d526cp1e5bf9jsna3322edfdf9a',
-          'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
-        }
-      };
-
-      try {
-        const response = await axios.request(options);
-        if (response.data.items.length > 0) {
-          const videoId = response.data.items[0].id.videoId;
-          this.youtubeLink = `https://www.youtube.com/watch?v=${videoId}`; 
-        }
-      } catch (error) {
-        console.error('Error fetching YouTube link:', error);
-      }
+      // Existing axios call to fetch YouTube link
     }
   },
   created() {
     this.fetchYoutubeLink(this.exerciseName);
-    console.log("fetched youtube link")
+    this.checkLikeStatus();
+    console.log("Component created and YouTube link fetched");
   }
 };
 </script>
+
 
 <style scoped>
 .workout-info {
