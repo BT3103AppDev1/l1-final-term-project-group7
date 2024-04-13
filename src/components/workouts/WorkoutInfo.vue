@@ -135,15 +135,6 @@ export default {
   overflow-y: scroll;
 }
 
-.clickable-img-wrapper {
-  display: inline-block;
-  transition: transform .2s; /* Animation */
-}
-
-.clickable-img-wrapper:hover {
-  transform: scale(1.5);
-}
-
 .arrows {
   height: 64px;
   margin: 10px;

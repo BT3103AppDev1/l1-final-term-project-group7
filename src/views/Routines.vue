@@ -21,6 +21,7 @@
         :routineImage="routine.image"
         :routineDuration="routine.duration"
         :exercises="routine.exercises"
+        @delete-routine="deleteRoutine(routine.id)"
       />
     </div>
   </div>
@@ -30,7 +31,7 @@
 import WorkoutContainer from '@/components/routines/WorkoutContainer.vue';
 import { getAuth } from 'firebase/auth';
 import { db } from '@/firebase';
-import { collection, query, addDoc, getDocs, doc, setDoc } from 'firebase/firestore';
+import { collection, query, addDoc, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 export default {
   name: 'Routines',
@@ -75,50 +76,69 @@ export default {
         console.log("added " + this.selectedExercise);
         console.log(this.currentRoutine);
         this.selectedExercise = null; // Reset the selection
+      } else {
+        alert("You have not selected an exercise.")
       }
     },
-    async saveRoutineToFirestore(routine) {
+    async saveRoutineToFirestore(exercises) {
       const auth = getAuth();
       const user = auth.currentUser;
-        // Use the routine name as the document ID
-        const routineRef = doc(db, 'users', user.uid, 'routines', this.newRoutineName);
-        await setDoc(routineRef, {
-          name: this.newRoutineName, // Save the name of the routine
-          exercises: routine,
-          createdAt: new Date() // Optional
-        }, { merge: true });
-        console.log(`Routine '${this.newRoutineName}' saved to Firestore`);
-        this.newRoutineName = ''; // Reset the input field
+      const routineRef = doc(db, 'users', user.uid, 'routines', this.newRoutineName);
+      await setDoc(routineRef, {
+        name: this.newRoutineName,
+        exercises: exercises, // Ensure this is just an array
+        createdAt: new Date()
+      }, { merge: true });
+      console.log(`Routine '${this.newRoutineName}' saved to Firestore`);
+      this.newRoutineName = '';
     },
     saveRoutine() {
       if (this.currentRoutine.length && this.newRoutineName) {
-        const newRoutine = {
-          name: this.newRoutineName,
-          exercises: this.currentRoutine,
-          // Add other fields as necessary
-        };
-        this.routines.push(newRoutine); // Push the complete routine object
-        this.saveRoutineToFirestore(newRoutine); // Save to Firestore
-        this.currentRoutine = []; // Reset the current routine
+        this.saveRoutineToFirestore(this.currentRoutine); // Pass the array of exercises
+        // Add to local routines array if needed...
+        this.currentRoutine = []; // Reset for the next input
         this.newRoutineName = ''; // Reset the routine name
+        this.fetchRoutines(); // Update the display
       } else {
-        console.log("Routine name or exercises are missing.");
+        alert("Routine name or exercises are missing.");
       }
     },
     async fetchRoutines() {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (user) {
-        const routinesRef = collection(db, 'users', user.uid, 'routines');
-        const querySnapshot = await getDocs(routinesRef);
-        this.routines = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          name: doc.data().name, 
-          exercises: doc.data().exercises,
-        }));
-        console.log("Routines fetched from Firestore");
+      try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+          const routinesRef = collection(db, 'users', user.uid, 'routines');
+          const querySnapshot = await getDocs(routinesRef);
+          this.routines = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            name: doc.data().name,
+            exercises: doc.data().exercises,
+          }));
+          console.log("Routines fetched from Firestore");
+        } else {
+          throw new Error("User is not authenticated.");
+        }
+      } catch (error) {
+        console.error("Error fetching routines:", error.message);
       }
     },
+    async deleteRoutine(routineId) {
+      try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+          const docRef = doc(db, 'users', user.uid, 'routines', routineId);
+          await deleteDoc(docRef);
+          console.log(`Deleted routine ${routineId}`);
+          this.fetchRoutines(); // Refresh the list after deletion
+        } else {
+          throw new Error("User is not authenticated.");
+        }
+      } catch (error) {
+        console.error("Failed to delete routine:", error.message);
+      }
+  }
   },
   created() {
     this.fetchLikedExercises();
