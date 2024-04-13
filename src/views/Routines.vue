@@ -1,8 +1,9 @@
 <template>
   <div class="routines">
+    <h2 id="create-routine-title">Create Routine:</h2>
     <div id="create-routine">
-      <button @click="toggleDropdown">Create Routine</button>
-      <select v-if="showDropdown" v-model="selectedExercise">
+      <input type="text" v-model="newRoutineName" placeholder="Enter Routine Name" />
+      <select v-model="selectedExercise">
         <option disabled value="">Select an exercise</option>
         <option v-for="exercise in likedExercises" :key="exercise.id" :value="exercise.id">
           {{ exercise.id }}
@@ -12,14 +13,16 @@
       <button @click="saveRoutine">Save Routine</button>
     </div>
     <!-- Render WorkoutContainer for each saved routine -->
-    <WorkoutContainer
-      v-for="routine in routines"
-      :key="routine.id"
-      :routineName="routine.name"
-      :routineImage="routine.image"
-      :routineDuration="routine.duration"
-      :exercises="routine.exercises"
-    />
+    <div id="workout-container-grid">
+      <WorkoutContainer
+        v-for="routine in routines"
+        :key="routine.id"
+        :routineName="routine.name"
+        :routineImage="routine.image"
+        :routineDuration="routine.duration"
+        :exercises="routine.exercises"
+      />
+    </div>
   </div>
 </template>
   
@@ -27,7 +30,7 @@
 import WorkoutContainer from '@/components/routines/WorkoutContainer.vue';
 import { getAuth } from 'firebase/auth';
 import { db } from '@/firebase';
-import { collection, query, addDoc, getDocs } from 'firebase/firestore';
+import { collection, query, addDoc, getDocs, doc, setDoc } from 'firebase/firestore';
 
 export default {
   name: 'Routines',
@@ -41,7 +44,8 @@ export default {
       showDropdown: false, // Controls the visibility of the dropdown
       routines: [], // Stores all saved routines
       currentRoutine: [], // Stores the current routine being built
-      selectedExercise: null // The currently selected exercise to add to the routine
+      selectedExercise: null, // The currently selected exercise to add to the routine
+      newRoutineName: '', // Data property for the new routine name
     }
   },
   methods: {
@@ -76,25 +80,29 @@ export default {
     async saveRoutineToFirestore(routine) {
       const auth = getAuth();
       const user = auth.currentUser;
-      if (user) {
-        // Define the document reference
-        const routinesRef = collection(db, 'users', user.uid, 'routines');
-        // Add a new document with a generated ID
-        await addDoc(routinesRef, {
+        // Use the routine name as the document ID
+        const routineRef = doc(db, 'users', user.uid, 'routines', this.newRoutineName);
+        await setDoc(routineRef, {
+          name: this.newRoutineName, // Save the name of the routine
           exercises: routine,
-          createdAt: new Date() // optional: store creation date
-        });
-        console.log("Routine saved to Firestore");
-      } else {
-        console.log("Error saving routines.");
-      }
+          createdAt: new Date() // Optional
+        }, { merge: true });
+        console.log(`Routine '${this.newRoutineName}' saved to Firestore`);
+        this.newRoutineName = ''; // Reset the input field
     },
     saveRoutine() {
-      if (this.currentRoutine.length) {
-        this.routines.push(this.currentRoutine);
-        console.log("routines: " + this.routines)
-        this.saveRoutineToFirestore(this.currentRoutine); // Save to Firestore
+      if (this.currentRoutine.length && this.newRoutineName) {
+        const newRoutine = {
+          name: this.newRoutineName,
+          exercises: this.currentRoutine,
+          // Add other fields as necessary
+        };
+        this.routines.push(newRoutine); // Push the complete routine object
+        this.saveRoutineToFirestore(newRoutine); // Save to Firestore
         this.currentRoutine = []; // Reset the current routine
+        this.newRoutineName = ''; // Reset the routine name
+      } else {
+        console.log("Routine name or exercises are missing.");
       }
     },
     async fetchRoutines() {
@@ -105,7 +113,8 @@ export default {
         const querySnapshot = await getDocs(routinesRef);
         this.routines = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data(),
+          name: doc.data().name, 
+          exercises: doc.data().exercises,
         }));
         console.log("Routines fetched from Firestore");
       }
@@ -121,10 +130,22 @@ export default {
 
 <style scoped>
 #create-routine {
-  padding: 20px;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-#create-routine .child {
-  margin: 20px;
+button {
+  text-wrap: nowrap;
+}
+
+#workout-container-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0px 15px;
+}
+
+.container {
+  min-width: 250px;
 }
 </style>

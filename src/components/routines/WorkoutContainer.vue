@@ -46,10 +46,14 @@
 .container {
   background-color: #dfe2e7;
   border-radius: 15px;
-  margin: 50px auto;
+  margin: 20px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 25%;
+}
+
+#routine-name {
+  margin: 0px;
 }
 
 .routine-img {
