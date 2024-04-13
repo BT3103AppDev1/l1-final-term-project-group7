@@ -1,13 +1,10 @@
 <template>
   <div class="container">
-    <h1 id="routine-name">Routine Name</h1>
-    <img class="routine-img" src="@/assets/LateralPulldown.webp" alt="Routine Image">
-    <h2 id="intensity-level">Intensity Level: High</h2>
-    <h2 id="duration">Duration: 45min</h2>
+    <h1 id="routine-name">{{ routineName }}</h1>
+    <!-- <img class="routine-img" :src="routineImage" alt="Routine Image"> -->
+    <h2 id="duration">Duration: {{ totalDuration }} min</h2>
     <ul id="list-exercises">
-      <li>Exercise 1</li>
-      <li>Exercise 2</li>
-      <li>Exercise 3</li>
+      <li v-for="exercise in exercises" :key="exercise">{{ exercise }}</li>
     </ul>
   </div>
 </template>
@@ -16,8 +13,21 @@
   
   export default {
     name: 'WorkoutContainer',
-    components: {
-
+    props: {
+      routineName: String,
+      routineImage: String,
+      routineDuration: String,
+      exercises: {
+        type: Array,
+        // Provide a default value to ensure it's always an array
+        default: () => ([]),
+      },
+    },
+    computed: {
+      totalDuration() {
+        // Assuming each exercise takes 10 minutes
+        return this.exercises.length * 10;
+      },
     },
     data() {
       return {
@@ -47,6 +57,6 @@
 }
 
 li {
-  font-size: 1.5em;
+  font-size: 1em;
 }
 </style>
