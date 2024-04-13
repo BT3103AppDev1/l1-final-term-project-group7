@@ -12,7 +12,7 @@
   import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js'
   import { getAuth, onAuthStateChanged } from 'firebase/auth';
   import { db } from '@/firebase';
-  import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+  import { collection, query, orderBy, getDocs, doc, getDoc} from 'firebase/firestore';
   import firebaseApp from '@/firebase';
 
   // Get a reference to the auth service
@@ -82,6 +82,8 @@
             // Reference to the user's steps collection
             const stepsCollectionRef = collection(db, 'users', user.uid, 'calories');
 
+            const userDoc = await getDoc(doc(db, 'users', user.uid))
+
             // Query documents sorted by date
             const q = query(stepsCollectionRef, orderBy("Date", "asc"));
             const querySnapshot = await getDocs(q);
@@ -94,7 +96,7 @@
             querySnapshot.forEach(doc => {
               console.log(chartData.labels)
               chartData.labels.push(doc.data().Date);
-              chartData.datasets[0].data.push(doc.data().Consumed - doc.data().Burnt);
+              chartData.datasets[0].data.push((doc.data().Consumed - doc.data().Burnt) - userDoc.data().CalorieGoal);
             });
         } else {
             // User is not signed in
