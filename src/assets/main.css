@@ -81,6 +81,15 @@ body {
   padding: 50px;
 }
 
+.clickable-img-wrapper {
+  display: inline-block;
+  transition: transform .2s; /* Animation */
+}
+
+.clickable-img-wrapper:hover {
+  transform: scale(1.5);
+}
+
 a,
 .green {
   text-decoration: none;
