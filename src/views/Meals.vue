@@ -61,6 +61,7 @@ import axios from 'axios';
 .container {
   display: flex;
   flex-direction: column;
+  margin: 20px 0px;
 }
 .featuredMealsContainer {
   display: flex;
