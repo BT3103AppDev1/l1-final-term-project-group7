@@ -4,7 +4,7 @@
       <div class="goalInfo">
         <div class="calories">
           <span>CURRENT CALORIE GOAL: </span>
-          <span class="calories-value">1875 / 2500</span>
+          <span class="calories-value">{{ netCalories }} / 2500</span>
         </div>
       </div>
         <Doughnut 
@@ -23,21 +23,37 @@
   
   export default {
     name: 'CalorieGoalDoughnut',
+
     components: {
       Doughnut
     },
-    data() {
-      return {
-        progress: {
+
+    props: {
+      netCalories: {
+        type: Number,
+        default: 0
+      },
+
+    },
+
+    computed: {
+      progress() {
+        const remainingCalories = 2500 - this.netCalories;
+        return {
           datasets: [
             {
-                label: 'Calories',
-                data: [75, 25], // Remaining percentage to complete the circle
-                backgroundColor: ['rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
-                borderWidth: 0, // No borders
+              label: 'Calories',
+              data: [this.netCalories, remainingCalories],
+              backgroundColor: ['rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
+              borderWidth: 0,
             }
           ]
-        },
+        };
+      }
+    },
+
+    data() {
+      return {
         options: {
           responsive: true,
           maintainAspectRatio: false,
