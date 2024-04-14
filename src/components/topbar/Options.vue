@@ -1,7 +1,7 @@
 <template>
     <div class="menu" @click="isOpen = !isOpen">
       <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-      <path fill="#000000" fill-rule="evenodd" d="M18 5a1 1 0 100-2H2a1 1 0 000 2h16zm0 4a1 1 0 100-2H2a1 1 0 100 2h16zm1 3a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 5a1 1 0 100-2H2a1 1 0 100 2h16z"/>
+      <path fill="#ffffff" fill-rule="evenodd" d="M18 5a1 1 0 100-2H2a1 1 0 000 2h16zm0 4a1 1 0 100-2H2a1 1 0 100 2h16zm1 3a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 5a1 1 0 100-2H2a1 1 0 100 2h16z"/>
       </svg>
       <transition name="fade" appear>
          <div class="sub-menu" v-if="isOpen">
@@ -61,7 +61,6 @@ export default {
   padding: 20px 20px;
   position: relative;
   text-align: center;
-  border-bottom: 5px solid transparent;
   display: flex;
   transition: 0.4s;
   justify-content: center;
