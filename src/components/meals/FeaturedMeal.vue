@@ -2,13 +2,17 @@
 	<div>
 
 		<div class="clickable" @click="handleClick">
-			<h1 style="text-align: center; color: white;">{{ "Featured: " + mealInfo['strMeal'] }}</h1>
+      <img class="featured-img" :src="mealInfo['strMealThumb']">
+      <div id="featured-text">
+        <h1 id="featured-title" >{{ "Featured Meal: " }}</h1>
+        <h2 id="featured-meal">{{  this.$capitalizeFirstLetter(mealInfo['strMeal'])  }}</h2>
+      </div>
 		</div>
 
 		<div class="overlay" v-if="showOverlay">
 			<div class="container">
 				<div class="topContainer">
-					<h1 style="font-size: 1.8em;">{{ mealInfo['strMeal'] }}</h1>
+					<h1 style="font-size: 1.8em;">{{ this.$capitalizeFirstLetter(mealInfo['strMeal']) }}</h1>
 					<div class="buttonsContainer">
 						<button @click.prevent="hidePopup" class="clickable-img-wrapper">
 							<img src="@/assets/Cross-Icon.png" alt="crossButton" class="icon">
@@ -23,11 +27,11 @@
 						<h3>Ingredients</h3>
 						<ul>
 							<li class=ingredList v-for="ingredient in ingredients">
-								<p class=ingredList>{{ ingredient }} </p>
+								<p class=ingredList>{{ this.$capitalizeFirstLetter(ingredient) }} </p>
 							</li>
 						</ul>
 						<h3>Instructions</h3>
-						<pre>{{ mealInfo['strInstructions'] }}</pre>
+						<p>{{ mealInfo['strInstructions'] }}</p>
 					</div>
 				</div>
 			</div>
@@ -46,6 +50,13 @@ export default {
 		};
 	},
 	computed: {
+    backgroundStyle() {
+      return {
+        backgroundImage: `url(${this.mealInfo['strMealThumb']})`,
+        backgroundSize: 'cover',
+        // Add other styles as needed
+      };
+    },
 		ingredients() {
 			var ingredList = []
 			for (let i = 1; i <= 20; i++) {
@@ -77,8 +88,9 @@ export default {
 	display: flex;
 	margin: 0px;
 	padding: 15px;
-	align-items: center;
+	align-items: top;
 	justify-content: center;
+  gap: 15px;
 }
 
 .container {
@@ -141,5 +153,8 @@ pre {
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%;
+}
+.featured-img {
+  height: 250px;
 }
 </style>

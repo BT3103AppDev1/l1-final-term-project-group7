@@ -81,11 +81,11 @@ export default {
 }
 
 .medium-intensity {
-  background-color: #fcce44; /* Yellow for medium intensity */
+  background-color: #ffc272; /* Yellow for medium intensity */
 }
 
 .high-intensity {
-  background-color: #ff6f6f; /* Red for high intensity */
+  background-color: #f67d68; /* Red for high intensity */
 }
 
 #top-row {
