@@ -5,7 +5,7 @@
     <ul v-else>
       <h4>Click on an exercise to view its description:</h4>
       <li v-for="exercise in exercises" :key="exercise.id" @click="selectExercise(exercise)">
-        {{ exercise.name }}
+        {{ this.$capitalizeFirstLetter(exercise.name) }}
       </li>
     </ul>
   </div>

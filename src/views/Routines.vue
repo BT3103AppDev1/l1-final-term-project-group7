@@ -6,7 +6,7 @@
       <select v-model="selectedExercise">
         <option disabled value="">Select an exercise</option>
         <option v-for="exercise in likedExercises" :key="exercise.id" :value="exercise.id">
-          {{ exercise.id }}
+          {{ this.$capitalizeFirstLetter(exercise.id) }}
         </option>
       </select>
       <button @click="addExerciseToRoutine">Add Exercise</button>

@@ -1,7 +1,7 @@
 <template>
   <div class="workout-info" v-if="showWorkout">
     <div id="title-row">
-      <h1 id="workout-title">{{ exerciseName }}</h1>
+      <h1 id="workout-title">{{ this.$capitalizeFirstLetter(exerciseName) }}</h1>
       <a href="#" @click="toggleLike" class="clickable-img-wrapper">
         <img :src="isLiked ? '/src/assets/Liked-Icon.png' : '/src/assets/Like-Icon.png'" alt="likeIcon" class="icon">
       </a>

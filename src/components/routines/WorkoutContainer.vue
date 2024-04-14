@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="containerClass">
+  <div class="container" :class="containerIntensity.class">
     <div id="top-row">
       <h1 id="routine-name">{{ routineName }}</h1>
       <a @click="deleteRoutine" href="#" class="clickable-img-wrapper">
@@ -7,6 +7,7 @@
       </a>
     </div>
     <!-- <img class="routine-img" :src="routineImage" alt="Routine Image"> -->
+    <h2 id="intensity">Intensity: {{ containerIntensity.label }}</h2>
     <h2 id="duration">Duration: {{ totalDuration }} min</h2>
     <ul id="list-exercises">
       <li v-for="exercise in exercises" :key="exercise">{{ exercise }}</li>
@@ -27,17 +28,26 @@ export default {
     },
   },
   computed: {
+    containerIntensity() {
+      let result = {
+        class: '',
+        label: ''
+      };
+
+      if (this.totalDuration <= 10) {
+        result.class = 'low-intensity';
+        result.label = 'Low';
+      } else if (this.totalDuration <= 30) {
+        result.class = 'medium-intensity';
+        result.label = 'Medium';
+      } else {
+        result.class = 'high-intensity';
+        result.label = 'High';
+      }
+      return result;
+    },
     totalDuration() {
       return this.exercises.length * 10;
-    },
-    containerClass() {
-      if (this.totalDuration <= 10) {
-        return 'low-intensity';
-      } else if (this.totalDuration <= 30) {
-        return 'medium-intensity';
-      } else {
-        return 'high-intensity';
-      }
     }
   },
   data() {
@@ -75,7 +85,7 @@ export default {
 }
 
 .high-intensity {
-  background-color: #ed7474; /* Red for high intensity */
+  background-color: #ff6f6f; /* Red for high intensity */
 }
 
 #top-row {
