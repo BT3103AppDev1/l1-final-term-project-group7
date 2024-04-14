@@ -1,6 +1,6 @@
 <template>
     <div class="clickable" @click="handleClick">
-        <h1 style="color: white;">{{ mealName }}</h1>
+        <h1 id="type-title" style="color: white;">{{ mealName }}</h1>
     </div>
 </template>
 
@@ -30,5 +30,10 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+#type-title {
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 </style>

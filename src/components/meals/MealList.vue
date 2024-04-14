@@ -17,20 +17,20 @@
         <div class="contentContainer">
           <ul v-if="showList" class="mealItems">
             <li v-for="meal in meals">
-              <a href="#" @click="selectRecipe(meal)">{{ meal["strMeal"] }}</a>
+              <a href="#" @click="selectRecipe(meal)">{{ this.$capitalizeFirstLetter(meal["strMeal"]) }}</a>
             </li>
           </ul>
           <div class="recipeContainer" v-if="!showList">
-            <h2>{{ selectedRecipe['strMeal'] }}</h2>
+            <h2>{{ this.$capitalizeFirstLetter(selectedRecipe['strMeal']) }}</h2>
             <img :src="imageLink" alt="crossButton" class="food">
             <h3>Ingredients</h3>
               <ul v-if="!showList" >
                 <li class = ingredList v-for="ingredient in ingredients">
-                  <p class = ingredList>{{ ingredient }} </p>
+                  <p class = ingredList>{{ this.$capitalizeFirstLetter(ingredient) }} </p>
                 </li>
               </ul>
             <h3>Instructions</h3>
-            <pre >{{ selectedRecipe['strInstructions'] }}</pre>
+            <p >{{ selectedRecipe['strInstructions'] }}</p>
           </div>
         </div>
 

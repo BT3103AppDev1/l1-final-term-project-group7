@@ -61,20 +61,18 @@ import axios from 'axios';
 .container {
   display: flex;
   flex-direction: column;
+  margin: 20px 0px;
 }
 .featuredMealsContainer {
   display: flex;
-
 }
 .mealsCointainer {
   display: flex;
-
 }
 .clickable, .clickablef {
   display: flex;
   min-width: 200px;
   min-height: 200px;
-  justify-content: center;
   border-radius: 10px;
   margin:10px;
   cursor: pointer;
@@ -82,8 +80,7 @@ import axios from 'axios';
 }
 
 .clickablef {
-  background-image: url("@/assets/FeaturedMealImage.jpg");
-  background-size: cover;
+  background-color: #dfe2e7;
 }
 #vegan {
   background-image: url("@/assets/VeganImage.jpg");
