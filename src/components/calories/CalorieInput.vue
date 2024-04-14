@@ -5,10 +5,11 @@
 
       <label for="meal-select" class="input-label">Calories Input</label>
       <div class="search-container">
-        <input v-model="mealQuery" placeholder="Input Meal" class="search-input">
+        <input v-model="mealQuery" placeholder="e.g 1kg Steak" class="search-input" @input="clearMealError">
         <button class="icon-button" @click="fetchAndStoreMeal">
           <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- Clickable search icon -->
         </button>
+        <p v-if="mealError" class="error-message">{{ mealError }}</p>
       </div>  
 
       <ul>
@@ -26,10 +27,11 @@
       <label for="workout-select" class="input-label">Calories Burnt</label>
 
       <div class="search-container">
-        <input v-model="exerciseQuery" placeholder="Input Exercise" class="search-input">
+        <input v-model="exerciseQuery" placeholder="Input Exercise" class="search-input" @input="clearExerciseError">
         <button class="icon-button" @click="fetchAndStoreExercise">
           <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- Clickable search icon -->
         </button>
+        <p v-if="exerciseError" class="error-message">{{ exerciseError }}</p>
       </div>  
 
       <ul>
@@ -66,6 +68,8 @@ export default {
       meals: [],
       exerciseQuery: '',
       exercises: [],
+      mealError: '',
+      exerciseError: '',
     };
   },
 
@@ -102,6 +106,15 @@ export default {
   },
 
   methods: {
+
+    clearMealError() {
+      this.mealError = '';
+    },
+
+    clearExerciseError() {
+      this.exerciseError = '';
+    },
+
     capitaliseWords(string) {
       return string.replace(/\b\w/g, l => l.toUpperCase());
     },
@@ -142,6 +155,7 @@ export default {
         await this.fetchandUpdateData(mealDocRef);
         console.log("Refreshed Data for user:" + this.uid);
       } catch (error) {
+        this.mealError = 'Failed to find meal. Please try a different meal.';
         console.error('Error: ', error.response ? error.response.data : error.message);
       }
     },
@@ -176,6 +190,7 @@ export default {
         console.log("Refreshed Data for user:" + this.uid);
         
       } catch (error) {
+        this.exerciseError = 'Failed to find exercise. Please try a different exercise.';
         console.error('Error: ', error.response ? error.response.data : error.message);
       }
     },
@@ -186,10 +201,13 @@ export default {
         if (docSnap.exists()) {
           console.log("Document data:", docSnap.data());
           this.meals = docSnap.data().meals || [];
-
           console.log(this.meals );
           this.exercises = docSnap.data().exercises || [];
           console.log(this.exercises);
+          this.$emit('update-calories', {
+            consumed: this.totalInputCalories,
+            burnt: this.totalBurntCalories
+          });
         } else {
           console.log("No such document!");
           this.meals = [];
