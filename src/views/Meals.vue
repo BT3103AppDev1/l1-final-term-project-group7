@@ -6,7 +6,7 @@
       <FeaturedMeal class="clickablef" :mealInfo="randomMeal2" />
     </div>
 
-    <div class="mealsCointainer">
+    <div class="mealsContainer">
       <MealType class="clickable" id="vegan" mealType="Vegan" @mealSelected="selectMeal($event)" />
       <MealType class="clickable" id="vegetarian" mealType="Vegetarian" @mealSelected="selectMeal($event)" />
       <MealType class="clickable" id="chicken" mealType="Chicken" @mealSelected="selectMeal($event)" />
@@ -66,7 +66,7 @@ import axios from 'axios';
 .featuredMealsContainer {
   display: flex;
 }
-.mealsCointainer {
+.mealsContainer {
   display: flex;
 }
 .clickable, .clickablef {
@@ -77,10 +77,18 @@ import axios from 'axios';
   margin:10px;
   cursor: pointer;
   flex-basis: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 25%;
+  transition: 0.2s;
 }
-
+.clickable:hover {
+  opacity: 0.8;
+}
 .clickablef {
-  background-color: #dfe2e7;
+  background-color: #335076;
+}
+.clickablef:hover {
+  background-color: #5B789F;
 }
 #vegan {
   background-image: url("@/assets/VeganImage.jpg");

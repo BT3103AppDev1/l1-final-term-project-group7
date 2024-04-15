@@ -112,6 +112,31 @@ export default {
     },
     async fetchYoutubeLink(searchQuery) {
       // Existing axios call to fetch YouTube link
+      const options = {
+        method: 'GET',
+        url: 'https://youtube-v31.p.rapidapi.com/search',
+        params: {
+          q: searchQuery,
+          part: 'snippet,id',
+          regionCode: 'US',
+          maxResults: '1', // Fetch only the first result
+          order: 'date'
+        },
+        headers: {
+          'X-RapidAPI-Key': 'ab77cb18d8msha789c05491d526cp1e5bf9jsna3322edfdf9a',
+          'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await axios.request(options);
+        if (response.data.items.length > 0) {
+          const videoId = response.data.items[0].id.videoId;
+          this.youtubeLink = `https://www.youtube.com/watch?v=${videoId}`; 
+        }
+      } catch (error) {
+        console.error('Error fetching YouTube link:', error);
+      }
     }
   },
   created() {

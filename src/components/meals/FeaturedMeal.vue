@@ -4,9 +4,8 @@
 		<div class="clickable" @click="handleClick">
       <img class="featured-img" :src="mealInfo['strMealThumb']">
       <div id="featured-text">
-        <h1 id="featured-title" >{{ "Featured Meal: " }}
-          <br>{{  this.$capitalizeFirstLetter(mealInfo['strMeal'])  }}
-        </h1>
+        <h1 id="featured-title" >{{ "Featured Meal: " }}</h1>
+        <h2>{{  this.$capitalizeFirstLetter(mealInfo['strMeal'])  }}</h2>
       </div>
 		</div>
 
@@ -157,5 +156,10 @@ pre {
 }
 .featured-img {
   height: 250px;
+  border-radius: 10px;
+}
+#featured-text {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 </style>
