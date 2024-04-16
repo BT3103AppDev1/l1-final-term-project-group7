@@ -6,18 +6,36 @@
         <img id="delete-button" src="@/assets/Cross-Icon.png" alt="Delete Routine" class="icon">
       </a>
     </div>
-    <!-- <img class="routine-img" :src="routineImage" alt="Routine Image"> -->
     <h2 id="intensity">Intensity: {{ containerIntensity.label }}</h2>
     <h2 id="duration">Duration: {{ totalDuration }} min</h2>
     <ul id="list-exercises">
-      <li v-for="exercise in exercises" :key="exercise">{{ exercise }}</li>
+      <li v-for="exercise in exercises" :key="exercise" @click="clickExerciseByName(exercise)">
+        {{ exercise }}
+      </li>
     </ul>
+    <div id="loading-msg" v-if="loading" class="overlay">Loading...</div>
+    <div v-if="showWorkoutInfo && selectedExercise" class="overlay">
+      <WorkoutInfo
+        :showWorkout="showWorkoutInfo"
+        :exerciseName="selectedExercise.name"
+        :exerciseDifficulty="selectedExercise.difficulty"
+        :exerciseType="selectedExercise.type"
+        :exerciseSteps="selectedExercise.instructions"
+        @close="showWorkoutInfo = false"
+      />
+    </div>
   </div>
 </template>
     
 <script>
+import axios from 'axios';
+import WorkoutInfo from '@/components/workouts/WorkoutInfo.vue';
+
 export default {
   name: 'WorkoutContainer',
+  components: {
+    WorkoutInfo
+  },
   props: {
     routineName: String,
     routineImage: String,
@@ -52,7 +70,11 @@ export default {
   },
   data() {
     return {
-      refreshComp: 0
+      refreshComp: 0,
+      loading: false,
+      error: null,
+      showWorkoutInfo: false,
+      selectedExercise: null
     }
   },
   methods: {
@@ -62,7 +84,40 @@ export default {
     deleteRoutine() {
       this.$emit('delete-routine', this.routineName);
       console.log("routine delete event emitted");
+    },
+    async clickExerciseByName(name) {
+      this.exerciseName = name;
+      this.loading = true;
+      this.$emit('exerciseSelected', this.exerciseName);
+      this.$emit('loading', true);
+
+      const apiURL = `https://api.api-ninjas.com/v1/exercises?name=${name}`;
+      const apiKey = 'ZoF/oFeYxXdYbJQNbzTcuw==PEEEQXeqEp2q3vxJ';
+
+      try {
+        console.log('Calling API for exercise name:', name);
+        const response = await axios.get(apiURL, {
+          headers: {
+            'X-Api-Key': apiKey
+          }
+        });
+
+        console.log('API response:', response.data);
+        if (response.data.length > 0) {
+          this.selectedExercise = response.data[0];
+          this.showWorkoutInfo = true;
+        } else {
+          this.error = "No exercise found.";
+        }
+        this.$emit('exerciseList', response.data);
+        this.loading = false;
+      } catch (error) {
+        console.error('Error: ', error.response ? error.response.data : error.message);
+        this.loading = false;
+        this.error = error.response ? error.response.data : error.message;
+      }
     }
+
   }
 }
 </script>
@@ -77,7 +132,7 @@ export default {
 }
 
 .low-intensity {
-  background-color: #7bbc7b; /* Green for low intensity */
+  background-color: #8ec58e; /* Green for low intensity */
 }
 
 .medium-intensity {
@@ -85,7 +140,7 @@ export default {
 }
 
 .high-intensity {
-  background-color: #f67d68; /* Red for high intensity */
+  background-color: #ff9385; /* Red for high intensity */
 }
 
 #top-row {
@@ -103,5 +158,25 @@ export default {
 
 li {
   font-size: 1em;
+  cursor: pointer;
+}
+
+#loading-msg {
+  font-size: 2em;
+  font-weight: bold;
+  color: #dfe2e7;
+}
+
+.overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Ensure popup is above other content */
 }
 </style>

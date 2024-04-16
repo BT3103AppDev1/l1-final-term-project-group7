@@ -155,8 +155,24 @@ export default {
   margin-bottom: 20px;
 }
 
+input {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 50px 5px 10px;
+}
+
+select {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 50px 5px 10px; 
+}
+
 button {
   text-wrap: nowrap;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 10px;
+  background-color: white;
 }
 
 #workout-container-grid {
