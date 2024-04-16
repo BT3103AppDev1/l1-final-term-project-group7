@@ -19,7 +19,7 @@
     <ul id="list-exercises">
       <li v-for="(exercise, index) in exercises" :key="index" @click="clickExerciseByName(exercise)">
         {{ exercise }}
-        <a v-if="isEditing" @click="deleteExercise(index)" class="delete-exercise">Delete</a>
+        <a v-if="isEditing" @click.stop="deleteExercise(index)" class="delete-exercise">Delete</a>
       </li>
     </ul>
     <div v-if="isEditing">
@@ -153,7 +153,7 @@ export default {
       console.log("edit state inactive")
     },
     addExercise() {
-      if (this.selectedExercise && !this.exercises.includes(this.selectedExercise)) {
+      if (this.selectedExercise) {
         this.exercises.push(this.selectedExercise);
         console.log("exercise added")
       }
