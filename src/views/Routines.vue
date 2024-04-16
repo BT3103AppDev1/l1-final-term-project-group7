@@ -12,6 +12,8 @@
       <button @click="addExerciseToRoutine">Add Exercise</button>
       <button @click="saveRoutine">Save Routine</button>
     </div>
+
+    <h2 id="my-routines-title">My Routines:</h2>
     <!-- Render WorkoutContainer for each saved routine -->
     <div id="workout-container-grid">
       <WorkoutContainer
@@ -21,7 +23,9 @@
         :routineImage="routine.image"
         :routineDuration="routine.duration"
         :exercises="routine.exercises"
+        :likedExercises="likedExercises"
         @delete-routine="deleteRoutine(routine.id)"
+        @update-routine="updateRoutine"
       />
     </div>
   </div>
@@ -138,7 +142,25 @@ export default {
       } catch (error) {
         console.error("Failed to delete routine:", error.message);
       }
-  }
+    },
+    async updateRoutine(routineId, updatedExercises) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const routineRef = doc(db, 'users', user.uid, 'routines', routineId);
+        try {
+          await setDoc(routineRef, {
+            exercises: updatedExercises
+          }, { merge: true });
+          console.log(`Routine '${routineId}' updated in Firestore.`);
+          this.fetchRoutines(); // Optionally refresh the routines from Firestore to reflect changes
+        } catch (error) {
+          console.error("Error updating routine:", error.message);
+        }
+      } else {
+        console.error("User is not authenticated.");
+      }
+    }
   },
   created() {
     this.fetchLikedExercises();
@@ -152,7 +174,11 @@ export default {
 #create-routine {
   display: flex;
   gap: 15px;
-  margin-bottom: 20px;
+  margin: 20px 0px;
+}
+
+#my-routines-title {
+  margin: 0px;
 }
 
 input {

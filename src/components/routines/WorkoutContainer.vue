@@ -2,17 +2,35 @@
   <div class="container" :class="containerIntensity.class">
     <div id="top-row">
       <h1 id="routine-name">{{ routineName }}</h1>
-      <a @click="deleteRoutine" href="#" class="clickable-img-wrapper">
-        <img id="delete-button" src="@/assets/Cross-Icon.png" alt="Delete Routine" class="icon">
-      </a>
+      <div id="icon-row">
+        <a @click="beginEdit" href="#" v-if="!isEditing" class="clickable-img-wrapper">
+          <img src="@/assets/Edit-Icon.png" alt="Edit Routine" class="icon">
+        </a>
+        <a @click="endEdit" href="#" v-if="isEditing" class="clickable-img-wrapper">
+          <img src="@/assets/Save-Icon.png" alt="Save Changes" class="icon">
+        </a>
+        <a @click="deleteRoutine" href="#" class="clickable-img-wrapper">
+          <img src="@/assets/Cross-Icon.png" alt="Delete Routine" class="icon">
+        </a>
+      </div>
     </div>
     <h2 id="intensity">Intensity: {{ containerIntensity.label }}</h2>
     <h2 id="duration">Duration: {{ totalDuration }} min</h2>
     <ul id="list-exercises">
-      <li v-for="exercise in exercises" :key="exercise" @click="clickExerciseByName(exercise)">
+      <li v-for="(exercise, index) in exercises" :key="index" @click="clickExerciseByName(exercise)">
         {{ exercise }}
+        <a v-if="isEditing" @click="deleteExercise(index)" class="delete-exercise">Delete</a>
       </li>
     </ul>
+    <div v-if="isEditing">
+      <select v-model="selectedExercise">
+        <option disabled value="">Select an exercise</option>
+        <option v-for="exercise in likedExercises" :key="exercise.id" :value="exercise.id">
+          {{ this.$capitalizeFirstLetter(exercise.id) }}
+        </option>
+      </select>
+      <button @click="addExercise">Add Exercise</button>
+    </div>
     <div id="loading-msg" v-if="loading" class="overlay">Loading...</div>
     <div v-if="showWorkoutInfo && selectedExercise" class="overlay">
       <WorkoutInfo
@@ -26,6 +44,7 @@
     </div>
   </div>
 </template>
+
     
 <script>
 import axios from 'axios';
@@ -44,6 +63,10 @@ export default {
       type: Array,
       default: () => ([]),
     },
+    likedExercises: {
+    type: Array,
+    default: () => ([]),
+    }
   },
   computed: {
     containerIntensity() {
@@ -52,10 +75,10 @@ export default {
         label: ''
       };
 
-      if (this.totalDuration <= 10) {
+      if (this.totalDuration <= 20) {
         result.class = 'low-intensity';
         result.label = 'Low';
-      } else if (this.totalDuration <= 30) {
+      } else if (this.totalDuration <= 40) {
         result.class = 'medium-intensity';
         result.label = 'Medium';
       } else {
@@ -70,6 +93,8 @@ export default {
   },
   data() {
     return {
+      isEditing: false,
+      selectedExercise: '',
       refreshComp: 0,
       loading: false,
       error: null,
@@ -116,8 +141,27 @@ export default {
         this.loading = false;
         this.error = error.response ? error.response.data : error.message;
       }
+    },
+    beginEdit() {
+      console.log("edit state active")
+      this.isEditing = true;
+    },
+    endEdit() {
+      this.isEditing = false;
+      this.selectedExercise = ''; // Reset after editing
+      this.$emit('update-routine', this.routineName, this.exercises);
+      console.log("edit state inactive")
+    },
+    addExercise() {
+      if (this.selectedExercise && !this.exercises.includes(this.selectedExercise)) {
+        this.exercises.push(this.selectedExercise);
+        console.log("exercise added")
+      }
+    },
+    deleteExercise(index) {
+      this.exercises.splice(index, 1);
+      console.log("exercise deleted")
     }
-
   }
 }
 </script>
@@ -178,5 +222,11 @@ li {
   justify-content: center;
   align-items: center;
   z-index: 10; /* Ensure popup is above other content */
+}
+
+#icon-row {
+  display: flex;
+  gap: 10px;
+  justify-content: right;
 }
 </style>
