@@ -24,8 +24,10 @@
         :routineDuration="routine.duration"
         :exercises="routine.exercises"
         :likedExercises="likedExercises"
+        :isEditingActive="isEditingActive"
         @delete-routine="deleteRoutine(routine.id)"
         @update-routine="updateRoutine"
+        @editing-changed="handleEditingChange"
       />
     </div>
   </div>
@@ -51,6 +53,8 @@ export default {
       currentRoutine: [], // Stores the current routine being built
       selectedExercise: null, // The currently selected exercise to add to the routine
       newRoutineName: '', // Data property for the new routine name
+      activeEditCount: 0, // Counter to track edit state, ensure to multiple edits
+      isEditingActive: false, // Single flag to indicate if any editing is active
     }
   },
   methods: {
@@ -61,6 +65,17 @@ export default {
       this.showDropdown = !this.showDropdown;
       if (this.showDropdown && this.likedExercises.length === 0) {
         this.fetchLikedExercises();
+      }
+    },
+    handleEditingChange(isEditing) {
+      if (isEditing) {
+        if (this.isEditingActive) {
+          alert("Another routine is already being edited. Please save the current changes before editing another routine.");
+          return; // Prevent state change if already active
+        }
+        this.isEditingActive = true;
+      } else {
+        this.isEditingActive = false;
       }
     },
     async fetchLikedExercises() {

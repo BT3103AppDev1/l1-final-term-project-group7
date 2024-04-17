@@ -22,6 +22,8 @@
         <a v-if="isEditing" @click.stop="deleteExercise(index)" class="delete-exercise">Delete</a>
       </li>
     </ul>
+
+    <!-- Edit Interface -->
     <div v-if="isEditing">
       <select v-model="selectedExercise">
         <option disabled value="">Select an exercise</option>
@@ -32,6 +34,8 @@
       <button @click="addExercise">Add Exercise</button>
     </div>
     <div id="loading-msg" v-if="loading" class="overlay">Loading...</div>
+
+    <!-- WorkoutInfo Pop-Up -->
     <div v-if="showWorkoutInfo && selectedExercise" class="overlay">
       <WorkoutInfo
         :showWorkout="showWorkoutInfo"
@@ -45,7 +49,6 @@
   </div>
 </template>
 
-    
 <script>
 import axios from 'axios';
 import WorkoutInfo from '@/components/workouts/WorkoutInfo.vue';
@@ -66,7 +69,8 @@ export default {
     likedExercises: {
     type: Array,
     default: () => ([]),
-    }
+    },
+    isEditingActive: Boolean,
   },
   computed: {
     containerIntensity() {
@@ -99,7 +103,6 @@ export default {
       loading: false,
       error: null,
       showWorkoutInfo: false,
-      selectedExercise: null
     }
   },
   methods: {
@@ -143,14 +146,21 @@ export default {
       }
     },
     beginEdit() {
-      console.log("edit state active")
+      if (this.isEditingActive) {
+        // If editing is active elsewhere, log the attempt and stop the process
+        console.log("Another routine is currently being edited.");
+        alert("Another routine is already being edited. Please save or cancel the current changes before editing another routine.");
+        return; // Stop the edit method from proceeding
+      }
       this.isEditing = true;
+      this.$emit('editing-changed', true);
+      console.log("Edit state active");
     },
     endEdit() {
       this.isEditing = false;
-      this.selectedExercise = ''; // Reset after editing
+      this.$emit('editing-changed', false);
       this.$emit('update-routine', this.routineName, this.exercises);
-      console.log("edit state inactive")
+      console.log("Edit state inactive");
     },
     addExercise() {
       if (this.selectedExercise) {
@@ -228,5 +238,21 @@ li {
   display: flex;
   gap: 10px;
   justify-content: right;
+}
+
+select {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 50px 5px 10px; 
+  width: 100%;
+  margin-bottom: 15px
+}
+
+button {
+  text-wrap: nowrap;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 10px;
+  background-color: white;
 }
 </style>
