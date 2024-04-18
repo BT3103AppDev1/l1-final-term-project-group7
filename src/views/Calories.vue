@@ -1,15 +1,18 @@
 <template>
-<h1>Calories Page</h1>
-<div class="calorie-goal">
-  <CalorieGoalDoughnut :net-calories="netCalories" />
-</div>
-<div class="calorie-input">
-  <CalorieInput @update-calories="updateCalories" />
-</div>
-<div class="net-calorie-chart">
-  <NetCalorieChart :consumed="consumed" :burnt="burnt" :net-calories="netCalories" />
-</div>
+  <h1>Calories Page</h1>
+  <div class="calorie-goal">
+    <CalorieGoalDoughnut :net-calories="netCalories" />
+  </div>
+  <div class="calories-container">
+    <div class="calorie-input">
+      <CalorieInput @update-calories="updateCalories" />
+    </div>
+    <div class="net-calorie-chart">
+      <NetCalorieChart :consumed="consumed" :burnt="burnt" :net-calories="netCalories" />
+    </div>
+  </div>
 </template>
+  
   
 <script>
 import CalorieGoalDoughnut from '@/components/calories/CalorieGoal.vue'
@@ -46,7 +49,25 @@ export default {
 </script>
 
 <style scoped>
-.CalorieInput {
-  max-width: 50%;
+.calories-container {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-between; /* This will space out the children */
+  /* border: solid */
+}
+
+.calorie-input {
+  flex: 65%;
+}
+
+.net-calorie-chart {
+  flex: 35%; 
+  /* border:solid red; */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Full width */
 }
 </style>

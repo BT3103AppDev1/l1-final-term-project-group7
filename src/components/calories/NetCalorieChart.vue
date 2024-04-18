@@ -93,9 +93,11 @@ export default {
     background-color: white;
     border-radius: 15px;
     align-items: center;
-    padding: 20px;
-    max-width: 30%;
+    padding: 1rem;
+    margin-top: 10%;
+    max-width: 85%;
     font-weight: bold;
+    justify-content: space-around;
 }
 
 </style>
