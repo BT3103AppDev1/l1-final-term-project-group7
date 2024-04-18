@@ -16,8 +16,9 @@ import Achievements from '@/components/social/Achievements.vue';
 export default {
   components: {
     Leaderboard,
-    Achievements
+    Achievements,
   },
+  
   data() {
     return {
       refreshComp: 0

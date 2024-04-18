@@ -1,25 +1,29 @@
 <template>
-    <div class="social-page">
-      <div class="leaderboard-container">
-        <h1 class="leaderboard-heading">Leaderboard</h1>
-        <div class="search-username">
-          <input type="text" placeholder="Search Username..." class="search-input">
+  <div class="leaderboard-container">
+    <h1 class="leaderboard-heading">Leaderboard</h1>
+    <AddFriend @friendAdded="addFriend"></AddFriend>
+    <div class="user-info" v-for="(username, index) in usernames" :key="index">
+      <div class="username">
+        <div class="user-rank">
+          <div class="rank-circle">{{ index + 1 }}</div>
         </div>
-        <div class="user-info" v-for="(username, index) in usernames" :key="index">
-          <div class="username">
-            <div class="user-rank">
-              <div class="rank-circle">{{ index + 1 }}</div>
-            </div>
-            {{ username.title }}
-          </div>
-        </div>
+        {{ username.title }}
       </div>
     </div>
-  </template>
+  </div>
+</template>
 
 <script>
+import AddFriend from '@/components/social/AddFriend.vue';
+import { db } from '@/firebase';
+
 export default {
-  name: 'Usernames',
+  name: 'Leaderboard',
+
+  components: {
+    AddFriend,
+  },
+
   data() {
     return {
       usernames: [
@@ -27,9 +31,23 @@ export default {
         { title: '@sweatybettie' },
         { title: '@gymrat4life' },
         { title: '@musclemuncher' }
-      ]
+      ],
     };
-  }
+  },
+
+  methods: {
+    async addFriend(username) {
+      try {
+        const currentUser = this.$firebase.auth().currentUser;
+        await db.collection('friends').doc(currentUser.uid).collection('userFriends').add({
+          friendUsername: username,
+        });
+        console.log('Friend added successfully');
+      } catch (error) {
+        console.error('Error adding friend:', error);
+      }
+    },
+  },
 };
 </script>
   
