@@ -4,8 +4,8 @@
     <h1>Create An Account</h1>
 
     <p class="login-prompt">
-      Have an account?
-      <router-link to="/login" class="login-link">Log in here</router-link>
+        Have an account?
+        <router-link to="/login" class="login-link">Log in here</router-link>
     </p>
 
     <div class="field-container">
@@ -81,7 +81,7 @@ export default {
         },
 
         validatePassword() {
-            const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@\^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@\^_`{|}~]{8,}$/;
             if (!re.test(this.password)) {
                 this.errors.password = "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.";
                 alert(this.errors.password);
@@ -202,7 +202,6 @@ export default {
 .login-link:hover {
     text-decoration: underline; 
 }
-
 
 
 #registerContainer {
