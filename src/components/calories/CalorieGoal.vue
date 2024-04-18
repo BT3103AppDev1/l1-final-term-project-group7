@@ -4,7 +4,7 @@
       <div class="goalInfo">
         <div class="calories">
           <span>CURRENT CALORIE GOAL: </span>
-          <span class="calories-value">{{ netCalories }} / 2500</span>
+          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories }} / 2500</span>
         </div>
       </div>
         <Doughnut 
@@ -33,18 +33,20 @@
         type: Number,
         default: 0
       },
-
-    },
+    },        
 
     computed: {
+      goalExceeded() {
+        return this.netCalories > 2500;
+      },
       progress() {
-        const remainingCalories = 2500 - this.netCalories;
+        const remainingCalories =  Math.max(2500 - this.netCalories, 0);
         return {
           datasets: [
             {
               label: 'Calories',
-              data: [this.netCalories, remainingCalories],
-              backgroundColor: ['rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
+              data: [this.netCalories, remainingCalories > 0 ? remainingCalories : 0],
+              backgroundColor: [this.goalExceeded ? 'rgb(221, 34, 78, 0.8)' : 'rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
               borderWidth: 0,
             }
           ]
@@ -90,21 +92,24 @@
 
 .goalIcon {
   width: 10vh;
-  margin-right: 2vh; /* Reduced margin to save space */
+  margin-right: 2vh;
 }
 
-.calories, .calories-value {
+.calories {
   font-size: 2em;
   font-weight: bold;
   white-space: nowrap; /* Keeps the text on a single line */
   overflow: hidden; /* Prevents text from spilling over */
-  text-overflow: ellipsis; /* Adds an ellipsis to indicate hidden overflow text */
   max-width: 100%; /* Ensures the text does not exceed its container */
 }
 
 .calories-value {
   color: #76c442; /* Adjust color to match the progress ring */
   display: block; /* Makes the element a block to occupy its own line */
+}
+
+.goal-exceeded {
+  color: rgb(221, 34, 78, 0.8); /* Ensures this color overrides other styles */
 }
 
 #CalorieGoalDoughnut {
