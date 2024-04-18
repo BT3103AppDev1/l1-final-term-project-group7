@@ -4,7 +4,7 @@
       <div class="goalInfo">
         <div class="calories">
           <span>CURRENT CALORIE GOAL: </span>
-          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories }} / 2500</span>
+          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / 2500</span>
         </div>
       </div>
         <Doughnut 
@@ -78,7 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  max-width: 65%; /* Ensuring the widget does not exceed the parent width */
+  max-width: 60%; 
   max-height: 15vh;
 }
 
