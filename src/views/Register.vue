@@ -17,6 +17,10 @@
        <!-- <span v-if="errors.password" class="error-message">{{ errors.password }}</span>-->
     </div>
     <div class="field-container">
+        <input type="text" placeholder="Username" v-model="username" />
+        <!--<span v-if="errors.weight" class="error-message">{{ errors.weight }}</span>-->
+    </div>
+    <div class="field-container">
         <input type="text" placeholder="Weight (kg)" v-model="weight" @blur="validateWeight" />
         <!--<span v-if="errors.weight" class="error-message">{{ errors.weight }}</span>-->
     </div>
@@ -40,9 +44,9 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
 import firebaseApp  from '@/firebase.js'; 
-import { collection, doc, setDoc, addDoc} from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
 
 export default {
@@ -52,6 +56,7 @@ export default {
         return {
             email: '',
             password: '',
+            username: '',
             weight: '',
             height: '',
             birthday: '',
@@ -77,7 +82,6 @@ export default {
             } else {
                 this.errors.email = null;
             }
-
         },
 
         validatePassword() {
@@ -133,7 +137,7 @@ export default {
 
 
         async register() {
-            if (!this.email || !this.password || !this.weight || !this.height || !this.birthday) {
+            if (!this.email || !this.password || !this.weight || !this.height || !this.birthday || !this.username) {
                 this.errorMessage = "All fields are required.";
                 return;
             }
@@ -145,10 +149,20 @@ export default {
                 const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
                 const uid = userCredential.user.uid;
 
+                // save username to auth
+                await updateProfile(this.auth.currentUser, {
+                    displayName: this.username
+                }).then(() => {
+                    console.log("Username updated successfully!");
+                }).catch((error) => {
+                    console.error("Error updating username:", error);
+                });
+
                 const docRef = doc(db, 'users', uid);
                 await setDoc(docRef, {
                     userInfo: {
                         email: this.email,
+                        username: this.username,
                         weight: this.weight,
                         height: this.height,
                         birthday: this.birthday
