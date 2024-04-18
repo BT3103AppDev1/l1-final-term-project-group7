@@ -1,21 +1,48 @@
 <template>
 <div id="registerContainer">
-    <h1 id="mainHead">Health Guru</h1>
-    <h1 id="message">Create An Account</h1>
-    <p><input type="text" placeholder="email" v-model="email" /></p>
-    <p><input type="password" placeholder="password" v-model="password" /></p>
-    <p v-if="errorMessage">{{ errorMessage }}</p>
-    <p><button @click="register">Submit</button></p>
-    <p><button @click="registerWithGoogle">Register With Google</button></p>
-    <p><button @click="goToLogin">Have an Account? Log in here</button></p>
-    <h3 id="pagecontent">HealthGuru is a .... </h3>
+    <!--<h1 id="mainHead">Health Guru</h1>-->
+    <h1>Create An Account</h1>
+
+    <p class="login-prompt">
+      Have an account?
+      <router-link to="/login" class="login-link">Log in here</router-link>
+    </p>
+
+    <div class="field-container">
+        <input type="email" placeholder="Email" v-model="email" @blur="validateEmail" />
+       <!-- <span v-if="errors.email" class="error-message">{{ errors.email }}</span>-->
+    </div>
+    <div class="field-container">
+        <input type="password" placeholder="Password" v-model="password" @blur="validatePassword" />
+       <!-- <span v-if="errors.password" class="error-message">{{ errors.password }}</span>-->
+    </div>
+    <div class="field-container">
+        <input type="text" placeholder="Weight (kg)" v-model="weight" @blur="validateWeight" />
+        <!--<span v-if="errors.weight" class="error-message">{{ errors.weight }}</span>-->
+    </div>
+    <div class="field-container">
+        <input type="text" placeholder="Height (cm)" v-model="height" @blur="validateHeight" />
+        <!--<span v-if="errors.height" class="error-message">{{ errors.height }}</span>-->
+    </div>
+    <div class="field-container">
+        <input type="date" placeholder="Birthday" v-model="birthday" @blur="validateBirthday" />
+        <!--<span v-if="errors.birthday" class="error-message">{{ errors.birthday }}</span>-->
+    </div>
+
+    <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
+    <button @click="register">Register</button>
+    <button @click="registerWithGoogle" class="google-btn">
+        <img src="@/assets/GoogleLogo.png" alt="Google" class="google-icon">
+        Register With Google
+    </button>
+
 </div>
 </template>
 
 <script>
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp  from '@/firebase.js'; 
-import { doc, getDoc, setDoc, getFirestore, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { collection, doc, setDoc, addDoc} from 'firebase/firestore';
 import { db } from '@/firebase';
 
 export default {
@@ -25,27 +52,109 @@ export default {
         return {
             email: '',
             password: '',
+            weight: '',
+            height: '',
+            birthday: '',
+            errors: {
+                email: null,
+                password: null,
+                weight: null,
+                height: null,
+                birthday: null
+            },
             errorMessage: '',
             user: '',
-            uid: '',
             auth: getAuth(firebaseApp),
         };
     },
 
-    mounted() {
-        onAuthStateChanged(this.auth, (user) => {
-        if (user) {
-            this.user = user;
-            this.uid = user.uid;
-        }
-        })
-    },
-
     methods: {
+        validateEmail() {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!re.test(this.email)) {
+                this.errors.email = "Invalid email format."
+                alert(this.errors.email);
+            } else {
+                this.errors.email = null;
+            }
+
+        },
+
+        validatePassword() {
+            const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!re.test(this.password)) {
+                this.errors.password = "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.";
+                alert(this.errors.password);
+            } else {
+                this.errors.password = null;
+            }
+        },
+
+        validateHeight() {
+            const height = parseFloat(this.height);
+            if ((height < 50 || height > 251)) {
+                this.errors.height = "Height must be between 50 and 250 cm.";
+                alert(this.errors.height);
+            } else {
+                this.errors.height = null;
+            }
+        },
+
+        validateWeight() {
+            const weight = parseFloat(this.weight);
+            if ((weight <= 0 || weight > 250)) {
+                this.errors.weight = "Weight must be between 1 and 250 kg.";
+                alert(this.errors.weight);
+            } else {
+                this.errors.weight = null;
+            }
+        },
+
+        validateBirthday() {
+            const birthday = new Date(this.birthday);
+            const today = new Date();
+            const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate()); // 100 years ago
+            if ((birthday < minDate || birthday > today)) {
+                this.errors.birthday = "Invalid Date of Birth";;
+                alert(this.errors.birthday);
+            } else {
+                this.errors.birthday = null;
+            }
+        },
+
+        validateForm() {
+            this.validateEmail();
+            this.validatePassword();
+            this.validateHeight();
+            this.validateBirthday();
+            this.validateWeight();
+            return Object.keys(this.errors).every(key => this.errors[key] === null);
+        },
+
+
         async register() {
+            if (!this.email || !this.password || !this.weight || !this.height || !this.birthday) {
+                this.errorMessage = "All fields are required.";
+                return;
+            }
+            if (!this.validateForm()) {
+                this.errorMessage = "Please correct errors before submitting";
+                return;
+            }
             try {
-                await createUserWithEmailAndPassword(this.auth, this.email, this.password);
-                console.log("Successfully registered!");
+                const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
+                const uid = userCredential.user.uid;
+
+                const docRef = doc(db, 'users', uid);
+                await setDoc(docRef, {
+                    userInfo: {
+                        email: this.email,
+                        weight: this.weight,
+                        height: this.height,
+                        birthday: this.birthday
+                    }
+                }, { merge: true});
+
                 this.$router.push('/');
             } catch (error) {
                 console.error(error.code);
@@ -62,6 +171,7 @@ export default {
             }
         },
 
+
         async registerWithGoogle() {
             try {
                 const provider = new GoogleAuthProvider();
@@ -73,32 +183,110 @@ export default {
                 this.errorMessage = "Failed to register with Google.";
             }
         },
-
-        goToLogin() {
-            this.$router.push('/login');
-        }
     },
 };
 </script>
 
 <style scoped>
-#pagecontent {
-height: 100px;
-font-size: larger;
-font-weight: bolder;
-text-align: center;
+.login-prompt {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
-#mainHead {
-width: 100%;
-text-align: center;
-background-color: white;
+.login-link {
+    color: #007BFF;
+    font-weight: 550; 
 }
+
+.login-link:hover {
+    text-decoration: underline; 
+}
+
+
 
 #registerContainer {
-width: 100%;
-display: flex;
-align-items: center;
-flex-direction: column;
+    max-width: 95%;
+    margin: auto;
+    padding: 20px;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.field-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 15%;
+}
+
+.field-container input[type="text"],
+.field-container input[type="email"],
+.field-container input[type="password"],
+.field-container input[type="date"] {
+    width: 100%; 
+    max-width: 300px;
+    padding: 8px; 
+    margin-bottom: 3px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+button {
+    width: 200px;
+    height: 1%;
+    margin-bottom: 1%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #f6f6f6;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.google-btn {
+  background-color: white;
+  padding: 10px 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.google-icon {
+  width: 17px;
+  height: 17px; 
+  margin-right: 10px;
+}
+
+
+#errorMsg{
+    color: red;
+    text-align: center; 
+}
+
+
+/* 
+.error-message {
+  color: #ff0000; 
+  font-size: 0.8em;
+  margin-left: 10px;
+  white-space: nowrap; 
+} 
+*/
 </style>
