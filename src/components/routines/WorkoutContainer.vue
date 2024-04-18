@@ -14,8 +14,12 @@
         </a>
       </div>
     </div>
-    <h2 id="intensity">Intensity: {{ containerIntensity.label }}</h2>
-    <h2 id="duration">Duration: {{ totalDuration }} min</h2>
+    <img :src=containerIntensity.image :style="{width : '100%'}">
+    <h2>
+      Intensity: {{ containerIntensity.label }}
+      <br>
+      Duration: {{ totalDuration }} min
+    </h2>
     <ul id="list-exercises">
       <li v-for="(exercise, index) in exercises" :key="index" @click="clickExerciseByName(exercise)">
         {{ exercise }}
@@ -76,18 +80,22 @@ export default {
     containerIntensity() {
       let result = {
         class: '',
-        label: ''
+        label: '',
+        image: ''
       };
 
       if (this.totalDuration <= 20) {
         result.class = 'low-intensity';
         result.label = 'Low';
+        result.image = 'src/assets/Low-Intensity-Workout.webp';
       } else if (this.totalDuration <= 40) {
         result.class = 'medium-intensity';
         result.label = 'Medium';
+        result.image = 'src/assets/Medium-Intensity-Workout.webp';
       } else {
         result.class = 'high-intensity';
         result.label = 'High';
+        result.image = 'src/assets/High-Intensity-Workout.webp';
       }
       return result;
     },
@@ -200,6 +208,7 @@ export default {
 #top-row {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 #routine-name {
@@ -208,6 +217,10 @@ export default {
 
 .routine-img {
   width: 100%;
+}
+
+ul {
+  margin-top: 0px;
 }
 
 li {
@@ -254,5 +267,9 @@ button {
   border-width: 0px;
   padding: 5px 10px;
   background-color: white;
+}
+
+h2 {
+  margin: 0px
 }
 </style>
