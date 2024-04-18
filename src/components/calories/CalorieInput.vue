@@ -44,10 +44,6 @@
       <div class="total-calories">Total: {{ totalBurntCalories }} kcal</div>
     </div>
   </div>
-
-  <div class="net-calories">
-      <h3>Net Calories: {{  netCalories }} kcal</h3>
-  </div>
 </template>
   
 <script>
@@ -257,7 +253,7 @@ export default {
   justify-content: space-between;
   padding: 1rem;
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 80%;
 }
 
 .calories-input, .calories-burnt {
@@ -356,6 +352,7 @@ ul li:last-child {
 .total-calories { 
   padding-top: 1rem;
   font-weight: bold;
+  font-size: large;
 }
 </style>
   
