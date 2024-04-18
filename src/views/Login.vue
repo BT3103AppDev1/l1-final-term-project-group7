@@ -124,17 +124,19 @@ button {
     height: 1%;
     margin-bottom: 1%;
     padding: 10px;
-    background-color: white;
-    color: black;
+    background-color: rgb(56, 126, 224);;
+    color: white;
     border: none;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    border-radius: 6px;
+    font-weight: bolder;
 }
 
 button:hover {
     background-color: #f6f6f6;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    color: black;
 }
 
 .google-btn {
@@ -145,6 +147,8 @@ button:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-bottom: 7%;
+  color: black;
 }
 
 .google-icon {

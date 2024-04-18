@@ -153,7 +153,7 @@ export default {
                 await updateProfile(this.auth.currentUser, {
                     displayName: this.username
                 }).then(() => {
-                    console.log("Username updated successfully!");
+                    console.log("User Name updated successfully!");
                 }).catch((error) => {
                     console.error("Error updating username:", error);
                 });
@@ -191,7 +191,8 @@ export default {
                 const provider = new GoogleAuthProvider();
                 await signInWithPopup(this.auth, provider);
                 console.log("Successfully registered with Google!");
-                this.$router.push('/');
+                this.$router.push('/profile');
+                // push to profile page to fill up
             } catch (error) {
                 console.error(error.code);
                 this.errorMessage = "Failed to register with Google.";
@@ -258,17 +259,21 @@ button {
     height: 1%;
     margin-bottom: 1%;
     padding: 10px;
-    background-color: white;
-    color: black;
+    background-color: rgb(56, 126, 224);;
+    color: white;
     border: none;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    border-radius: 6px;
+    font-weight: bolder;
 }
+
+
 
 button:hover {
     background-color: #f6f6f6;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    color: black;
 }
 
 .google-btn {
@@ -279,6 +284,8 @@ button:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-bottom: 5%;
+  color: black;
 }
 
 .google-icon {
@@ -286,6 +293,7 @@ button:hover {
   height: 17px; 
   margin-right: 10px;
 }
+
 
 
 #errorMsg{
