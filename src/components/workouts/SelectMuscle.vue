@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <div class="anatomyContainer" style="background-color: white;">
-        <h1>Click to select muscle</h1>
+        <h1>Click to filter exercises by muscle:</h1>
         <svg width="100%" height="100%" viewBox="0 0 176 207" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <rect id="Artboard1" x="0" y="0" width="175.551" height="206.785" style="fill:none;"/>
       <g id="Back-Muscles">
