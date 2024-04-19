@@ -3,9 +3,9 @@
         <h3><strong>Profile Info</strong></h3>
         <p>Username: <input v-model="username" placeholder="Enter username" type="text" /></p>
         <p>Email: <strong>{{ email }}</strong></p>
-        <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @blur="validateHeight"/></p>
-        <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @blur="validateWeight"/></p>
-        <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @blur="validateBirthday" /></p>
+        <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @input = "clearError" @blur="validateHeight" /></p>
+        <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @input = "clearError"  @blur="validateWeight"/></p>
+        <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @input = "clearError"  @blur="validateBirthday" /></p>
         <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
         <p id="resultMsg" v-if="resultMessage">{{ resultMessage }}</p>    
         <p><button @click="updateUserProfile">Save Changes</button></p>  
@@ -16,6 +16,7 @@
 import { db } from '@/firebase';
 import { doc, setDoc, getDoc} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { toHandlers } from 'vue';
 
 export default {
     name: 'ProfileInfo',
@@ -83,6 +84,11 @@ export default {
                 this.errorMessage = error.message;
             }
         },
+
+        clearError() {
+            this.errorMessage = '';
+        },
+
 
         validateHeight() {
             const height = parseFloat(this.height);
