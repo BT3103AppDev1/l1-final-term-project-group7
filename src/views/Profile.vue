@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1> Profile Page </h1>
         <div id="profileContainer">
+            <h1> Profile Page </h1>
             <div id="profileInfo">
                 <ProfileInfo/>
             </div>

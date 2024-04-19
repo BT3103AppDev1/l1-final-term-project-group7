@@ -46,7 +46,7 @@
 <script>
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
 import firebaseApp  from '@/firebase.js'; 
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection } from 'firebase/firestore';
 import { db } from '@/firebase';
 
 export default {
@@ -158,18 +158,33 @@ export default {
                     console.error("Error updating username:", error);
                 });
 
+                // update userInfo
                 const docRef = doc(db, 'users', uid);
                 await setDoc(docRef, {
                     userInfo: {
                         email: this.email,
                         username: this.username,
-                        weight: this.weight,
+                        weight: this.weight, // latest weight will be saved in userInfo when changed in profile
                         height: this.height,
                         birthday: this.birthday
                     }
                 }, { merge: true});
 
+                const date = new Date().toISOString().slice(0, 10);
+                const weightDocRef = doc(db, 'users', uid, 'weights', String(date));
+
+                // document of historical weights 
+                try {
+                    await setDoc(weightDocRef, {
+                        weight: this.weight,
+                        date: date
+                    }, { merge: true });
+                } catch (error) {
+                    console.error("Error updating weight entry:", error);
+                };
+
                 this.$router.push('/');
+
             } catch (error) {
                 console.error(error.code);
                 switch(error.code) {
@@ -190,12 +205,12 @@ export default {
             try {
                 const provider = new GoogleAuthProvider();
                 await signInWithPopup(this.auth, provider);
-                console.log("Successfully registered with Google!");
-                this.$router.push('/profile');
+
                 // push to profile page to fill up
+                this.$router.push('/profile');
+
             } catch (error) {
                 console.error(error.code);
-                this.errorMessage = "Failed to register with Google.";
             }
         },
     },

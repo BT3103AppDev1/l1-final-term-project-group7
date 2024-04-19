@@ -45,10 +45,8 @@ export default {
         if (user) {
             this.user = user;
             this.uid = user.uid;
-            console.log("uid", this.uid);
             this.username = user.displayName || '';
             this.email = user.email || '';
-            console.log("username:", this.username)
             const docRef = doc(db, 'users', this.uid);
             this.fetchData(docRef);
         }
@@ -65,14 +63,12 @@ export default {
                 // check if document exists and is not missing
                 if (docSnap.exists() && docSnap.data().userInfo) {
                     const userData = docSnap.data().userInfo
-                    console.log("User data:" , userData)
                     this.weight = userData.weight,
                     this.height = userData.height,
                     this.birthday = userData.birthday
                     // username and email gotten in mounted
+
                 } else {
-                    console.log("cant find document or document exist but userinfo missing");
-                    console.log("creating  new document");
                     await setDoc(docRef, {
                         userInfo: {
                             email: this.email,
@@ -82,7 +78,6 @@ export default {
                             birthday: this.birthday
                         }
                     });
-                    console.log("document updated");
                 }
             } catch (error) {
                 this.errorMessage = error.message;
@@ -137,7 +132,7 @@ export default {
                 return;
             }
             try {
-                console.log("calling updatedoc");
+                // update latest userInfo
                 await setDoc(docRef, {
                     userInfo: {
                         email: this.email,
@@ -148,17 +143,21 @@ export default {
                     }
                 });
 
-                console.log("height and weight updated");
                 // update displayName on auth side if changed
                 if (this.user.displayName != this.username) {
-                    console.log("updating displayname from", this.user.displayName);
-                    console.log("updated displayname to", this.username);
                     await updateProfile(this.user, {
                         displayName: this.username
                     });
-                    console.log("displayname updated")
-                }
+                };
 
+                const date = new Date().toISOString().slice(0, 10);
+                const weightDocRef = doc(db, 'users', this.uid, 'weights', String(date));
+
+                // update document of historical weights 
+                await setDoc(weightDocRef, {
+                        weight: this.weight,
+                        date: date
+                }, { merge: true });
                 this.resultMessage = "Changes saved succesfully!";
             } catch (error) {
                 this.errorMessage = 'Failed to update profile' + error.Message;
