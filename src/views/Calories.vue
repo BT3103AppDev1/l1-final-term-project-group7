@@ -1,5 +1,4 @@
 <template>
-  <h1>Calories Page</h1>
   <div class="calorie-goal">
     <CalorieGoalDoughnut :net-calories="netCalories" />
   </div>
@@ -49,6 +48,12 @@ export default {
 </script>
 
 <style scoped>
+.calorie-goal {
+  margin-top: 5%;
+  
+}
+
+
 .calories-container {
   margin-top: 2%;
   display: flex;
