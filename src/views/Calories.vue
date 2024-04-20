@@ -68,6 +68,9 @@ export default {
 
 .input-data-pop-up{
   flex:30%;
+  justify-content: center;
+  align-items: center;
+  border:solid;
 }
 
 .calories-container {

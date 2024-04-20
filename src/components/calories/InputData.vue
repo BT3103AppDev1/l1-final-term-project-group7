@@ -1,6 +1,6 @@
 <template>
     <div class="weight-step-recorder">
-      <button @click="showPopup = true">Record Data</button>
+      <button class='button-record' @click="showPopup = true">Record Data</button>
       
       <div v-if="showPopup" class="popup">
         <div class="popup-content">
@@ -75,6 +75,30 @@
   </script>
   
   <style scoped>
+  .button-record{
+    background-color: #0c457e; /* Dark blue color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px; 
+    font-weight: bold;
+    font-size: 1.75rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+  }
+
+  .button-record:hover {
+    background-color: #002244; /* A slightly darker blue on hover */
+  }
+  
+  .button-record:active, .button-import:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #0055cc; 
+  }
   .popup {
     position: fixed;
     left: 0;
