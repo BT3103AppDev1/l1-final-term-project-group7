@@ -5,7 +5,7 @@
             <div id="profileInfo">
                 <ProfileInfo/>
             </div>
-            <div id="changePassword">
+            <div id="changePassword" v-if="!isGoogle">
                 <ChangePassword/>
             </div>
         </div>
@@ -15,7 +15,7 @@
 <script>
 import ProfileInfo from '@/components/profile/ProfileInfo.vue';
 import ChangePassword from '@/components/profile/ChangePassword.vue';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 export default {
     name: 'Profile',
 
@@ -24,9 +24,27 @@ export default {
         ChangePassword
     },
 
+
+    mounted() {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+            this.user = user;
+            const provider =  user.providerData[0].providerId;
+            console.log("new provider is", provider);
+            if (provider == "google.com") {
+                this.isGoogle = true;
+            }
+            console.log("is it google", this.isGoogle);
+        }
+        })
+    },
+
     data() {
       return {
-        refreshComp: 0
+        refreshComp: 0,
+        user: '',
+        isGoogle: false
       }
     },
 

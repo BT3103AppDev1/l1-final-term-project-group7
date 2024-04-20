@@ -3,9 +3,9 @@
         <h3><strong>Profile Info</strong></h3>
         <p>Username: <input v-model="username" placeholder="Enter username" type="text" /></p>
         <p>Email: <strong>{{ email }}</strong></p>
-        <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @blur="validateHeight"/></p>
-        <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @blur="validateWeight"/></p>
-        <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @blur="validateBirthday" /></p>
+        <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @input = "clearError" @blur="validateHeight" /></p>
+        <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @input = "clearError"  @blur="validateWeight"/></p>
+        <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @input = "clearError"  @blur="validateBirthday" /></p>
         <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
         <p id="resultMsg" v-if="resultMessage">{{ resultMessage }}</p>    
         <p><button @click="updateUserProfile">Save Changes</button></p>  
@@ -84,6 +84,11 @@ export default {
             }
         },
 
+        clearError() {
+            this.errorMessage = '';
+        },
+
+
         validateHeight() {
             const height = parseFloat(this.height);
             if ((height < 50 || height > 251)) {
@@ -137,8 +142,8 @@ export default {
                     userInfo: {
                         email: this.email,
                         username: this.username,
-                        weight: this.weight,
-                        height: this.height,
+                        weight: parseFloat(this.weight),
+                        height: parseFloat(this.height),
                         birthday: this.birthday
                     }
                 });
@@ -155,7 +160,7 @@ export default {
 
                 // update document of historical weights 
                 await setDoc(weightDocRef, {
-                        weight: this.weight,
+                        weight: parseFloat(this.weight),
                         date: date
                 }, { merge: true });
                 this.resultMessage = "Changes saved succesfully!";
