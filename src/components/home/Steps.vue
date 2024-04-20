@@ -84,25 +84,28 @@
             const stepsCollectionRef = collection(db, 'users', user.uid, 'steps');
 
             // Query documents sorted by date
-            const q = query(stepsCollectionRef, orderBy("Date", "asc"));
+            const q = query(stepsCollectionRef, orderBy("__name__", "asc"));
             const querySnapshot = await getDocs(q);
+            // need to implement lookback period --> limit to 7 days
 
             // Reset chart data before adding new data
             chartData.labels = [];
             chartData.datasets[0].data = [];
 
             // Populate chart data with steps from Firestore
-            querySnapshot.forEach(doc => {
+            querySnapshot.forEach((doc) => {
               console.log(chartData.labels)
-              chartData.labels.push(doc.data().Date);
-              chartData.datasets[0].data.push(doc.data().Steps);
+              const [year, month, day] = doc.id.split('-');
+              const dateFormatted = `${day}-${month}`; // Convert 'YYYY-MM-DD' to 'DD-MM' for the chart labels
+              chartData.labels.push(dateFormatted);
+              chartData.datasets[0].data.push(doc.data().steps);
             });
         } else {
             // User is not signed in
             console.log("User is not signed in to fetch steps data.");
         }
         console.log(chartData.datasets[0].data); // Debug log the final dataset array
-    };
+      };
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
