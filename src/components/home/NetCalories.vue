@@ -83,7 +83,7 @@
             // Reference to the user's collection
             const userInfoRef = doc(db, 'users', user.uid);
             const userInfoDoc = await getDoc(userInfoRef);
-            const calorieGoal = userInfoDoc.data().userInfo.CalorieGoal;
+            const calorieGoal = 2500;
 
             const caloriesDateCollectionRef = collection(db, 'users', user.uid, 'caloriesDate');
             const q = query(
@@ -96,22 +96,21 @@
             // Reset chart data before adding new data
             chartData.labels = [];
             chartData.datasets[0].data = [];
-            console.log('test')
 
             // Populate chart data with steps from Firestore
             querySnapshot.forEach((doc) => {
-              const date = doc.id; // The document ID is the date
+              const [year, month, day] = doc.id.split('-');
+              const dateFormatted = `${day}-${month}`; // Convert 'YYYY-MM-DD' to 'DD-MM' for the chart labels
               const data = doc.data();
+              
               
               // Calculate total calories consumed
               const totalConsumed = data.meals.reduce((acc, meal) => acc + meal.calories, 0);
+              console.log(totalConsumed);
               // Calculate total calories burnt
               const totalBurnt = data.exercises.reduce((acc, exercise) => acc + exercise.calories, 0);
               // Calculate net calories for the date
-              const netCalories = (totalConsumed - totalBurnt) - calorieGoal;
-
-              const [year, month, day] = doc.id.split('-');
-              const dateFormatted = `${day}-${month}`; // Convert 'YYYY-MM-DD' to 'DD-MM' for the chart labels
+              const netCalories = (totalConsumed - totalBurnt) - calorieGoal;              
               
               // Push data to chart
               chartData.labels.push(dateFormatted); 
