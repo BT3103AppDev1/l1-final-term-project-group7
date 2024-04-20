@@ -89,9 +89,4 @@ export default {
   align-self: center;
 }
 
-button{
-    color:#5B789F;
-    background-color: white;
-    border: none;
-}
 </style>
