@@ -83,6 +83,15 @@ export default {
   opacity: 0;
 }
 
+#logout-button {
+  border-radius: 10px;
+  border-width: 0px;
+  background-color: #98c4e8;
+}
+#logout-button:hover {
+  cursor: pointer;
+}
+
 .profile-icon {
   width: 20px;
   height: 20px;
