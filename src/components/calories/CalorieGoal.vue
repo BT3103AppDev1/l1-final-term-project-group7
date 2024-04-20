@@ -69,16 +69,17 @@
   };
   </script>
   
-  <style scoped>
+
+<style scoped>
 .calorieGoalWidget {
   background-color: #404b5a;
   border-radius: 15px;
-  padding: 20px;
+  padding: 1%;
   color: whitesmoke;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  max-width: 60%; 
+  max-width: 55%; 
   max-height: 15vh;
 }
 
@@ -96,11 +97,11 @@
 }
 
 .calories {
-  font-size: 2em;
+  font-size: 1.8em;
   font-weight: bold;
-  white-space: nowrap; /* Keeps the text on a single line */
-  overflow: hidden; /* Prevents text from spilling over */
+  white-space: wrap; /* Keeps the text on a single line */
   max-width: 100%; /* Ensures the text does not exceed its container */
+  font-size: 1.5vw;
 }
 
 .calories-value {
@@ -114,10 +115,10 @@
 
 #CalorieGoalDoughnut {
   max-width: 30vh; /* Adjust width of the doughnut */
-  max-height: 30vh; /* Adjust height of the doughnut */
-  margin-right: 2vh; /* Reduced margin to save space */
-  flex-grow: 0; /* Prevents the doughnut from growing */
+  max-height: 35vh; /* Adjust height of the doughnut */
+  flex-grow: 1; /* Prevents the doughnut from growing */
   flex-shrink: 0; /* Prevents the doughnut from shrinking */
 }
-  </style>
+
+</style>
   
