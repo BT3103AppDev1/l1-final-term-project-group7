@@ -109,9 +109,12 @@
               const totalBurnt = data.exercises.reduce((acc, exercise) => acc + exercise.calories, 0);
               // Calculate net calories for the date
               const netCalories = (totalConsumed - totalBurnt) - calorieGoal;
+
+              const [year, month, day] = doc.id.split('-');
+              const dateFormatted = `${day}-${month}`; // Convert 'YYYY-MM-DD' to 'DD-MM' for the chart labels
               
               // Push data to chart
-              chartData.labels.push(date.split("-").reverse().join("-")); // Convert 'YYYY-MM-DD' to 'DD-MM-YYYY'
+              chartData.labels.push(dateFormatted); 
               chartData.datasets[0].data.push(netCalories);
           });
         } else {

@@ -77,25 +77,28 @@
         chartInstance.update();
       });
 
-      const fetchStepsData = async () => {
+      const fetchWeightData = async () => {
         const user = auth.currentUser;
         if (user) {
             // Reference to the user's steps collection
-            const stepsCollectionRef = collection(db, 'users', user.uid, 'weight');
+            const weightsCollectionRef = collection(db, 'users', user.uid, 'weights');
 
             // Query documents sorted by date
-            const q = query(stepsCollectionRef, orderBy("Date", "asc"));
+            const q = query(weightsCollectionRef, orderBy("__name__", "asc"));
             const querySnapshot = await getDocs(q);
+            // need to implement lookback period --> limit to 7 days
 
             // Reset chart data before adding new data
             chartData.labels = [];
             chartData.datasets[0].data = [];
 
             // Populate chart data with steps from Firestore
-            querySnapshot.forEach(doc => {
+            querySnapshot.forEach((doc) => {
               console.log(chartData.labels)
-              chartData.labels.push(doc.data().Date);
-              chartData.datasets[0].data.push(doc.data().Weight);
+              const [year, month, day] = doc.id.split('-');
+              const dateFormatted = `${day}-${month}`; // Convert 'YYYY-MM-DD' to 'DD-MM' for the chart labels
+              chartData.labels.push(dateFormatted);
+              chartData.datasets[0].data.push(doc.data().weight);
             });
         } else {
             // User is not signed in
@@ -107,7 +110,7 @@
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          fetchStepsData();
+          fetchWeightData();
         }
       });
     });
