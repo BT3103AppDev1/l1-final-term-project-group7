@@ -6,7 +6,7 @@
     </div>
     <div id="search-and-options">
       <div id="searchBar">
-        <input type="text" v-model="input" placeholder="Search..." class="search-input"/>
+        <input type="text" v-if="user" v-model="input" placeholder="Search..." class="search-input"/>
       </div>
       <Options class="options" v-if="user" @logged-out="handleLogout"/>
     </div>
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style>
+
   #logo{
     display:flex;
     align-items: center;
@@ -63,6 +64,11 @@ export default {
 
   #search-and-options {
     display: flex;
+  }
+
+  #options {
+    display: flex;
+    align-items: center;
   }
 
   #top-bar {

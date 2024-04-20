@@ -16,7 +16,6 @@
 import { db } from '@/firebase';
 import { doc, setDoc, getDoc} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { toHandlers } from 'vue';
 
 export default {
     name: 'ProfileInfo',
@@ -143,8 +142,8 @@ export default {
                     userInfo: {
                         email: this.email,
                         username: this.username,
-                        weight: this.weight,
-                        height: this.height,
+                        weight: parseFloat(this.weight),
+                        height: parseFloat(this.height),
                         birthday: this.birthday
                     }
                 });
@@ -161,7 +160,7 @@ export default {
 
                 // update document of historical weights 
                 await setDoc(weightDocRef, {
-                        weight: this.weight,
+                        weight: parseFloat(this.weight),
                         date: date
                 }, { merge: true });
                 this.resultMessage = "Changes saved succesfully!";

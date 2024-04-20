@@ -164,8 +164,8 @@ export default {
                     userInfo: {
                         email: this.email,
                         username: this.username,
-                        weight: this.weight, // latest weight will be saved in userInfo when changed in profile
-                        height: this.height,
+                        weight: parseFloat(this.weight), // latest weight will be saved in userInfo when changed in profile
+                        height: parseFloat(this.height),
                         birthday: this.birthday
                     }
                 }, { merge: true});
@@ -176,14 +176,18 @@ export default {
                 // document of historical weights 
                 try {
                     await setDoc(weightDocRef, {
-                        weight: this.weight,
+                        weight: parseFloat(this.weight),
                         date: date
                     }, { merge: true });
+
+                
                 } catch (error) {
                     console.error("Error updating weight entry:", error);
                 };
 
+                alert("Successfully Registered!");
                 this.$router.push('/');
+                
 
             } catch (error) {
                 console.error(error.code);
@@ -206,8 +210,10 @@ export default {
                 const provider = new GoogleAuthProvider();
                 await signInWithPopup(this.auth, provider);
 
+                
                 // push to profile page to fill up
                 this.$router.push('/profile');
+                alert("Successfully Registered!");
 
             } catch (error) {
                 console.error(error.code);
