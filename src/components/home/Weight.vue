@@ -105,7 +105,7 @@
             console.log("User is not signed in to fetch steps data.");
         }
         console.log(chartData.datasets[0].data); // Debug log the final dataset array
-    };
+      };
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
