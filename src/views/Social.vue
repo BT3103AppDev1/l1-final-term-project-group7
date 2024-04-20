@@ -38,6 +38,7 @@ export default {
 }
 
 .leaderboard-container {
+  display: flex;
   flex: 0.8;
   background-color: #ffffff;
   padding: 20px;

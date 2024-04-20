@@ -32,7 +32,6 @@ import NutritionNovice from '@/assets/NutritionNovice.png';
 export default {
   name: 'Achievements',
   data() {
-    console.log(this.achievements);
     return {
       achievements: [
         { title: 'First Steps:', description: 'Complete your first workout' },
