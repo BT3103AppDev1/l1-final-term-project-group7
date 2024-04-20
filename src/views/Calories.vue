@@ -1,6 +1,11 @@
 <template>
-  <div class="calorie-goal">
-    <CalorieGoalDoughnut :net-calories="netCalories" />
+  <div class="top-container">
+    <div class="calorie-goal">
+      <CalorieGoalDoughnut :net-calories="netCalories" />
+    </div>
+    <div class="input-data-pop-up">
+      <InputDataPopup @recorded="updateCalories" />
+    </div>
   </div>
   <div class="calories-container">
     <div class="calorie-input">
@@ -17,13 +22,15 @@
 import CalorieGoalDoughnut from '@/components/calories/CalorieGoal.vue'
 import CalorieInput from '@/components/calories/CalorieInput.vue'
 import NetCalorieChart from '@/components/calories/NetCalorieChart.vue'
+import InputDataPopup from '@/components/calories/InputData.vue' 
 
 export default {
   name: 'App',
   components: {
     CalorieGoalDoughnut,
     CalorieInput,
-    NetCalorieChart
+    NetCalorieChart,
+    InputDataPopup
   },
   data() {
     return {
@@ -48,11 +55,20 @@ export default {
 </script>
 
 <style scoped>
-.calorie-goal {
+.top-container {
+  display: flex;
+  justify-content: space-between;
   margin-top: 5%;
-  
 }
 
+.calorie-goal {
+  flex: 70%;
+  margin-right: 2%; /* Adjust space between the components */
+}
+
+.input-data-pop-up{
+  flex:30%;
+}
 
 .calories-container {
   margin-top: 2%;
