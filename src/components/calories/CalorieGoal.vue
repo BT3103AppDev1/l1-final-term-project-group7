@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  max-width: 55%; 
+  max-width: 90%; 
   max-height: 15vh;
 }
 
