@@ -12,6 +12,8 @@
       <button @click="addExerciseToRoutine">Add Exercise</button>
       <button @click="saveRoutine">Save Routine</button>
     </div>
+
+    <h2 id="my-routines-title">My Routines:</h2>
     <!-- Render WorkoutContainer for each saved routine -->
     <div id="workout-container-grid">
       <WorkoutContainer
@@ -21,7 +23,11 @@
         :routineImage="routine.image"
         :routineDuration="routine.duration"
         :exercises="routine.exercises"
+        :likedExercises="likedExercises"
+        :isEditingActive="isEditingActive"
         @delete-routine="deleteRoutine(routine.id)"
+        @update-routine="updateRoutine"
+        @editing-changed="handleEditingChange"
       />
     </div>
   </div>
@@ -47,6 +53,8 @@ export default {
       currentRoutine: [], // Stores the current routine being built
       selectedExercise: null, // The currently selected exercise to add to the routine
       newRoutineName: '', // Data property for the new routine name
+      activeEditCount: 0, // Counter to track edit state, ensure to multiple edits
+      isEditingActive: false, // Single flag to indicate if any editing is active
     }
   },
   methods: {
@@ -57,6 +65,17 @@ export default {
       this.showDropdown = !this.showDropdown;
       if (this.showDropdown && this.likedExercises.length === 0) {
         this.fetchLikedExercises();
+      }
+    },
+    handleEditingChange(isEditing) {
+      if (isEditing) {
+        if (this.isEditingActive) {
+          alert("Another routine is already being edited. Please save the current changes before editing another routine.");
+          return; // Prevent state change if already active
+        }
+        this.isEditingActive = true;
+      } else {
+        this.isEditingActive = false;
       }
     },
     async fetchLikedExercises() {
@@ -138,7 +157,25 @@ export default {
       } catch (error) {
         console.error("Failed to delete routine:", error.message);
       }
-  }
+    },
+    async updateRoutine(routineId, updatedExercises) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const routineRef = doc(db, 'users', user.uid, 'routines', routineId);
+        try {
+          await setDoc(routineRef, {
+            exercises: updatedExercises
+          }, { merge: true });
+          console.log(`Routine '${routineId}' updated in Firestore.`);
+          this.fetchRoutines(); // Optionally refresh the routines from Firestore to reflect changes
+        } catch (error) {
+          console.error("Error updating routine:", error.message);
+        }
+      } else {
+        console.error("User is not authenticated.");
+      }
+    }
   },
   created() {
     this.fetchLikedExercises();
@@ -152,11 +189,31 @@ export default {
 #create-routine {
   display: flex;
   gap: 15px;
-  margin-bottom: 20px;
+  margin: 20px 0px;
+}
+
+#my-routines-title {
+  margin: 0px;
+}
+
+input {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 50px 5px 10px;
+}
+
+select {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 50px 5px 10px; 
 }
 
 button {
   text-wrap: nowrap;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 10px;
+  background-color: white;
 }
 
 #workout-container-grid {

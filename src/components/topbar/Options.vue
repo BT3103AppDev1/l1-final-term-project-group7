@@ -7,7 +7,7 @@
               <router-link to="/profile">Profile</router-link>
             </div>
             <div class="item">
-              <button @click="logOut">Log Out</button>
+              <button id="logout-button" @click="logOut">Log Out</button>
             </div>
           </div>
       </transition>
@@ -48,7 +48,7 @@ export default {
   padding: 20px 20px;
   border-bottom: 5px solid transparent;
   display: flex;
-  transition: 0.4s;
+  transition: 0.3s;
   justify-content: center;
   height: 18px;
   width: 50px;
@@ -60,9 +60,13 @@ export default {
   position: relative;
   text-align: center;
   display: flex;
-  transition: 0.4s;
+  transition: 0.3s;
   justify-content: center;
 }
+
+.menu:hover {
+      background-color: #5B789F;
+    }
 
 .menu .sub-menu {
   position: absolute;
@@ -76,7 +80,7 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .5s ease-out;
+  transition: all .3s ease-out;
 }
 .fade-enter,
 .fade-leave-to {
@@ -91,11 +95,9 @@ export default {
 #logout-button:hover {
   cursor: pointer;
 }
-
 .profile-icon {
   width: 20px;
   height: 20px;
   align-self: center;
 }
-
 </style>

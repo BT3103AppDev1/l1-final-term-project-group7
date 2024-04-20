@@ -56,6 +56,13 @@ export default {
     margin-left: 120px;
   }
 
+  .search-input {
+    border-radius: 20px;
+    border-width: 0px;
+    margin: 0px 20px;
+    padding: 5px 50px 5px 10px;
+  }
+
   #searchBar{
     display: flex;
     align-items: center;

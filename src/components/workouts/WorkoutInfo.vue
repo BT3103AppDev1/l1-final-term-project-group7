@@ -18,7 +18,7 @@
           Type: {{ this.$capitalizeFirstLetter(exerciseType) }}
         </p>
         <div class="youtube-link-container">
-          <a :href="youtubeLink" target="_blank">Video Demonstration</a>
+          <a :href="youtubeLink" target="_blank" rel="noopener noreferrer">Video Demonstration</a>
         </div>
         <div id="description">
           <ul>
