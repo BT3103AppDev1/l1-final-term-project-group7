@@ -21,7 +21,9 @@
   
   <script>
   import { ref } from 'vue';
-  // Add Firebase imports and setup if needed
+  import { db } from '@/firebase';
+  import { doc, setDoc } from 'firebase/firestore';
+  import { getAuth, onAuthStateChanged } from 'firebase/auth';
   
   export default {
     name: 'InputDataPopup',
@@ -32,17 +34,40 @@
         steps: null
       });
   
-      const recordData = () => {
-        // Here you would handle the Firebase data submission
-        console.log('Data to record:', formData.value);
-  
-        // After recording to Firebase, you would probably want to hide the popup
-        showPopup.value = false;
-  
-        // Reset formData if necessary
-        formData.value = { weight: null, steps: null };
+      const recordData = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser; 
+        if (user) {
+          const today = new Date().toISOString().slice(0, 10);
+          const weightDocRef = doc(db, 'users', user.uid, 'weights', today);
+          const stepsDocRef = doc(db, 'users', user.uid, 'steps', today);
+          const weightDataToWrite = {
+            date: today,
+            weight: formData.value.weight
+          };
+
+          const stepsDataToWrite = {
+            date: today,
+            steps: formData.value.steps
+          };
+          
+          try {
+            // Write the data to Firestore
+            await setDoc(weightDocRef, weightDataToWrite);
+            await setDoc(stepsDocRef, stepsDataToWrite);
+            console.log('Data recorded successfully');
+            
+            // Close the popup and reset the form
+            showPopup.value = false;
+            formData.value = { weight: null, steps: null };
+          } catch (error) {
+            console.error('Error recording data to Firestore:', error);
+          }
+
+        } else {
+            console.log('No user signed in')
+        }
       };
-  
       // Return reactive properties and methods
       return { showPopup, formData, recordData };
     }
