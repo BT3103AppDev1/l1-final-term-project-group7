@@ -96,6 +96,7 @@
             // Reset chart data before adding new data
             chartData.labels = [];
             chartData.datasets[0].data = [];
+            console.log('test')
 
             // Populate chart data with steps from Firestore
             querySnapshot.forEach((doc) => {
