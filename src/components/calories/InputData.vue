@@ -1,23 +1,27 @@
 <template>
-    <div class="weight-step-recorder">
-      <button class='button-record' @click="showPopup = true">Record Data</button>
-      
-      <div v-if="showPopup" class="popup">
-        <div class="popup-content">
-          <h2>Record Daily Data</h2>
-  
+  <div class="weight-step-recorder">
+    <button class="button-record" @click="showPopup = true">Record Data</button>
+    
+    <div v-if="showPopup" class="popup">
+      <div class="popup-content">
+        <h2>Record Daily Data</h2>
+
+        <div class="form-group">
           <label for="weight">Weight (kg):</label>
           <input type="number" id="weight" v-model="formData.weight">
-  
+
           <label for="steps">Step Count:</label>
           <input type="number" id="steps" v-model="formData.steps">
-  
+        </div>
+
+        <div class="button-group">
           <button @click="recordData">Submit</button>
           <button @click="showPopup = false">Cancel</button>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import { ref } from 'vue';
@@ -75,6 +79,26 @@
   </script>
   
   <style scoped>
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adjust as needed for spacing */
+  }
+
+  .form-group label {
+    margin-right: 5px; /* Add margin for spacing */
+  }
+
+  .form-group input[type="number"] {
+    flex: 1; /* Take up remaining space */
+    margin-bottom: 10px; /* Space before the next row */
+  }
+
+  .button-group {
+    margin-top: 10px; /* Space from the inputs to the buttons */
+    text-align: center; /* Center buttons if the container width is defined */
+  }
+
   .button-record{
     background-color: #0c457e; /* Dark blue color */
     color: white;
@@ -120,6 +144,5 @@
     z-index: 2; /* Higher z-index to be above the overlay */
   }
   
-  /* Add more styles as needed */
   </style>
   
