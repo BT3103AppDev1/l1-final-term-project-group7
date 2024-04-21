@@ -299,7 +299,6 @@ export default {
   cursor: pointer;
   height: 30px; /* Height of the button should be the same as the input field */
   width: 30px; /* Width of the button */
-  right:0;
   /* border:solid; */
 }
 .search-icon {
