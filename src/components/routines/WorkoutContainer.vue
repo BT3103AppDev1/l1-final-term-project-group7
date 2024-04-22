@@ -256,6 +256,10 @@ li {
   cursor: pointer;
 }
 
+ul {
+  margin-bottom: 0px
+}
+
 #loading-msg {
   font-size: 2em;
   font-weight: bold;

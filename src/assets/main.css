@@ -1,5 +1,9 @@
 @import './base.css';
 
+* {
+  font-family: 'Satoshi';
+}
+
 body {
   margin: 0px;
   background-color: #98c4e8;
