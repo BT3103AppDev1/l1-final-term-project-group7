@@ -1,15 +1,16 @@
 <template>
     <div class="profileInfo">
         <h3><strong>Profile Info</strong></h3>
-        <p>Username: <input v-model="username" placeholder="Enter username" type="text" /></p>
-        <p>Email: <strong>{{ email }}</strong></p>
-        <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @input = "clearError" @blur="validateHeight" /></p>
-        <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @input = "clearError"  @blur="validateWeight"/></p>
-        <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @input = "clearError"  @blur="validateBirthday" /></p>
-        <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
-        <p id="resultMsg" v-if="resultMessage">{{ resultMessage }}</p>    
-        <p><button @click="updateUserProfile">Save Changes</button></p>  
-          
+        <div id="profileFields">
+          <p>Username: <input v-model="username" placeholder="Enter username" type="text" /></p>
+          <p>Email: <strong>{{ email }}</strong></p>
+          <p>Height (cm): <input v-model="height" placeholder="Enter height" type="text" @input = "clearError" @blur="validateHeight" /></p>
+          <p>Weight (kg): <input v-model="weight" placeholder="Enter weight" type="text" @input = "clearError"  @blur="validateWeight"/></p>
+          <p>Birthday: <input v-model="birthday" placeholder="Birthday" type="date" @input = "clearError"  @blur="validateBirthday" /></p>
+          <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
+          <p id="resultMsg" v-if="resultMessage">{{ resultMessage }}</p>    
+          <button @click="updateUserProfile">Save Changes</button>
+        </div>          
     </div>
 </template>
 <script>
@@ -172,41 +173,51 @@ export default {
 
 }
 </script>
+
 <style scoped>
-.profileInfo input[type="text"],
-.profileInfo input[type="email"],
-.profileInfo input[type="date"] {
-    width: 100%; 
-    max-width: 300px;
-    padding: 8px; 
-    margin-bottom: 3px; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
+#profileFields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: visible;
+}
+
+p {
+  display: flex;
+  margin: 0px;
+  align-items: center;
+  gap: 10px;
+  text-wrap: nowrap;
+}
+
+input {
+  flex-grow: 1;
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px;
 }
 
 button {
-    width: 200px;
-    height: 1%;
-    margin-bottom: 1%;
-    padding: 10px;
-    background-color: rgb(56, 126, 224);
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    font-weight: bolder;
-    text-align: center;
+  display: flex;
+  padding: 10px;
+  background-color: rgb(56, 126, 224);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-weight: bolder;
+  justify-content: center;
 }
 
 button:hover {
-    background-color: #f6f6f6;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    color: black;
+  background-color: #f6f6f6;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  color: black;
 }
 
 #errorMsg{
-    color: red;
+  color: red;
 }
 
 </style>

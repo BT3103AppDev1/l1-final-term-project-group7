@@ -1,14 +1,10 @@
 <template>
     <div id = "passwordContainer">
         <h3><strong>Change Password</strong></h3>
-        <div class="field-container">
-            <input type="password" placeholder="Current Password" v-model="currPassword" />
-        </div>
-        <div class="field-container">
-            <input type="password" placeholder="New Password" v-model="newPassword" @blur = "validatePassword" />
-        </div>
-        <div class="field-container">
-            <input type="password" placeholder="Confirm Password" v-model="cfmPassword" @blur = "validatePassword"/>
+        <div id="passwordFields">
+          <input type="password" placeholder="Current Password" v-model="currPassword" />
+          <input type="password" placeholder="New Password" v-model="newPassword" @blur = "validatePassword" />
+          <input type="password" placeholder="Confirm Password" v-model="cfmPassword" @blur = "validatePassword"/>
         </div>
         <p id="errorMsg" v-if="errorMessage">{{ errorMessage }}</p>
         <p><button @click="changePassword">Change Password</button></p>    
@@ -17,7 +13,6 @@
 </template>
 <script>
 import { getAuth, onAuthStateChanged, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
-
 
 export default {
     name: 'ChangePassword',
@@ -91,47 +86,39 @@ export default {
 </script>
 
 <style scoped>
-.field-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    width: 100%;
+#passwordFields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.field-container input[type="password"] {
-    width: 100%; 
-    max-width: 300px;
-    padding: 8px; 
-    margin-bottom: 3px; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
+input {
+  flex-grow: 1;
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px;
 }
 
 button {
-    width: 200px;
-    height: 1%;
-    margin-bottom: 1%;
-    padding: 10px;
-    background-color: rgb(56, 126, 224);;
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 6px;
-    font-weight: bolder;
+  width: 200px;
+  padding: 10px;
+  background-color: rgb(56, 126, 224);;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  font-weight: bolder;
 }
 
-
-
 button:hover {
-    background-color: #f6f6f6;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    color: black;
+  background-color: #f6f6f6;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  color: black;
 }
 
 #errorMsg{
-    color: red;
-    max-width: 70%
+  color: red;
 }
 
 </style>
