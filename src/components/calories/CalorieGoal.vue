@@ -197,7 +197,7 @@
 .calories {
   font-size: 1.8em;
   font-weight: bold;
-  white-space: wrap; /* Keeps the text on a single line */
+  white-space: nowrap; /* Keeps the text on a single line */
   max-width: 100%; /* Ensures the text does not exceed its container */
   font-size: 1.5vw;
 }
