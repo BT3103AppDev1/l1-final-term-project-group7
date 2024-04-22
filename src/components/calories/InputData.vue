@@ -12,6 +12,9 @@
 
           <label for="steps">Step Count:</label>
           <input type="number" id="steps" v-model="formData.steps">
+
+          <label for="duration">Exercise Duration:</label>
+          <input type="number" id="duration" v-model="formData.duration">
         </div>
 
         <div class="button-group">
@@ -45,6 +48,7 @@
           const today = new Date().toISOString().slice(0, 10);
           const weightDocRef = doc(db, 'users', user.uid, 'weights', today);
           const stepsDocRef = doc(db, 'users', user.uid, 'steps', today);
+          const durationDocRef = doc(db, 'users', user.uid, 'exerciseDuration', today);
           const weightDataToWrite = {
             date: today,
             weight: formData.value.weight
@@ -55,15 +59,21 @@
             steps: formData.value.steps
           };
           
+          const durationDataToWrite = {
+            date: today,
+            duration: formData.value.duration
+          };
+
           try {
             // Write the data to Firestore
             await setDoc(weightDocRef, weightDataToWrite);
             await setDoc(stepsDocRef, stepsDataToWrite);
+            await setDoc(durationDocRef, durationDataToWrite);
             console.log('Data recorded successfully');
             
             // Close the popup and reset the form
             showPopup.value = false;
-            formData.value = { weight: null, steps: null };
+            formData.value = { weight: null, steps: null, exerciseDuration:  null };
           } catch (error) {
             console.error('Error recording data to Firestore:', error);
           }
