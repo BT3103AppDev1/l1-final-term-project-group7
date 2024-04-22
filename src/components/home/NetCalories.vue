@@ -81,9 +81,10 @@
         const user = auth.currentUser;
         if (user) {
             // Reference to the user's collection
-            const userInfoRef = doc(db, 'users', user.uid);
-            const userInfoDoc = await getDoc(userInfoRef);
-            const calorieGoal = 2500;
+            const caloriesGoalDocRef = doc(db, 'users', user.uid, 'goals', 'CalorieGoal'); 
+            const caloriesGoalDoc = await getDoc(caloriesGoalDocRef);
+            const calorieGoal = caloriesGoalDoc.data().CalorieGoal
+            console.log(calorieGoal)
 
             const caloriesDateCollectionRef = collection(db, 'users', user.uid, 'caloriesDate');
             const q = query(

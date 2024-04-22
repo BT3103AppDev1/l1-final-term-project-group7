@@ -105,13 +105,13 @@
       const auth = getAuth();
       const showEditPopup = ref(false);
       const newCalorieGoal = ref('');
-      const userCalorieGoal = ref(2500); // Default value, will be updated from Firestore
+      const userCalorieGoal = ref(0); // Default value, will be updated from Firestore
 
       // update user's calorie goal in firestore
       const updateCalorieGoal = async () => {
         const user = auth.currentUser; 
         if (user) {
-          const calorieGoalDocRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
+          const calorieGoalDocRef = doc(db, 'users', user.uid, 'goals', 'CalorieGoal');
           try {
             // Write the new calorie goal to Firestore
             await setDoc(calorieGoalDocRef, { CalorieGoal: newCalorieGoal.value });
