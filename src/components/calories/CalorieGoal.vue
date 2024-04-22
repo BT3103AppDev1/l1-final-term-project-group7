@@ -6,7 +6,7 @@
       <div class="goalInfo">
         <div class="calories">
           <span>CURRENT CALORIE GOAL: </span>
-          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / 2500</span>
+          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / {{ userCalorieGoal }}</span>
         </div>
       <!--Calorie Goal Doughnut-->
       </div>
@@ -35,11 +35,11 @@
   </template>
   
   <script>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { Doughnut } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
   import { db } from '@/firebase';
-  import { doc, setDoc } from 'firebase/firestore';
+  import { doc, setDoc, getDoc } from 'firebase/firestore';
   import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
   
@@ -62,10 +62,10 @@
 
     computed: {
       goalExceeded() {
-        return this.netCalories > 2500;
+        return this.netCalories > this.userCalorieGoal;
       },
       progress() {
-        const remainingCalories =  Math.max(2500 - this.netCalories, 0);
+        const remainingCalories =  Math.max(this.userCalorieGoal - this.netCalories, 0);
         return {
           datasets: [
             {
@@ -99,19 +99,33 @@
         console.log('New Calorie Goal:', this.calorieGoalInput);
         this.showEditPopup = !this.showEditPopup;
       },
-      submitGoal() {
-        // Here you would handle syncing with Firestore
-        console.log('New Calorie Goal:', this.calorieGoalInput);
-        // Assuming you want to hide the popup after submitting
-        this.showEditPopup = false;
-      }
+      async fetchCalorieGoal() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+          const calorieGoalRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
+          try {
+            const calorieGoalDoc = await getDoc(calorieGoalRef);
+            if (calorieGoalDoc.exists()) {
+              this.userCalorieGoal = calorieGoalDoc.data().CalorieGoal;
+              console.log('test')
+            } else {
+              console.log('No calorie goal found');
+            }
+          } catch (error) {
+            console.error('Error fetching calorie goal:', error);
+          }
+        }
+      },
     },
 
     setup() {
       const auth = getAuth();
       const showEditPopup = ref(false);
       const newCalorieGoal = ref('');
+      const userCalorieGoal = ref(2500); // Default value, will be updated from Firestore
 
+      // update user's calorie goal in firestore
       const updateCalorieGoal = async () => {
         const user = auth.currentUser; 
         if (user) {
@@ -124,6 +138,11 @@
             // Close the popup and reset the input
             showEditPopup.value = false;
             newCalorieGoal.value = '';
+
+            console.log('New Calorie Goal:', this.calorieGoalInput);
+            // hide the popup after submitting
+            this.showEditPopup = false;
+            // Return reactive properties and methods
           } catch (error) {
             console.error('Error updating calorie goal:', error);
           }
@@ -131,8 +150,34 @@
           console.log('No user signed in');
         }
       };
-      // Return reactive properties and methods
-      return { showEditPopup, newCalorieGoal, updateCalorieGoal };
+
+      // Fetch user's calorie goal from firestore
+      const fetchCalorieGoal = async () => {
+        const user = auth.currentUser;
+        if (user) {
+          const calorieGoalRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
+          try {
+            const calorieGoalDoc = await getDoc(calorieGoalRef);
+            if (calorieGoalDoc.exists()) {
+              userCalorieGoal.value = calorieGoalDoc.data().CalorieGoal;
+            } else {
+              console.log('No calorie goal found');
+            }
+          } catch (error) {
+            console.error('Error fetching calorie goal:', error);
+          }
+        }
+      };
+
+      onMounted(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            fetchCalorieGoal();
+          }
+        });
+      });
+
+      return { showEditPopup, newCalorieGoal, updateCalorieGoal, userCalorieGoal};
     }
   }
   </script>
