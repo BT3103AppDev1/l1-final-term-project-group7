@@ -25,7 +25,7 @@
           <label for="newGoal">Enter new calorie goal:</label>
           <input type="number" id="newGoal" v-model.number="newCalorieGoal" placeholder="Enter new calorie goal">
           <div class="popup-buttons">
-            <button @click="recordData">Update Goal</button>
+            <button @click="updateCalorieGoal">Update Goal</button>
             <button @click="showEditGoalPopup">Cancel</button>
           </div>
         </form>
@@ -35,10 +35,13 @@
   </template>
   
   <script>
+  import { ref } from 'vue';
   import { Doughnut } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
   import { db } from '@/firebase';
   import { doc, setDoc } from 'firebase/firestore';
+  import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
   
   // Register the required components
   ChartJS.register(Title, Tooltip, Legend, ArcElement);
@@ -102,8 +105,36 @@
         // Assuming you want to hide the popup after submitting
         this.showEditPopup = false;
       }
+    },
+
+    setup() {
+      const auth = getAuth();
+      const showEditPopup = ref(false);
+      const newCalorieGoal = ref('');
+
+      const updateCalorieGoal = async () => {
+        const user = auth.currentUser; 
+        if (user) {
+          const calorieGoalDocRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
+          try {
+            // Write the new calorie goal to Firestore
+            await setDoc(calorieGoalDocRef, { CalorieGoal: newCalorieGoal.value });
+            console.log('Calorie goal updated successfully');
+            
+            // Close the popup and reset the input
+            showEditPopup.value = false;
+            newCalorieGoal.value = '';
+          } catch (error) {
+            console.error('Error updating calorie goal:', error);
+          }
+        } else {
+          console.log('No user signed in');
+        }
+      };
+      // Return reactive properties and methods
+      return { showEditPopup, newCalorieGoal, updateCalorieGoal };
     }
-  };
+  }
   </script>
   
 
