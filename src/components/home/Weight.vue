@@ -16,7 +16,6 @@
   import { collection, query, orderBy, getDocs } from 'firebase/firestore';
   import firebaseApp from '@/firebase';
   
-
   // Get a reference to the auth service
   const auth = getAuth(firebaseApp);
 

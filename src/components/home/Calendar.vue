@@ -1,26 +1,63 @@
   <template>
     <div class="calendar-widget">
       <div class="day" v-for="workout in workouts" :key="workout.id">
-        <div class="date">{{ workout.date }}</div>
+        <div class="date">{{ workout.date.toDate().toDateString() }}</div>
         <div class="activity" v-if="workout.activity">{{ workout.activity }}</div>
       </div>
     </div>
   </template>
   
   <script>
+  import { getAuth, onAuthStateChanged } from 'firebase/auth';
+  import { db } from '@/firebase'; // Assuming this is correctly importing your Firebase database instance
+  import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+  
+  // Initialize the authentication service
+  const auth = getAuth();
+
   export default {
-    name: 'calendarWidget',
+    name: 'CalendarWidget',
     data() {
       return {
-        workouts: [
-          { id: 1, date: 'TODAY, 23 MAR', activity: 'PUSH WORKOUT' },
-          { id: 2, date: 'TOMORROW 24 MAR', activity: 'PULL WORKOUT' },
-          { id: 3, date: 'MONDAY,  25 MAR', activity: 'RUN' },
-        ]
+        workouts: []
       };
+    },
+    created() {
+      // Listen for auth state changes and then fetch workouts
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.fetchRoutines();
+        }
+      });
+    },
+    methods: {
+      // Async method to fetch routines
+      fetchRoutines: async function() {
+        const user = auth.currentUser;
+        if (user) {
+          try {
+            // Reference to the user's routines collection
+            const routinesQuery = query(
+              collection(db, 'users', user.uid, 'routines'),
+              orderBy('createdAt', 'desc'),
+              limit(3)
+            );
+            // Execute the query
+            const querySnapshot = await getDocs(routinesQuery);
+            this.workouts = querySnapshot.docs.map(doc => ({
+              id: doc.id,
+              date: doc.data().createdAt, // Retrieve the date from the document
+              activity: doc.data().name  // Retrieve the workout name from the document
+            })).reverse();
+
+          } catch (error) {
+            console.error("Error fetching routines: ", error);
+          }
+        }
+      }
     }
   }
-  </script>
+</script>
   
   <style scoped>
   .calendar-widget {
