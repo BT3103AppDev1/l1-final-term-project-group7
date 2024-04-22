@@ -93,8 +93,7 @@ export default {
 }
 
 input {
-  display: flex;
-  width: 90%; 
+  flex-grow: 1;
   padding: 8px; 
   border: 1px solid #ccc; 
   border-radius: 4px;
@@ -120,7 +119,6 @@ button:hover {
 
 #errorMsg{
   color: red;
-  max-width: 70%
 }
 
 </style>

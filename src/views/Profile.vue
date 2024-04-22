@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="profileContainer">
-      <h1> Profile Page </h1>
+      <h1>My Profile</h1>
       <div id="profileDisplay">
         <div id="profileInfo">
           <ProfileInfo/>
@@ -65,15 +65,19 @@ export default {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   background-color: white;
   border-radius: 8px;
-  margin: 10%;
+  min-width: fit-content;
+  margin: 100px;
 }
 
 #profileDisplay {
   display: flex;
+  justify-content: space-evenly;
+  gap: 50px;
+  margin-bottom: 20px;
 }
 
-#profileInfo, #changePassword {
-  width: 50%;
+#changePassword {
+  width: 40%;
 }
 
 h1 {
