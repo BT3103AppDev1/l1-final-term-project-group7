@@ -70,7 +70,7 @@ export default {
   flex:30%;
   justify-content: center;
   align-items: center;
-  border:solid;
+  /* border:solid; */
 }
 
 .calories-container {
