@@ -7,16 +7,16 @@
       </div>
       <div class="stats">
         <div class="stat" id="steps">
-          <span class="label">STEPS: 89%</span>
-          <span>13050 / 15000</span>
+          <span class="label">STEPS: {{ (steps / stepsGoal * 100).toFixed(0) }}%</span>
+          <span>{{ steps }} / {{ stepsGoal }}</span>
         </div>
         <div class="stat" id="exercise_duration">
-          <span class="label">DAILY EXERCISE: 75%</span>
-          <span>40 / 60 MINUTES</span>
+          <span class="label">DAILY EXERCISE: {{ (exerciseDuration / exerciseDurationGoal * 100).toFixed(0) }}%</span>
+          <span>{{ exerciseDuration }} / {{ exerciseDurationGoal }} MINUTES</span>
         </div>
         <div class="stat" id="exercises_completed">
-          <span class="label" >TOTAL EXERCISES COMPLETED: 40%</span>
-          <span>100 / 250</span>
+          <span class="label" >TOTAL EXERCISES COMPLETED: {{ (exerciseAttempted / exerciseAttemptedGoal * 100).toFixed(0) }}%</span>
+          <span>{{ exerciseAttempted }} / {{ exerciseAttemptedGoal }} EXERCISES COMPLETED</span>
         </div>
       </div>
       <Doughnut 
@@ -27,41 +27,63 @@
   </template>
   
   <script>
+  import { ref, onMounted } from 'vue';
   import { Doughnut } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+  import { db } from '@/firebase'; // Import your firebase configurations
+  import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+  import { getAuth, onAuthStateChanged } from 'firebase/auth';
+  import firebaseApp from '@/firebase';
   
   // Register the required components
   ChartJS.register(Title, Tooltip, Legend, ArcElement);
   
+   // Get a reference to the auth service
+   const auth = getAuth(firebaseApp);
+
   export default {
     name: 'activityWidget',
     components: {
       Doughnut
     },
-    data() {
-      return {
-        progress: {
+
+    computed: {
+      progress() {
+        return {
           datasets: [
             {
-                label: 'Steps',
-                data: [89, 11], // Remaining percentage to complete the circle
-                backgroundColor: ['rgba(255, 49, 98, 0.8)', 'rgba(255, 49, 98, 0.3)'], 
-                borderWidth: 0, // No borders
+              label: 'Steps',
+              data: [
+                this.steps,
+                (this.stepsGoal - this.steps > 0 ? this.stepsGoal - this.steps : 0)
+              ], // Remaining percentage to complete the circle
+              backgroundColor: ['rgba(255, 49, 98, 0.8)', 'rgba(255, 49, 98, 0.3)'], 
+              borderWidth: 0, // No borders
             },
             {
-                label: 'Daily Exercise',
-                data: [75, 25], // Remaining percentage to complete the circle
-                backgroundColor: ['rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
-                borderWidth: 0,
+              label: 'Daily Exercise',
+              data: [
+                this.exerciseDuration, 
+                (this.exerciseDurationGoal - this.exerciseDuration > 0 ? this.exerciseDurationGoal - this.exerciseDuration : 0)
+              ], // Remaining percentage to complete the circle
+              backgroundColor: ['rgba(126, 217, 87, 1)', 'rgba(126, 217, 87, 0.3)'], 
+              borderWidth: 0,
             },
             {
-                label: 'Total Exercises Completed',
-                data: [40, 60], // Remaining percentage to complete the circle
-                backgroundColor: ['rgba(45,137,239,0.8)', 'rgba(45,137,239,0.3)'],
-                borderWidth: 0,
+              label: 'Total Exercises Completed',
+              data: [
+                this.exerciseAttempted, 
+                (this.exerciseAttemptedGoal - this.exerciseAttempted > 0 ? this.exerciseAttemptedGoal - this.exerciseAttempted : 0)
+              ], // Remaining percentage to complete the circle
+              backgroundColor: ['rgba(45,137,239,0.8)', 'rgba(45,137,239,0.3)'],
+              borderWidth: 0,
             }
           ]
-        },
+        };
+      },
+    }, 
+    data() {
+      return {
         options: {
           responsive: true,
           maintainAspectRatio: false,
@@ -71,6 +93,89 @@
           },
         }
       };
+    },
+    setup() {
+      const steps = ref(0);
+      const stepsGoal = ref(0);
+      const exerciseDurationGoal = ref(0);
+      const exerciseDuration = ref(0);
+      const exerciseAttempted = ref(0);
+      const exerciseAttemptedGoal = ref(0);
+
+      // Fetch user's current steps count and steps goal from Firestore
+      const fetchData = async () => {
+        const user = auth.currentUser;
+        if(user) {
+          try {
+            // Steps
+            const stepsCollectionRef = collection(db, 'users', user.uid, 'steps');
+            const stepDocIds = [];
+            const snapshot = await getDocs(stepsCollectionRef);
+            snapshot.forEach(doc => {
+              // Add document ID to the array
+              stepDocIds.push(doc.id);
+            });
+            // Sort the array of document IDs in descending order
+            stepDocIds.sort((a, b) => b.localeCompare(a));   
+
+            const stepsDocRef = doc(db, 'users', user.uid, 'steps', stepDocIds[0]);  // latest doc
+            const stepsGoalDocRef = doc(db, 'users', user.uid, 'goals', 'StepsGoal'); 
+
+            // Exercise Duration 
+            const durationCollectionRef = collection(db, 'users', user.uid, 'exerciseDuration');
+            const durationDocIds = [];
+            const snapshot_duration = await getDocs(durationCollectionRef);
+            snapshot_duration.forEach(doc => {
+              // Add document ID to the array
+              durationDocIds.push(doc.id);
+            });
+            // Sort the array of document IDs in descending order
+            durationDocIds.sort((a, b) => b.localeCompare(a)); 
+            const ExerciseDurationDocRef = doc(db, 'users', user.uid, 'exerciseDuration', durationDocIds[0]);  // latest doc
+            const ExerciseDurationGoalDocRef = doc(db, 'users', user.uid, 'goals', 'ExerciseDuration'); 
+            
+            // Exercises Attempted
+            const ExerciseAttemptedGoalDocRef = doc(db, 'users', user.uid, 'goals', 'ExerciseAttemptedGoal'); 
+
+            const stepsDoc = await getDoc(stepsDocRef);
+            const stepsGoalDoc = await getDoc(stepsGoalDocRef);
+            const ExerciseDurationDoc = await getDoc(ExerciseDurationDocRef);
+            const ExerciseDurationGoalDoc = await getDoc(ExerciseDurationGoalDocRef);
+            const ExerciseAttemptedGoalDoc = await getDoc(ExerciseAttemptedGoalDocRef);
+
+            if (stepsDoc.exists() && stepsGoalDoc.exists() && ExerciseDurationDoc.exists() && ExerciseAttemptedGoalDoc.exists() && ExerciseDurationGoalDoc.exists()) {
+              // Steps
+              steps.value = stepsDoc.data().steps;
+              stepsGoal.value = stepsGoalDoc.data().StepsGoal;
+              console.log(steps.value / stepsGoal.value)
+
+              // Exercise Duration 
+              exerciseDurationGoal.value = ExerciseDurationGoalDoc.data().ExerciseDurationGoal
+              exerciseDuration.value = ExerciseDurationDoc.data().duration
+
+              // Exercise Attempted
+              exerciseAttemptedGoal.value = ExerciseAttemptedGoalDoc.data().ExercisesAttemptedGoal
+              exerciseAttempted.value = ExerciseAttemptedGoalDoc.data().ExercisesAttempted
+
+            } else {
+              console.log('No steps data found');
+            }
+          } catch (error) {
+            console.error('Error fetching steps data:', error);
+          }
+        }
+      };
+
+      onMounted(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            fetchData();
+          }
+        });
+      });
+
+      // Return all the reactive properties and methods
+      return { steps, stepsGoal, exerciseDurationGoal, exerciseDuration, exerciseAttemptedGoal, exerciseAttempted };
     }
   };
   </script>
