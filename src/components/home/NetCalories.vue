@@ -81,10 +81,9 @@
         const user = auth.currentUser;
         if (user) {
             // Reference to the user's collection
-            const caloriesGoalDocRef = doc(db, 'users', user.uid, 'goals', 'CalorieGoal'); 
-            const caloriesGoalDoc = await getDoc(caloriesGoalDocRef);
-            const calorieGoal = caloriesGoalDoc.data().CalorieGoal
-            console.log(calorieGoal)
+            const userInfoRef = doc(db, 'users', user.uid);
+            const userInfoDoc = await getDoc(userInfoRef);
+            const calorieGoal = 2500;
 
             const caloriesDateCollectionRef = collection(db, 'users', user.uid, 'caloriesDate');
             const q = query(
@@ -97,7 +96,6 @@
             // Reset chart data before adding new data
             chartData.labels = [];
             chartData.datasets[0].data = [];
-            console.log('test')
 
             // Populate chart data with steps from Firestore
             querySnapshot.forEach((doc) => {
