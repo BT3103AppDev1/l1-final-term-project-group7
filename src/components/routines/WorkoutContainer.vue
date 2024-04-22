@@ -15,11 +15,13 @@
       </div>
     </div>
     <img :src=containerIntensity.image :style="{width : '100%'}">
-    <h2>
+    <h3>
       Intensity: {{ containerIntensity.label }}
       <br>
       Duration: {{ totalDuration }} min
-    </h2>
+      <br>
+      Date: {{ formattedDate }}
+    </h3>
     <ul id="list-exercises">
       <li v-for="(exercise, index) in exercises" :key="index" @click="clickExerciseByName(exercise)">
         {{ exercise }}
@@ -28,7 +30,8 @@
     </ul>
 
     <!-- Edit Interface -->
-    <div v-if="isEditing">
+    <div v-if="isEditing" class="edit-interface">
+      <input type="date" v-model="editingDate" placeholder="Select Date" />
       <select v-model="selectedExercise">
         <option disabled value="">Select an exercise</option>
         <option v-for="exercise in likedExercises" :key="exercise.id" :value="exercise.id">
@@ -62,9 +65,20 @@ export default {
   components: {
     WorkoutInfo
   },
+  data() {
+    return {
+      isEditing: false,
+      selectedExercise: '',
+      editingDate: '',
+      refreshComp: 0,
+      loading: false,
+      error: null,
+      showWorkoutInfo: false,
+    }
+  },
   props: {
     routineName: String,
-    routineImage: String,
+    routineDate: String,
     routineDuration: String,
     exercises: {
       type: Array,
@@ -101,16 +115,32 @@ export default {
     },
     totalDuration() {
       return this.exercises.length * 10;
-    }
-  },
-  data() {
-    return {
-      isEditing: false,
-      selectedExercise: '',
-      refreshComp: 0,
-      loading: false,
-      error: null,
-      showWorkoutInfo: false,
+    },
+    formattedDate() {
+      if (!this.routineDate) return ""; // Return empty string if no date is set
+
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const months = ["January", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "October", "November", "December"];
+      const date = new Date(this.routineDate);
+
+      const dayOfWeek = daysOfWeek[date.getDay()];
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+
+      // Function to add suffix to date
+      const suffix = (day) => {
+        if (day > 3 && day < 21) return 'th';
+        switch (day % 10) {
+          case 1:  return "st";
+          case 2:  return "nd";
+          case 3:  return "rd";
+          default: return "th";
+        }
+      };
+
+      return `${dayOfWeek}, ${day}${suffix(day)} ${months[monthIndex]} ${year}`;
     }
   },
   methods: {
@@ -156,24 +186,26 @@ export default {
     beginEdit() {
       if (this.isEditingActive) {
         // If editing is active elsewhere, log the attempt and stop the process
-        console.log("Another routine is currently being edited.");
         alert("Another routine is already being edited. Please save or cancel the current changes before editing another routine.");
         return; // Stop the edit method from proceeding
       }
       this.isEditing = true;
+      this.editingDate = this.routineDate;
       this.$emit('editing-changed', true);
       console.log("Edit state active");
     },
     endEdit() {
       this.isEditing = false;
       this.$emit('editing-changed', false);
-      this.$emit('update-routine', this.routineName, this.exercises);
+      this.$emit('update-routine', this.routineName, this.exercises, this.editingDate);
       console.log("Edit state inactive");
     },
     addExercise() {
       if (this.selectedExercise) {
         this.exercises.push(this.selectedExercise);
         console.log("exercise added")
+      } else {
+        alert("You have not selected an exercise.")
       }
     },
     deleteExercise(index) {
@@ -219,10 +251,6 @@ export default {
   width: 100%;
 }
 
-ul {
-  margin-top: 0px;
-}
-
 li {
   font-size: 1em;
   cursor: pointer;
@@ -253,12 +281,17 @@ li {
   justify-content: right;
 }
 
+.edit-interface {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 select {
   border-radius: 20px;
   border-width: 0px;
-  padding: 5px 50px 5px 10px; 
+  padding: 5px 10px; 
   width: 100%;
-  margin-bottom: 15px
 }
 
 button {
@@ -269,7 +302,13 @@ button {
   background-color: white;
 }
 
-h2 {
+input {
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 5px 10px;
+}
+
+h3 {
   margin: 0px
 }
 </style>

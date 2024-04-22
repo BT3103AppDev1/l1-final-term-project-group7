@@ -2,7 +2,8 @@
   <div class="routines">
     <h2 id="create-routine-title">Create Routine:</h2>
     <div id="create-routine">
-      <input type="text" v-model="newRoutineName" placeholder="Enter Routine Name" />
+      <input id="name-field" type="text" v-model="newRoutineName" placeholder="Enter Routine Name" />
+      <input type="date" v-model="newRoutineDate" placeholder="Select Date" />
       <select v-model="selectedExercise">
         <option disabled value="">Select an exercise</option>
         <option v-for="exercise in likedExercises" :key="exercise.id" :value="exercise.id">
@@ -20,7 +21,7 @@
         v-for="routine in routines"
         :key="routine.id"
         :routineName="routine.name"
-        :routineImage="routine.image"
+        :routineDate="routine.date"
         :routineDuration="routine.duration"
         :exercises="routine.exercises"
         :likedExercises="likedExercises"
@@ -51,8 +52,9 @@ export default {
       showDropdown: false, // Controls the visibility of the dropdown
       routines: [], // Stores all saved routines
       currentRoutine: [], // Stores the current routine being built
-      selectedExercise: null, // The currently selected exercise to add to the routine
+      selectedExercise: "", // The currently selected exercise to add to the routine
       newRoutineName: '', // Data property for the new routine name
+      newRoutineDate: '', // Data property for the new routine date
       activeEditCount: 0, // Counter to track edit state, ensure to multiple edits
       isEditingActive: false, // Single flag to indicate if any editing is active
     }
@@ -94,7 +96,7 @@ export default {
         this.currentRoutine.push(this.selectedExercise);
         console.log("added " + this.selectedExercise);
         console.log(this.currentRoutine);
-        this.selectedExercise = null; // Reset the selection
+        this.selectedExercise = ""; // Reset the selection
       } else {
         alert("You have not selected an exercise.")
       }
@@ -105,21 +107,22 @@ export default {
       const routineRef = doc(db, 'users', user.uid, 'routines', this.newRoutineName);
       await setDoc(routineRef, {
         name: this.newRoutineName,
-        exercises: exercises, // Ensure this is just an array
-        createdAt: new Date()
+        exercises: exercises,
+        date: this.newRoutineDate,
+        createdAt: new Date() // Optional property
       }, { merge: true });
       console.log(`Routine '${this.newRoutineName}' saved to Firestore`);
-      this.newRoutineName = '';
     },
     saveRoutine() {
-      if (this.currentRoutine.length && this.newRoutineName) {
+      if (this.currentRoutine.length && this.newRoutineName && this.newRoutineDate) {
         this.saveRoutineToFirestore(this.currentRoutine); // Pass the array of exercises
         // Add to local routines array if needed...
         this.currentRoutine = []; // Reset for the next input
         this.newRoutineName = ''; // Reset the routine name
+        this.newRoutineDate = ''; // Reset the routine date
         this.fetchRoutines(); // Update the display
       } else {
-        alert("Routine name or exercises are missing.");
+        alert("One of the required fields are missing.");
       }
     },
     async fetchRoutines() {
@@ -133,6 +136,7 @@ export default {
             id: doc.id,
             name: doc.data().name,
             exercises: doc.data().exercises,
+            date: doc.data().date,
           }));
           console.log("Routines fetched from Firestore");
         } else {
@@ -158,17 +162,18 @@ export default {
         console.error("Failed to delete routine:", error.message);
       }
     },
-    async updateRoutine(routineId, updatedExercises) {
+    async updateRoutine(routineId, updatedExercises, updatedDate) {
       const auth = getAuth();
       const user = auth.currentUser;
       if (user) {
         const routineRef = doc(db, 'users', user.uid, 'routines', routineId);
         try {
           await setDoc(routineRef, {
-            exercises: updatedExercises
+            exercises: updatedExercises,
+            date: updatedDate
           }, { merge: true });
           console.log(`Routine '${routineId}' updated in Firestore.`);
-          this.fetchRoutines(); // Optionally refresh the routines from Firestore to reflect changes
+          this.fetchRoutines(); // Refresh the routines from Firestore to reflect changes
         } catch (error) {
           console.error("Error updating routine:", error.message);
         }
@@ -199,13 +204,17 @@ export default {
 input {
   border-radius: 20px;
   border-width: 0px;
-  padding: 5px 50px 5px 10px;
+  padding: 5px 10px;
+}
+
+#name-field {
+  padding-right: 50px;
 }
 
 select {
   border-radius: 20px;
   border-width: 0px;
-  padding: 5px 50px 5px 10px; 
+  padding: 5px 10px; 
 }
 
 button {
