@@ -35,7 +35,7 @@
   </template>
   
   <script>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { Doughnut } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
   import { db } from '@/firebase';
@@ -99,24 +99,6 @@
         console.log('New Calorie Goal:', this.calorieGoalInput);
         this.showEditPopup = !this.showEditPopup;
       },
-      async fetchCalorieGoal() {
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (user) {
-          const calorieGoalRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
-          try {
-            const calorieGoalDoc = await getDoc(calorieGoalRef);
-            if (calorieGoalDoc.exists()) {
-              this.userCalorieGoal = calorieGoalDoc.data().CalorieGoal;
-              console.log('test')
-            } else {
-              console.log('No calorie goal found');
-            }
-          } catch (error) {
-            console.error('Error fetching calorie goal:', error);
-          }
-        }
-      },
     },
 
     setup() {
@@ -137,7 +119,8 @@
             
             // Close the popup and reset the input
             showEditPopup.value = false;
-            newCalorieGoal.value = '';
+            // Update the local userCalorieGoal with the new value
+            userCalorieGoal.value = newCalorieGoal.value;
 
             console.log('New Calorie Goal:', this.calorieGoalInput);
             // hide the popup after submitting
