@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="activity-widget">
       <div class="title">
         <p>
@@ -101,40 +101,24 @@
     padding-right: 5%;
     border-left: 1px solid rgba(255, 255, 255, 0.5); /* Separator line */
     font-size: 1em;
-    /* border: dashed */
   }
   
   .stat {
-    font-size: 1.2em; /* Increase the font size of stats */
+    font-size: 1.2em;
     margin: 3% 0; /* Space between stat items */
-    /* border : solid */
   }
 
   #steps {
     color: rgb(221, 34, 78);
-    /* text-shadow:
-    -0.5px -0.5px 0 #000,  
-    0.5px -0.5px 0 #000,
-    -0.5px  0.5px 0 #000,
-    0.5px  0.5px 0 #000; */
+
   }
 
   #exercise_duration {
     color: rgb(122, 212, 83);
-    /*text-shadow:
-    -0.5px -0.5px 0 #000,  
-    0.5px -0.5px 0 #000,
-    -0.5px  0.5px 0 #000,
-    0.5px  0.5px 0 #000; */
   }
   
   #exercises_completed {
     color: rgba(45,137,239,0.8);
-    /* text-shadow:
-    -0.5px -0.5px 0 #000,  
-    0.5px -0.5px 0 #000,
-    -0.5px  0.5px 0 #000,
-    0.5px  0.5px 0 #000; */
   }
 
   .label {

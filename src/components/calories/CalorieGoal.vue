@@ -1,38 +1,38 @@
 <template>
-    <div class="calorieGoalWidget">
-      <!--Target Icon-->
-      <img src="@/assets/Target-Icon.png" alt="Target Icon" class="goalIcon" />
-      <!--Calorie Goal Info-->
-      <div class="goalInfo">
-        <div class="calories">
-          <span>CURRENT CALORIE GOAL: </span>
-          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / {{ userCalorieGoal }}</span>
-        </div>
-      <!--Calorie Goal Doughnut-->
+  <div class="calorieGoalWidget">
+    <!--Target Icon-->
+    <img src="@/assets/Target-Icon.png" alt="Target Icon" class="goalIcon" />
+    <!--Calorie Goal Info-->
+    <div class="goalInfo">
+      <div class="calories">
+        <span>CURRENT CALORIE GOAL: </span>
+        <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / {{ userCalorieGoal }}</span>
       </div>
-      <Doughnut 
-        id="CalorieGoalDoughnut"
-        :data="progress" 
-        :options="options" 
-      />
-      <!--Edit Calorie Goal-->
-      <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="edit-goal-icon" @click="showEditGoalPopup" />
+    <!--Calorie Goal Doughnut-->
+    </div>
+    <Doughnut 
+      id="CalorieGoalDoughnut"
+      :data="progress" 
+      :options="options" 
+    />
+    <!--Edit Calorie Goal-->
+    <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="edit-goal-icon" @click="showEditGoalPopup" />
 
-      <div v-if="showEditPopup" class="overlay">
-        <div class="popup">
-        <h2>Edit Calorie Goal</h2>
-        <form @submit.prevent="submitNewGoal">
-          <label for="newGoal">Enter new calorie goal:</label>
-          <input type="number" id="newGoal" v-model.number="newCalorieGoal" placeholder="Enter new calorie goal">
-          <div class="popup-buttons">
-            <button @click="updateCalorieGoal">Update Goal</button>
-            <button @click="showEditGoalPopup">Cancel</button>
-          </div>
-        </form>
+    <div v-if="showEditPopup" class="overlay">
+      <div class="popup">
+      <h2>Edit Calorie Goal</h2>
+      <form @submit.prevent="submitNewGoal">
+        <label for="newGoal">Enter new calorie goal:</label>
+        <input type="number" id="newGoal" v-model.number="newCalorieGoal" placeholder="Enter new calorie goal">
+        <div class="popup-buttons">
+          <button @click="updateCalorieGoal">Update Goal</button>
+          <button @click="showEditGoalPopup">Cancel</button>
         </div>
+      </form>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import { ref, onMounted, watch } from 'vue';
@@ -138,7 +138,7 @@
       const fetchCalorieGoal = async () => {
         const user = auth.currentUser;
         if (user) {
-          const calorieGoalRef = doc(db, 'users', user.uid, 'CalorieGoal', 'CalorieGoal');
+          const calorieGoalRef = doc(db, 'users', user.uid, 'goals', 'CalorieGoal');
           try {
             const calorieGoalDoc = await getDoc(calorieGoalRef);
             if (calorieGoalDoc.exists()) {
