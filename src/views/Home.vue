@@ -1,5 +1,4 @@
 <template>
-  <h1>Home Page</h1>
   <div class="container">
     <div class="top-row">
       <div class="chart weight">

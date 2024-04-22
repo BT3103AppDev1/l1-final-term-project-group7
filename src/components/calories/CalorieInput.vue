@@ -44,10 +44,6 @@
       <div class="total-calories">Total: {{ totalBurntCalories }} kcal</div>
     </div>
   </div>
-
-  <div class="net-calories">
-      <h3>Net Calories: {{  netCalories }} kcal</h3>
-  </div>
 </template>
   
 <script>
@@ -257,16 +253,28 @@ export default {
   justify-content: space-between;
   padding: 1rem;
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 80%;
 }
 
-.calories-input, .calories-burnt {
-  width: 45%;
+@media (min-width: 768px) { /* Adjust this breakpoint as needed */
+  .calories-input-widget {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .calories-input, .calories-burnt {
+    width: 45%; /* Subtracting margin */
+    margin-right: 5%; /* Add margin between the two boxes */
+  }
+
+  .calories-burnt {
+    margin-right: 0; 
+  }
 }
 
 .input-label {
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1.8em;
   color: #1c43c2; 
   margin-bottom: 0.5rem; 
   display: block; 
@@ -275,6 +283,7 @@ export default {
 .search-container { 
   position: relative; /* Establishes a positioning context for search icon */
   display: block;
+  /* border:solid; */
 }
 
 .search-input {
@@ -290,10 +299,12 @@ export default {
   cursor: pointer;
   height: 30px; /* Height of the button should be the same as the input field */
   width: 30px; /* Width of the button */
+  /* border:solid; */
 }
 .search-icon {
   width: 100%;
   height: auto;
+  /* border:solid; */
 }
 
 
@@ -324,19 +335,25 @@ li {
 
 .list-item {
   display: flex; 
+  flex-wrap: wrap;
   justify-content: space-between; /* Arrange content and delete button on opposite ends */
   align-items: center; 
-  padding: 0.5rem 2rem; 
-  margin: 8px 0; 
+  padding: 0.5rem 1rem; 
+  margin: 0.5rem 0; 
   background-color: #ffffff; 
   border-radius: 10px; 
+  width: 95%;
 }
 
 .delete-icon {
+  position: absolute;
+  top: 50%; /* Position halfway down the parent container */
+  right: 10px; /* Position from the right of the parent container */
+  transform: translateY(-50%); /* Center it vertically */
   cursor: pointer; /* Change cursor to pointer when hovering over the icon */
-  width: 20px; /* Set width for the delete icon */
-  height: 20px; /* Set height for the delete icon */
-  margin-left: 10px
+  width: 20px; 
+  height: 20px; 
+  margin-left: 10px;
 }
 
 ul li::before {
@@ -346,7 +363,7 @@ ul li::before {
   background-color: #1c43c2; 
   border-radius: 50%; 
   position: absolute; /* Positions it relative to the list item */
-  left: 10px; /* Distance from the left side of the list item */
+  left: 1%; /* Distance from the left side of the list item */
 }
 
 ul li:last-child {
@@ -356,6 +373,7 @@ ul li:last-child {
 .total-calories { 
   padding-top: 1rem;
   font-weight: bold;
+  font-size: 1em;
 }
 </style>
   
