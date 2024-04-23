@@ -3,7 +3,7 @@
     <div id="title-row">
       <h1 id="workout-title">{{ this.$capitalizeFirstLetter(exerciseName) }}</h1>
       <a href="#" @click="toggleLike" class="clickable-img-wrapper">
-        <img :src="isLiked ? './src/assets/Liked-Icon.png' : './src/assets/Like-Icon.png'" alt="likeIcon" class="icon">
+        <img :src="isLiked ? likedIcon : likeIcon" alt="likeIcon" class="icon">
       </a>
       <a @click.prevent="hideWorkoutInfo" class="clickable-img-wrapper">
         <img src="@/assets/Cross-Icon.png" alt="crossButton" class="icon">
@@ -42,6 +42,9 @@ import { db } from '@/firebase';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import firebaseApp from '@/firebase';
 
+import likedIcon from '@/assets/Liked-Icon.png';
+import likeIcon from '@/assets/Like-Icon.png';
+
 // Get a reference to the auth service
 const auth = getAuth(firebaseApp);
 
@@ -58,6 +61,8 @@ export default {
     return {
       youtubeLink: '',
       isLiked: false, // This will be updated based on Firestore data
+      likedIcon,
+      likeIcon,
     };
   },
   methods: {

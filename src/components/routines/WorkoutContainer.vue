@@ -60,6 +60,10 @@
 import axios from 'axios';
 import WorkoutInfo from '@/components/workouts/WorkoutInfo.vue';
 
+import lowIntensityImage from '@/assets/Low-Intensity-Workout.webp';
+import mediumIntensityImage from '@/assets/Medium-Intensity-Workout.webp';
+import highIntensityImage from '@/assets/High-Intensity-Workout.webp';
+
 export default {
   name: 'WorkoutContainer',
   components: {
@@ -101,15 +105,15 @@ export default {
       if (this.totalDuration <= 20) {
         result.class = 'low-intensity';
         result.label = 'Low';
-        result.image = './src/assets/Low-Intensity-Workout.webp';
+        result.image = lowIntensityImage;
       } else if (this.totalDuration <= 40) {
         result.class = 'medium-intensity';
         result.label = 'Medium';
-        result.image = './src/assets/Medium-Intensity-Workout.webp';
+        result.image = mediumIntensityImage;
       } else {
         result.class = 'high-intensity';
         result.label = 'High';
-        result.image = './src/assets/High-Intensity-Workout.webp';
+        result.image = highIntensityImage;
       }
       return result;
     },
@@ -289,6 +293,7 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 20px;
 }
 
 select {
