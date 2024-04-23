@@ -101,15 +101,15 @@ export default {
       if (this.totalDuration <= 20) {
         result.class = 'low-intensity';
         result.label = 'Low';
-        result.image = '@/assets/Low-Intensity-Workout.webp';
+        result.image = './src/assets/Low-Intensity-Workout.webp';
       } else if (this.totalDuration <= 40) {
         result.class = 'medium-intensity';
         result.label = 'Medium';
-        result.image = '@/assets/Medium-Intensity-Workout.webp';
+        result.image = './src/assets/Medium-Intensity-Workout.webp';
       } else {
         result.class = 'high-intensity';
         result.label = 'High';
-        result.image = '@/assets/High-Intensity-Workout.webp';
+        result.image = './src/assets/High-Intensity-Workout.webp';
       }
       return result;
     },
