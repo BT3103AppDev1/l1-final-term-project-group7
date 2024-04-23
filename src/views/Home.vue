@@ -19,6 +19,7 @@
         <calendarWidget />
       </div>
     </div>
+    <FeaturedExercise/>
   </div>
   
 </template>
@@ -29,6 +30,7 @@
   import calendarWidget from '@/components/home/Calendar.vue'
   import netCaloriesWidget from '@/components/home/NetCalories.vue'
   import activtyWidget from '@/components/home/Activity.vue'
+  import FeaturedExercise from '@/components/home/FeaturedExercise.vue'
 
   export default {
     name: 'App',
@@ -37,7 +39,8 @@
       stepsWidget,
       calendarWidget,
       netCaloriesWidget,
-      activtyWidget
+      activtyWidget,
+      FeaturedExercise,
     },
     data() {
       return {
