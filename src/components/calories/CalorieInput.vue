@@ -15,7 +15,9 @@
       <ul>
         <li v-for="meal in meals" :key="meal.id" class="list-item">
           <span>{{ capitaliseWords(meal.name) }}: {{ meal.calories }} kcal</span>
-          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(meal)">
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(meal)">
+          </a>
         </li>
       </ul>
 
@@ -37,7 +39,9 @@
       <ul>
         <li v-for="exercise in exercises" :key="exercise.id" class="list-item">
           <span>{{ capitaliseWords(exercise.name) }}: -{{ exercise.calories }} kcal </span>
-          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(exercise)">
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(exercise)">
+          </a>
         </li>
       </ul>
 
@@ -254,14 +258,15 @@ export default {
 <style scoped>
 .calories-input-widget {
   display: flex;
-  justify-content: space-between;
   padding: 1rem;
   border-radius: 10px;
-  max-width: 70%;
+  gap: 50px;
 }
 
-.calories-input, .calories-burnt {
-  width: 45%;
+@media (min-width: 768px) { /* Adjust this breakpoint as needed */
+  .calories-input, .calories-burnt {
+    width: max-content; /* Subtracting margin */
+  }
 }
 
 .input-label {
@@ -296,20 +301,10 @@ export default {
   height: auto;
 }
 
-
-.dropdown {
-  border: 2px solid #1c43c2; 
-  border-radius: 20px; 
-  padding: 10px 40px 10px 40px; /* Left padding to make room for the icon */
-  width: calc(100% - 20px); /* Adjust width to account for icon width */
-  outline: none; /* Removes the default focus outline */
-  font-size: 1em;
-}
-
 ul {
-list-style: none;
-padding: 0; 
-margin: 0;
+  list-style: none;
+  padding: 0; 
+  width: max-content;
 }
 
 li {
@@ -320,23 +315,24 @@ li {
   background-color: #ffffff; 
   border-radius: 10px; 
   position: relative; 
+  text-wrap: nowrap;
 }
 
 .list-item {
   display: flex; 
   justify-content: space-between; /* Arrange content and delete button on opposite ends */
   align-items: center; 
-  padding: 0.5rem 2rem; 
-  margin: 8px 0; 
+  margin-left: 0.5rem 0; 
   background-color: #ffffff; 
   border-radius: 10px; 
+  min-width: fit-content;
 }
 
 .delete-icon {
-  cursor: pointer; /* Change cursor to pointer when hovering over the icon */
-  width: 20px; /* Set width for the delete icon */
-  height: 20px; /* Set height for the delete icon */
-  margin-left: 10px
+  display: flex;
+  justify-self: center;
+  width: 20px; 
+  height: 20px;
 }
 
 ul li::before {
@@ -346,11 +342,7 @@ ul li::before {
   background-color: #1c43c2; 
   border-radius: 50%; 
   position: absolute; /* Positions it relative to the list item */
-  left: 10px; /* Distance from the left side of the list item */
-}
-
-ul li:last-child {
-  border-bottom: none; /* Removes bottom border from the last item */
+  left: 5%; /* Distance from the left side of the list item */
 }
 
 .total-calories { 
