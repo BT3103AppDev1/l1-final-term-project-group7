@@ -1,18 +1,21 @@
-<template>
-  <div class="featured-exercise-container" @click="clickedContainer">
-    <h1>{{ "Featured Exercise: " + randomExercise.name }}</h1>
-    <div class="overlay" v-if="showWorkoutInfo">
-      <WorkoutInfo 
-        :showWorkout="showWorkoutInfo"
-        :exerciseName="randomExercise.name"
-        :exerciseDifficulty="randomExercise.difficulty"
-        :exerciseType="randomExercise.type"
-        :exerciseSteps="randomExercise.instructions"
-        @close="showWorkoutInfo = false"
-      />
-    </div>
-  </div>
-</template>
+<template> 
+  <div class="featured-exercise-container"> 
+    <div @click="clickedContainer"> 
+      <h1>{{ "Featured Exercise: " + randomExercise.name }}</h1> 
+    </div> 
+    <div class="overlay" v-if="showWorkoutInfo"> 
+      <WorkoutInfo  
+        :showWorkout="showWorkoutInfo" 
+        :exerciseName="randomExercise.name" 
+        :exerciseDifficulty="randomExercise.difficulty" 
+        :exerciseType="randomExercise.type" 
+        :exerciseSteps="randomExercise.instructions" 
+        @close="showWorkoutInfo = false" 
+      /> 
+    </div> 
+  </div> 
+</template> 
+
 
 <script>
 import WorkoutInfo from '@/components/workouts/WorkoutInfo.vue';
