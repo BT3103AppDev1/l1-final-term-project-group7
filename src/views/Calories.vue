@@ -57,17 +57,16 @@ export default {
 <style scoped>
 .top-container {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   margin-top: 5%;
+  gap: 100px;
 }
 
 .calorie-goal {
-  flex: 70%;
-  margin-right: 2%; /* Adjust space between the components */
+  width: fit-content;
 }
 
 .input-data-pop-up{
-  flex:30%;
   justify-content: center;
   align-items: center;
   /* border:solid; */
@@ -76,22 +75,10 @@ export default {
 .calories-container {
   margin-top: 2%;
   display: flex;
-  justify-content: space-between; /* This will space out the children */
-  /* border: solid */
-}
-
-.calorie-input {
-  flex: 65%;
+  gap: 50px;
 }
 
 .net-calorie-chart {
-  flex: 35%; 
-  /* border:solid red; */
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* Full width */
+  align-self: center;
 }
 </style>

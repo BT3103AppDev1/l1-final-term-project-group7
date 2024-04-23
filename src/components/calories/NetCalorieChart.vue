@@ -90,14 +90,11 @@ export default {
 </script>
 <style scoped>
 .chartContainer {
-    background-color: white;
-    border-radius: 15px;
-    align-items: center;
-    padding: 1rem;
-    margin-top: 10%;
-    max-width: 85%;
-    font-weight: bold;
-    justify-content: space-around;
+  background-color: white;
+  border-radius: 15px;
+  align-items: center;
+  padding: 1rem;
+  font-weight: bold;
+  justify-content: space-around;
 }
-
 </style>
