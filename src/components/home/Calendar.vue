@@ -1,7 +1,7 @@
   <template>
     <div class="calendar-widget">
       <div class="day" v-for="workout in workouts" :key="workout.id">
-        <div class="date">{{ workout.date.toDate().toDateString() }}</div>
+        <div class="date">{{ workout.date.toDateString() }}</div>
         <div class="activity" v-if="workout.activity">{{ workout.activity }}</div>
       </div>
     </div>
@@ -46,7 +46,7 @@
             const querySnapshot = await getDocs(routinesQuery);
             this.workouts = querySnapshot.docs.map(doc => ({
               id: doc.id,
-              date: doc.data().createdAt, // Retrieve the date from the document
+              date: new Date(doc.data().date), // Retrieve the date from the document
               activity: doc.data().name  // Retrieve the workout name from the document
             })).reverse();
 

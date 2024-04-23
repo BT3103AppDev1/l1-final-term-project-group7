@@ -7,7 +7,9 @@
       <div class="search-container">
         <input v-model="mealQuery" placeholder="e.g 1kg Steak" class="search-input" @input="clearMealError">
         <button class="icon-button" @click="fetchAndStoreMeal">
-          <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- Clickable search icon -->
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> 
+          </a>
         </button>
         <p v-if="mealError" class="error-message">{{ mealError }}</p>
       </div>  
@@ -15,7 +17,9 @@
       <ul>
         <li v-for="meal in meals" :key="meal.id" class="list-item">
           <span>{{ capitaliseWords(meal.name) }}: {{ meal.calories }} kcal</span>
-          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(meal)">
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(meal)">
+          </a>
         </li>
       </ul>
 
@@ -29,7 +33,9 @@
       <div class="search-container">
         <input v-model="exerciseQuery" placeholder="Input Exercise" class="search-input" @input="clearExerciseError">
         <button class="icon-button" @click="fetchAndStoreExercise">
-          <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> <!-- Clickable search icon -->
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon">
+          </a>
         </button>
         <p v-if="exerciseError" class="error-message">{{ exerciseError }}</p>
       </div>  
@@ -37,7 +43,9 @@
       <ul>
         <li v-for="exercise in exercises" :key="exercise.id" class="list-item">
           <span>{{ capitaliseWords(exercise.name) }}: -{{ exercise.calories }} kcal </span>
-          <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(exercise)">
+          <a href="#" class="clickable-img-wrapper">
+            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(exercise)">
+          </a>
         </li>
       </ul>
 
@@ -250,26 +258,10 @@ export default {
 <style scoped>
 .calories-input-widget {
   display: flex;
-  justify-content: space-between;
   padding: 1rem;
   border-radius: 10px;
-  max-width: 80%;
-}
-
-@media (min-width: 768px) { /* Adjust this breakpoint as needed */
-  .calories-input-widget {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .calories-input, .calories-burnt {
-    width: 45%; /* Subtracting margin */
-    margin-right: 5%; /* Add margin between the two boxes */
-  }
-
-  .calories-burnt {
-    margin-right: 0; 
-  }
+  width: fit-content;
+  gap: 50px;
 }
 
 .input-label {
@@ -281,19 +273,11 @@ export default {
 }
 
 .search-container { 
-  position: relative; /* Establishes a positioning context for search icon */
-  display: block;
-  /* border:solid; */
-}
-
-.search-input {
-  padding-right: 2.5em;
+  display: flex;
+  align-items: center;
 }
 
 .icon-button {
-  position: absolute; /* Positions the button absolutely within the search-container */
-  top: 50%; /* Aligns the button to the center from the top of the search-container */
-  transform: translateY(-50%); /* Ensures the button is centered vertically */
   background: none;
   border: none;
   cursor: pointer;
@@ -302,11 +286,14 @@ export default {
   /* border:solid; */
 }
 .search-icon {
-  width: 100%;
+  width: 16px;
   height: auto;
   /* border:solid; */
 }
 
+.search-input {
+  margin: 0px;
+}
 
 .dropdown {
   border: 2px solid #1c43c2; 
@@ -318,42 +305,30 @@ export default {
 }
 
 ul {
-list-style: none;
-padding: 0; 
-margin: 0;
+  list-style: none;
+  padding: 0; 
+  margin: 0;
+  width: fit-content;
 }
 
 li {
   display: flex; 
   align-items: center; 
-  padding: 0.5rem 2rem; 
+  padding: 0.5rem; 
+  padding-left: 2rem;
   margin: 8px 0; 
   background-color: #ffffff; 
   border-radius: 10px; 
   position: relative; 
-}
-
-.list-item {
-  display: flex; 
-  flex-wrap: wrap;
-  justify-content: space-between; /* Arrange content and delete button on opposite ends */
-  align-items: center; 
-  padding: 0.5rem 1rem; 
-  margin: 0.5rem 0; 
-  background-color: #ffffff; 
-  border-radius: 10px; 
-  width: 95%;
+  text-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .delete-icon {
-  position: absolute;
-  top: 50%; /* Position halfway down the parent container */
-  right: 10px; /* Position from the right of the parent container */
-  transform: translateY(-50%); /* Center it vertically */
-  cursor: pointer; /* Change cursor to pointer when hovering over the icon */
-  width: 20px; 
-  height: 20px; 
-  margin-left: 10px;
+  display: flex;
+  width: 24px; 
+  height: 24px; 
+  align-self: center;
 }
 
 ul li::before {
@@ -363,7 +338,7 @@ ul li::before {
   background-color: #1c43c2; 
   border-radius: 50%; 
   position: absolute; /* Positions it relative to the list item */
-  left: 1%; /* Distance from the left side of the list item */
+  left: 3%; /* Distance from the left side of the list item */
 }
 
 ul li:last-child {

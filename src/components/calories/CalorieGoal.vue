@@ -23,7 +23,7 @@
       <h2>Edit Calorie Goal</h2>
       <form @submit.prevent="submitNewGoal">
         <label for="newGoal">Enter new calorie goal:</label>
-        <input type="number" id="newGoal" v-model.number="newCalorieGoal" placeholder="Enter new calorie goal">
+        <input type="number" id="newGoal" v-model.number="newCalorieGoal" placeholder="">
         <div class="popup-buttons">
           <button @click="updateCalorieGoal">Update Goal</button>
           <button @click="showEditGoalPopup">Cancel</button>
@@ -82,8 +82,6 @@
     data() {
       return {
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
           cutoutPercentage: 100, // Increase this number to make the chart more like a ring
           legend: {
             display: false // Hides the legend
@@ -170,36 +168,29 @@
 .calorieGoalWidget {
   background-color: #404b5a;
   border-radius: 15px;
-  padding: 1%;
+  padding: 2%;
   color: whitesmoke;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  max-width: 90%; 
-  max-height: 15vh;
   position: relative;
+  gap: 30px;
+  width: fit-content;
 }
 
 .goalInfo {
   display: flex;
   align-items: center;
-  flex-grow: 1;
-  flex-shrink: 1; /* Allows this element to shrink if necessary */
-  max-width: calc(100% - 50vh); /* Adjust based on the size of the doughnut and icon */
 }
 
 .goalIcon {
   width: 10vh;
-  margin-right: 2vh;
 }
 
 
 .calories {
-  font-size: 1.8em;
   font-weight: bold;
   white-space: nowrap; /* Keeps the text on a single line */
-  max-width: 100%; /* Ensures the text does not exceed its container */
-  font-size: 1.5vw;
+  font-size: 1.6em;
 }
 
 .calories-value {
@@ -211,20 +202,16 @@
   color: rgb(221, 34, 78, 0.8); /* Ensures this color overrides other styles */
 }
 
-#CalorieGoalDoughnut {
-  max-width: 30vh;
-  max-height: 35vh; 
-  flex-grow: 1; /* Prevents the doughnut from growing */
-  flex-shrink: 0; /* Prevents the doughnut from shrinking */
+canvas {
+  width: 128px !important;
+  height: 128px !important;
 }
 
 .edit-goal-icon {
   cursor: pointer;
   height: 2rem;
   width: 2rem; 
-  position: absolute; /* Absolute positioning within the icon container */
-  top: 0.5rem; 
-  right: 0.5rem; 
+  align-self: flex-start;
 }
 
 .overlay {
