@@ -11,8 +11,8 @@
             <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> 
           </a>
         </button>
-        <p v-if="mealError" class="error-message">{{ mealError }}</p>
       </div>  
+      <p v-if="mealError" class="error-message">{{ mealError }}</p>
 
       <ul>
         <li v-for="meal in meals" :key="meal.id" class="list-item">
@@ -37,8 +37,8 @@
             <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon">
           </a>
         </button>
-        <p v-if="exerciseError" class="error-message">{{ exerciseError }}</p>
       </div>  
+      <p v-if="exerciseError" class="error-message">{{ exerciseError }}</p> 
 
       <ul>
         <li v-for="exercise in exercises" :key="exercise.id" class="list-item">

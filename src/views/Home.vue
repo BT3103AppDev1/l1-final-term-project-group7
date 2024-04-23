@@ -13,13 +13,15 @@
     </div>
     <div class="bottom-row">
       <div class="activity">
-        <activtyWidget />
+        <activityWidget />
       </div>
       <div class="calendar">
         <calendarWidget />
       </div>
     </div>
-    <FeaturedExercise/>
+    <div class="featured">
+      <FeaturedExercise/>
+    </div>
   </div>
   
 </template>
@@ -29,7 +31,7 @@
   import stepsWidget from '@/components/home/Steps.vue'
   import calendarWidget from '@/components/home/Calendar.vue'
   import netCaloriesWidget from '@/components/home/NetCalories.vue'
-  import activtyWidget from '@/components/home/Activity.vue'
+  import activityWidget from '@/components/home/Activity.vue'
   import FeaturedExercise from '@/components/home/FeaturedExercise.vue'
 
   export default {
@@ -39,7 +41,7 @@
       stepsWidget,
       calendarWidget,
       netCaloriesWidget,
-      activtyWidget,
+      activityWidget,
       FeaturedExercise,
     },
     data() {
@@ -58,24 +60,23 @@
 <style scoped>
 .container {
   display: flex;
-  margin: 0 auto;
   flex-direction: column;
-  height: 85%; /* Fill the container height */
-  justify-content: space-around; /*Distributes space between rows */
-  overflow: hidden; /* Prevents overflow */
+  margin: 20px;
+  width: fit-content;
+  gap: 30px;
   /* border: solid 2px red; */
 }
 
-.top-row, .bottom-row {
+.top-row, .bottom-row, .featured {
   display: flex;
-  justify-content: space-around; /* Distributes space between widgets */
-  /* border: solid 2px blue; */
+  width: 100%;
+  gap: 30px;
+  justify-content: center;
 }
 
 .chart {
   flex: 1; /* Each chart will grow to take up equal space */
-  margin-right: 2%; /*space between the charts */
-  height: 25vh;
+  height: fit-content;
 }
 
 .activity, .calendar {
@@ -99,18 +100,5 @@
 }
 
 /* Responsive settings */
-@media (max-width: 768px) {
-  .top-row, .bottom-row {
-    flex-direction: column;
-  }
 
-  .weight, .steps, .netCalories, .activity, .calendar {
-    margin-right: 0;
-    margin-bottom: 10px; /* Add margin at the bottom instead for mobile */
-  }
-
-  .top-row > div, .bottom-row > div {
-    width: 100%; /* Full width on smaller screens */
-  }
-}
 </style>

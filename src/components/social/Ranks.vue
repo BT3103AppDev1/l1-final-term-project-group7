@@ -1,12 +1,16 @@
 <template>
   <div class="user-info" v-for="(userDetail, index) in usernames">
     <div class="username">
-      <div class="user-rank">
-        <div class="rank-circle">{{ index + 1 }}</div>
+      <div id="rank-and-user">
+        <div class="user-rank">
+          <div class="rank-circle">{{ index + 1 }}</div>
+        </div>
+        {{ userDetail.username }}
       </div>
-      {{ userDetail.username }}
       <button @click="deleteFriend(userDetail)">
-        <img src="@/assets/Cross-Icon.png" alt="crossButton" class="clickable">
+        <a href="#" class="clickable-img-wrapper">
+          <img src="@/assets/Cross-Icon.png" alt="crossButton" class="clickable">
+        </a>
       </button>
     </div>
   </div>
@@ -90,8 +94,15 @@ export default {
   padding: 10px 10px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex: 1;
 }
+
+#rank-and-user {
+  display: flex;
+  align-items: center;
+}
+
 .clickable {
   height: 24px;
 }

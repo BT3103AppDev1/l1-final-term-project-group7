@@ -4,11 +4,17 @@
     <hr>
     <ul v-if="searchResults.length > 0">
       <li v-for="user in searchResults">
-        <span style="color: #539fde;">{{ user.username }}</span>
-        <button v-if="showAddButton" @click="addFriend(user)">
-          <img src="@/assets/Liked-Icon.png" alt="crossButton" class = clickable>
-        </button>
-        <span v-if="!showAddButton" class="addedText">Friended</span>
+        <span style="color: #539fde;">
+          {{ user.username }}</span>
+            <button v-if="showAddButton" @click="addFriend(user)">
+            <a href="#" class="clickable-img-wrapper">
+              <img src="@/assets/Liked-Icon.png" alt="crossButton" class = clickable>
+            </a>
+          </button>
+        <span v-if="!showAddButton" class="addedText">
+          Already Friends
+          <img src="@/assets/Save-Icon.png" alt="crossButton" class = clickable>
+        </span>
       </li>
     </ul>
     <div v-else-if="searchQuery.length > 0" style="color: red;">No results found.</div>
@@ -124,6 +130,12 @@
     margin-left: 20px;
     color: #8fd78f;
     font-size: 14px;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   button {

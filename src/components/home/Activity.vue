@@ -86,7 +86,7 @@
       return {
         options: {
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
           cutoutPercentage: 100, // Increase this number to make the chart more like a ring
           legend: {
             display: false // Hides the legend
@@ -187,9 +187,9 @@
     padding: 20px;
     color: whitesmoke;
     display: flex;
-    justify-content: space-around; /*Add space between the stats and the doughnut */
     align-items: center;
     max-height: 80%;
+    width: 100%;
   }
 
   .title {
@@ -230,6 +230,7 @@
     font-weight: bold;
     display: block; 
     margin-bottom: 5px; 
+    text-wrap: nowrap;
   }
 
   #activityWidget {

@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="featured-exercise-container" @click="clickedContainer">
-      <h1>{{ "Featured Exercise: " + randomExercise.name }}</h1>
-    </div>
+  <div class="featured-exercise-container" @click="clickedContainer">
+    <h1>{{ "Featured Exercise: " + randomExercise.name }}</h1>
     <div class="overlay" v-if="showWorkoutInfo">
       <WorkoutInfo 
         :showWorkout="showWorkoutInfo"
@@ -99,8 +97,9 @@ export default {
   display: flex;
   justify-content: center;
   background-color: #dfe2e7;
-  padding:5px;
+  padding: 5px;
   border-radius: 10px;
+  width: 100%;
 }
 .featured-exercise-container:hover {
 cursor: pointer;
