@@ -16,8 +16,9 @@ import Achievements from '@/components/social/Achievements.vue';
 export default {
   components: {
     Leaderboard,
-    Achievements
+    Achievements,
   },
+  
   data() {
     return {
       refreshComp: 0
@@ -37,6 +38,7 @@ export default {
 }
 
 .leaderboard-container {
+  display: flex;
   flex: 0.8;
   background-color: #ffffff;
   padding: 20px;
