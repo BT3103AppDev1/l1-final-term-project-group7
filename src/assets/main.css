@@ -41,7 +41,7 @@ body {
   position: fixed;
   background-color: #335076;
   height: 100%;
-  width: 120;
+  width: 120px;
   overflow-y: auto;
   scrollbar-color: #657e93 #98c4e8;
   z-index: 10;
