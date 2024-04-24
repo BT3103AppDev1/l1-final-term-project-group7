@@ -5,15 +5,12 @@
     <ul v-if="searchResults.length > 0">
       <li v-for="user in searchResults">
         <span style="color: #539fde;">
-          {{ user.username }}</span>
-            <button v-if="showAddButton" @click="addFriend(user)">
-            <a href="#" class="clickable-img-wrapper">
-              <img src="@/assets/Liked-Icon.png" alt="crossButton" class = clickable>
-            </a>
-          </button>
+          {{ user.username }}
+          <img src="@/assets/Add-Icon.png" alt="crossButton" class="clickable-img-wrapper social-icon" v-if="showAddButton" @click="addFriend(user)">
+        </span>
         <span v-if="!showAddButton" class="addedText">
           Already Friends
-          <img src="@/assets/Save-Icon.png" alt="crossButton" class = clickable>
+          <img src="@/assets/Save-Icon.png" alt="crossButton" class=social-icon>
         </span>
       </li>
     </ul>
@@ -136,6 +133,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    font-weight: bold;
   }
 
   button {
@@ -144,11 +142,11 @@
     border: none;
   }
 
-  .clickable {
-    height: 18px;
+  .social-icon {
+    height: 24px;
   }
 
-  .clickable:hover {
+  .social-icon:hover {
     cursor: pointer;
   }
 </style>

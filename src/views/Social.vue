@@ -1,9 +1,9 @@
 <template>
   <div class="social-page">
-    <div class="leaderboard-container">
+    <div id="leaderboard-container">
       <Leaderboard></Leaderboard>
     </div>
-    <div class="achievements-container">
+    <div id="achievements-container">
       <Achievements></Achievements>
     </div>
   </div>
@@ -37,7 +37,7 @@ export default {
   display: flex;
 }
 
-.leaderboard-container {
+#leaderboard-container {
   display: flex;
   flex: 0.8;
   background-color: #ffffff;
@@ -45,13 +45,15 @@ export default {
   border-radius: 20px;
   margin-right: 20px;
   margin-top: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.achievements-container {
+#achievements-container {
   flex: 1.2;
   background-color: #335076;
   border-radius: 20px;
   padding: 20px;
   margin-top: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>

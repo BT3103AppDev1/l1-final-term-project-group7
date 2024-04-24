@@ -61,17 +61,19 @@
   
   <style scoped>
   .calendar-widget {
-    height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     background-color: #404b5a;
     border-radius: 15px; 
     padding: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 100%;
   }
   
   .day {
     background-color: #323c4a; 
-    border-radius: 10px; 
-    margin-bottom: 10px; 
+    border-radius: 10px;  
     padding: 10px 15px; 
     color: white; 
     font-size: 0.9em; 

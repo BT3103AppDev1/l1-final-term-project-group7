@@ -14,6 +14,16 @@
       <button @click="saveRoutine">Save Routine</button>
     </div>
 
+    <!-- Display the list of added exercises -->
+    <div v-if="currentRoutine.length > 0">
+      <h3>Added Exercises:</h3>
+      <ul>
+        <li v-for="(exerciseId, index) in currentRoutine" :key="index">
+          {{ this.$capitalizeFirstLetter(exerciseId) }} <button id="remove-button" @click="removeExercise(index)">Remove</button>
+        </li>
+      </ul>
+    </div>
+
     <h2 id="my-routines-title">My Routines:</h2>
     <!-- Render WorkoutContainer for each saved routine -->
     <div id="workout-container-grid">
@@ -180,7 +190,11 @@ export default {
       } else {
         console.error("User is not authenticated.");
       }
-    }
+    },
+    removeExercise(index) {
+      this.currentRoutine.splice(index, 1); // Remove the exercise at the specified index
+      console.log("Exercise removed");
+    },
   },
   created() {
     this.fetchLikedExercises();
@@ -229,6 +243,10 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 0px 15px;
+}
+
+#remove-button {
+  margin-left: 10px;
 }
 
 .container {

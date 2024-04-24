@@ -280,7 +280,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10; /* Ensure popup is above other content */
+  z-index: 9999; /* Ensure popup is above other content */
 }
 
 #icon-row {

@@ -1,32 +1,33 @@
-  <template>
-    <div class="activity-widget">
-      <div class="title">
-        <p>
-            ACTIVITY PROGRESS
-        </p>
-      </div>
-      <div class="stats">
-        <div class="stat" id="steps">
-          <span class="label">STEPS: {{ (steps / stepsGoal * 100).toFixed(0) }}%</span>
-          <span>{{ steps }} / {{ stepsGoal }}</span>
-        </div>
-        <div class="stat" id="exercise_duration">
-          <span class="label">DAILY EXERCISE: {{ (exerciseDuration / exerciseDurationGoal * 100).toFixed(0) }}%</span>
-          <span>{{ exerciseDuration }} / {{ exerciseDurationGoal }} MINUTES</span>
-        </div>
-        <div class="stat" id="exercises_completed">
-          <span class="label" >TOTAL EXERCISES COMPLETED: {{ (exerciseAttempted / exerciseAttemptedGoal * 100).toFixed(0) }}%</span>
-          <span>{{ exerciseAttempted }} / {{ exerciseAttemptedGoal }} EXERCISES COMPLETED</span>
-        </div>
-      </div>
-      <Doughnut 
-        id="activityWidget"
-        :data="progress" 
-        :options="options" />
+<template>
+  <div class="activity-widget">
+    <div class="title">
+      <p>
+          ACTIVITY PROGRESS
+      </p>
     </div>
-  </template>
+    <div class="stats">
+      <div class="stat" id="steps">
+        <span class="label">STEPS: {{ (steps / stepsGoal * 100).toFixed(0) }}%</span>
+        <span>{{ steps }} / {{ stepsGoal }}</span>
+      </div>
+      <div class="stat" id="exercise_duration">
+        <span class="label">DAILY EXERCISE: {{ (exerciseDuration / exerciseDurationGoal * 100).toFixed(0) }}%</span>
+        <span>{{ exerciseDuration }} / {{ exerciseDurationGoal }} MINUTES</span>
+      </div>
+      <div class="stat" id="exercises_completed">
+        <span class="label" >TOTAL EXERCISES COMPLETED: {{ (exerciseAttempted / exerciseAttemptedGoal * 100).toFixed(0) }}%</span>
+        <span>{{ exerciseAttempted }} / {{ exerciseAttemptedGoal }} EXERCISES COMPLETED</span>
+      </div>
+    </div>
+    <div id="doughnut">
+      <Doughnut 
+      :data="progress" 
+      :options="options" />
+    </div>
+  </div>
+</template>
   
-  <script>
+<script>
   import { ref, onMounted } from 'vue';
   import { Doughnut } from 'vue-chartjs';
   import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
@@ -178,69 +179,65 @@
       return { steps, stepsGoal, exerciseDurationGoal, exerciseDuration, exerciseAttemptedGoal, exerciseAttempted };
     }
   };
-  </script>
+</script>
   
-  <style scoped>
-  .activity-widget {
-    background-color: #404b5a;
-    border-radius: 15px;
-    padding: 20px;
-    color: whitesmoke;
-    display: flex;
-    align-items: center;
-    max-height: 80%;
-    width: 100%;
-  }
+<style scoped>
+.activity-widget {
+  background-color: #404b5a;
+  border-radius: 15px;
+  padding: 20px;
+  color: whitesmoke;
+  display: flex;
+  width: max-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
 
-  .title {
-    font-size: 1.3em; 
-    font-weight: bold;
-    margin-bottom: 20px; 
-    margin-right: 20px;
-    margin-left: 10px
-    }
-    
-  .stats {
-    width: 100%; 
-    padding-left: 5%; 
-    padding-right: 5%;
-    border-left: 1px solid rgba(255, 255, 255, 0.5); /* Separator line */
-    font-size: 1em;
+.title {
+  font-size: 1.3em; 
+  font-weight: bold;
+  margin-bottom: 20px; 
+  margin-right: 20px;
+  margin-left: 10px
   }
   
-  .stat {
-    font-size: 1.2em;
-    margin: 3% 0; /* Space between stat items */
-  }
+.stats {
+  width: 100%; 
+  padding-left: 5%; 
+  border-left: 1px solid rgba(255, 255, 255, 0.5); /* Separator line */
+  font-size: 1em;
+}
 
-  #steps {
-    color: rgb(221, 34, 78);
+.stat {
+  font-size: 1.2em;
+  margin: 3% 0; /* Space between stat items */
+}
 
-  }
+#steps {
+  color: rgb(221, 34, 78);
 
-  #exercise_duration {
-    color: rgb(122, 212, 83);
-  }
-  
-  #exercises_completed {
-    color: rgba(45,137,239,0.8);
-  }
+}
 
-  .label {
-    font-weight: bold;
-    display: block; 
-    margin-bottom: 5px; 
-    text-wrap: nowrap;
-  }
+#exercise_duration {
+  color: rgb(122, 212, 83);
+}
 
-  #activityWidget {
-  max-width: 30vh; /*Set a max-width to the doughnut chart for a smaller appearance */
-  max-height: 30vh;
-  margin-right: 30px;
-  margin-bottom: 5px;
-  width: 100%;
-  /* border: solid; */
-  }
+#exercises_completed {
+  color: rgba(45,137,239,0.8);
+}
 
-  </style>
-  
+.label {
+  font-weight: bold;
+  display: block; 
+  margin-bottom: 5px; 
+  text-wrap: nowrap;
+}
+
+canvas {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+#doughnut {
+  margin: 10px;
+}
+</style>

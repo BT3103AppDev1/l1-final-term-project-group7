@@ -35,6 +35,7 @@ export default {
   border: 1px solid #ccc;
   min-height: 100%;
   min-width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .exercise-list-container ul {

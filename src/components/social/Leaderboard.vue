@@ -58,7 +58,6 @@ export default {
   text-align: center;
   background-color: #ffffff;
   padding: 10px;
-  margin-top: 40px;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;

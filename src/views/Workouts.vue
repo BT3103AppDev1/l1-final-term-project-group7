@@ -78,7 +78,7 @@ export default {
   margin: 30px 0px;
   justify-content: center;
   overflow-x: visible; 
-  gap: 30px; 
+  gap: 30px;
 }
 
   #select-muscle {  
@@ -95,7 +95,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10; /* Ensure popup is above content */
+    z-index: 9999; /* Ensure popup is above content */
   }
 
   #displaySample {

@@ -1,6 +1,6 @@
 <template>
     <div id="loginContainer">
-        <h1>Log In to An Account</h1>
+        <h1>Sign in to HealthGuru</h1>
 
         <p class="register-prompt">
             Don't have an account?
@@ -106,7 +106,7 @@ export default {
     align-items: center;
     flex-direction: column;
     margin-bottom: 20px;
-    width: 15%;
+    width: 30%;
 }
 
 .field-container input[type="email"],

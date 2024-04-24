@@ -77,7 +77,6 @@ export default {
   margin-top: 10px;
 }
 
-
 .progress-container {
   display: flex;
   justify-content: space-between;
@@ -105,7 +104,8 @@ export default {
   width: 210px;
   margin-top: 5px;
   margin-bottom: 5px;
-  position: relative;
+  position: relative; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
@@ -122,6 +122,7 @@ export default {
   border-radius: 30px;
   padding: 8px 10px;
   margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .achievement-item {

@@ -6,20 +6,14 @@
       <label for="meal-select" class="input-label">Calories Input</label>
       <div class="search-container">
         <input v-model="mealQuery" placeholder="e.g 1kg Steak" class="search-input" @input="clearMealError">
-        <button class="icon-button" @click="fetchAndStoreMeal">
-          <a href="#" class="clickable-img-wrapper">
-            <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon"> 
-          </a>
-        </button>
+        <img src="@/assets/Search-Icon.png" alt="Search" class="clickable-img-wrapper search-icon" @click="fetchAndStoreMeal"> 
       </div>  
       <p v-if="mealError" class="error-message">{{ mealError }}</p>
 
       <ul>
         <li v-for="meal in meals" :key="meal.id" class="list-item">
           <span>{{ capitaliseWords(meal.name) }}: {{ meal.calories }} kcal</span>
-          <a href="#" class="clickable-img-wrapper">
-            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeMeal(meal)">
-          </a>
+          <img src="@/assets/Cross-Icon.png" alt="Delete" class="clickable-img-wrapper delete-icon" @click="removeMeal(meal)">
         </li>
       </ul>
 
@@ -32,20 +26,14 @@
 
       <div class="search-container">
         <input v-model="exerciseQuery" placeholder="Input Exercise" class="search-input" @input="clearExerciseError">
-        <button class="icon-button" @click="fetchAndStoreExercise">
-          <a href="#" class="clickable-img-wrapper">
-            <img src="@/assets/Search-Icon.png" alt="Search" class="search-icon">
-          </a>
-        </button>
+        <img src="@/assets/Search-Icon.png" alt="Search" class="clickable-img-wrapper search-icon" @click="fetchAndStoreExercise">
       </div>  
       <p v-if="exerciseError" class="error-message">{{ exerciseError }}</p> 
 
       <ul>
         <li v-for="exercise in exercises" :key="exercise.id" class="list-item">
           <span>{{ capitaliseWords(exercise.name) }}: -{{ exercise.calories }} kcal </span>
-          <a href="#" class="clickable-img-wrapper">
-            <img src="@/assets/Cross-Icon.png" alt="Delete" class="delete-icon" @click="removeWorkout(exercise)">
-          </a>
+          <img src="@/assets/Cross-Icon.png" alt="Delete" class=" clickable-img-wrapper delete-icon" @click="removeWorkout(exercise)">
         </li>
       </ul>
 
@@ -258,16 +246,23 @@ export default {
 <style scoped>
 .calories-input-widget {
   display: flex;
-  padding: 1rem;
   border-radius: 10px;
   width: fit-content;
-  gap: 50px;
+  gap: 30px;
+  padding: 0px;
+}
+
+.calories-input, .calories-burnt {
+  background-color: #dfe2e7;
+  border-radius: 15px;       
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 .input-label {
   font-weight: bold;
   font-size: 1.8em;
-  color: #1c43c2; 
+  color: #335076;
   margin-bottom: 0.5rem; 
   display: block; 
 }
@@ -275,37 +270,19 @@ export default {
 .search-container { 
   display: flex;
   align-items: center;
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  height: 30px; /* Height of the button should be the same as the input field */
-  width: 30px; /* Width of the button */
-  /* border:solid; */
-}
-.search-icon {
-  width: 16px;
-  height: auto;
-  /* border:solid; */
+  gap: 10px;
 }
 
 .search-input {
   margin: 0px;
 }
 
-.dropdown {
-  border: 2px solid #1c43c2; 
-  border-radius: 20px; 
-  padding: 10px 40px 10px 40px; /* Left padding to make room for the icon */
-  width: calc(100% - 20px); /* Adjust width to account for icon width */
-  outline: none; /* Removes the default focus outline */
-  font-size: 1em;
+.search-icon {
+  height: 30px;
 }
 
 ul {
-  list-style: none;
+  list-style: circle;
   padding: 0; 
   margin: 0;
   width: fit-content;
@@ -315,34 +292,30 @@ li {
   display: flex; 
   align-items: center; 
   padding: 0.5rem; 
-  padding-left: 2rem;
   margin: 8px 0; 
   background-color: #ffffff; 
   border-radius: 10px; 
   position: relative; 
   text-wrap: nowrap;
-  justify-content: space-between;
-}
-
-.delete-icon {
-  display: flex;
-  width: 24px; 
-  height: 24px; 
-  align-self: center;
+  gap: 10px;
 }
 
 ul li::before {
   content: ''; 
   width: 8px;
   height: 8px; 
-  background-color: #1c43c2; 
+  background-color: #335076;
   border-radius: 50%; 
-  position: absolute; /* Positions it relative to the list item */
-  left: 3%; /* Distance from the left side of the list item */
 }
 
 ul li:last-child {
   border-bottom: none; /* Removes bottom border from the last item */
+}
+
+.delete-icon {
+  display: flex;
+  width: 24px; 
+  height: 24px; 
 }
 
 .total-calories { 

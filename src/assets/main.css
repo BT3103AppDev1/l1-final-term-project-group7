@@ -44,12 +44,14 @@ body {
   width: 120;
   overflow-y: auto;
   scrollbar-color: #657e93 #98c4e8;
+  z-index: 10;
 }
 
 #content {
   flex-basis: 0;
   flex-grow: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
   padding: 0 50px;
   margin-left: 100px;
@@ -92,6 +94,13 @@ body {
 
 .clickable-img-wrapper:hover {
   transform: scale(1.5);
+}
+
+.search-input {
+  border-radius: 20px;
+  border-width: 0px;
+  margin: 0px 20px;
+  padding: 5px 50px 5px 10px;
 }
 
 a,

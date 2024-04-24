@@ -16,7 +16,7 @@
       :options="options" 
     />
     <!--Edit Calorie Goal-->
-    <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="edit-goal-icon" @click="showEditGoalPopup" />
+    <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="clickable-img-wrapper edit-goal-icon" @click="showEditGoalPopup" />
 
     <div v-if="showEditPopup" class="overlay">
       <div class="popup">
@@ -167,14 +167,14 @@
 <style scoped>
 .calorieGoalWidget {
   background-color: #404b5a;
-  border-radius: 15px;
-  padding: 2%;
+  border-radius: 15px;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: whitesmoke;
   display: flex;
-  align-items: center;
-  position: relative;
   gap: 30px;
-  width: fit-content;
+  align-items: center;
+  width: max-content;
+  padding: 10px;
 }
 
 .goalInfo {
@@ -184,6 +184,7 @@
 
 .goalIcon {
   width: 10vh;
+  height: 10vh;
 }
 
 
@@ -215,44 +216,59 @@ canvas {
 }
 
 .overlay {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
-  .popup {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 2; /* Higher z-index to be above the overlay */
-    color: black;
-  }
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 2; /* Higher z-index to be above the overlay */
+  color: black;
+}
 
-  label {
-    margin-right: 5px; /* Add margin for spacing */
-  }
+label {
+  margin-right: 5px; /* Add margin for spacing */
+}
 
-  input[type="number"] {
-    flex: 1; /* Take up remaining space */
-    margin-bottom: 10px; /* Space before the next row */
-  }
+input[type="number"] {
+  flex: 1; /* Take up remaining space */
+  margin-bottom: 10px; /* Space before the next row */
+}
 
-  .popup-buttons {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center; /* Centers buttons horizontally */
-    gap: 10px; /* Optional: adds space between the buttons */
-  }
+input {
+  border-radius: 20px;
+  border-width: 1px;
+}
 
-  
+button {
+  border-radius: 20px;
+  border-width: 0px;
+  margin: 0px 10px;
+}
 
+button:hover {
+  cursor: pointer;
+}
+
+h2 {
+  margin-top: 0px;
+}
+
+.popup-buttons {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center; /* Centers buttons horizontally */
+  gap: 10px; /* Optional: adds space between the buttons */
+}
 </style>
-  

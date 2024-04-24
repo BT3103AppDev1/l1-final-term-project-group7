@@ -1,17 +1,15 @@
 <template>
-  <div class="top-container">
-    <div class="calorie-goal">
+  <div class="calorie-widgets">
+    <div id="calorie-goal">
       <CalorieGoalDoughnut :net-calories="netCalories" />
     </div>
-    <div class="input-data-pop-up">
+    <div id="input-data-pop-up">
       <InputDataPopup @recorded="updateCalories" />
     </div>
-  </div>
-  <div class="calories-container">
-    <div class="calorie-input">
+    <div id="calorie-input">
       <CalorieInput @update-calories="updateCalories" />
     </div>
-    <div class="net-calorie-chart">
+    <div id="net-calorie-chart">
       <NetCalorieChart :consumed="consumed" :burnt="burnt" :net-calories="netCalories" />
     </div>
   </div>
@@ -55,30 +53,28 @@ export default {
 </script>
 
 <style scoped>
-.top-container {
+.calorie-widgets {
   display: flex;
-  align-items: center;
-  margin-top: 5%;
-  gap: 100px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 30px;
+  row-gap: 30px;
+  margin: 20px;
 }
 
-.calorie-goal {
-  width: fit-content;
-}
-
-.input-data-pop-up{
-  justify-content: center;
-  align-items: center;
-  /* border:solid; */
+#input-data-pop-up {
+  align-self: center;
+  width: 40%;
 }
 
 .calories-container {
   margin-top: 2%;
   display: flex;
-  gap: 50px;
+  gap: 30px;
 }
 
-.net-calorie-chart {
+#net-calorie-chart {
   align-self: center;
+  width: 40%;
 }
 </style>

@@ -84,25 +84,24 @@ export default {
 
 <style scoped>
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    /* Ensure popup is above content */
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
 .featured-exercise-container {
   display: flex;
   justify-content: center;
   background-color: #dfe2e7;
-  padding: 5px;
   border-radius: 10px;
   width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 .featured-exercise-container:hover {
 cursor: pointer;

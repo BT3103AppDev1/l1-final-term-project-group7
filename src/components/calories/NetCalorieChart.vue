@@ -90,8 +90,9 @@ export default {
 </script>
 <style scoped>
 .chartContainer {
-  background-color: white;
-  border-radius: 15px;
+  background-color: #dfe2e7;
+  border-radius: 15px;       
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   align-items: center;
   padding: 1rem;
   font-weight: bold;

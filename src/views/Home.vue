@@ -1,26 +1,26 @@
 <template>
   <div class="container">
-    <div class="top-row">
-      <div class="chart weight">
+    <div class="widgets">
+      <div id="weight">
         <weightWidget />
       </div>
-      <div class="chart steps">
+      <div id="steps">
         <stepsWidget />
       </div>
-      <div class="chart netCalories">
+      <div id="netCalories">
         <netCaloriesWidget />
       </div>
-    </div>
-    <div class="bottom-row">
-      <div class="activity">
-        <activityWidget />
+      <div id="stack">
+        <div id="activity">
+          <activityWidget />
+        </div>
+        <div id="featured">
+          <FeaturedExercise/>
+        </div>
       </div>
-      <div class="calendar">
+      <div id="calendar">
         <calendarWidget />
       </div>
-    </div>
-    <div class="featured">
-      <FeaturedExercise/>
     </div>
   </div>
   
@@ -59,46 +59,33 @@
 
 <style scoped>
 .container {
+  margin: 20px;
+}
+
+.widgets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 30px;
+}
+
+#weight, #steps, #netCalories{
+  width: 30%;
+  height: 25vh;
+}
+
+#stack {
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  width: fit-content;
-  gap: 30px;
-  /* border: solid 2px red; */
+  row-gap: 30px;
 }
 
-.top-row, .bottom-row, .featured {
+#calendar {
   display: flex;
+  width: 30%;
+}
+
+#featured {
   width: 100%;
-  gap: 30px;
-  justify-content: center;
 }
-
-.chart {
-  flex: 1; /* Each chart will grow to take up equal space */
-  height: fit-content;
-}
-
-.activity, .calendar {
-  margin-right: 3%; /* Add margin to the right of each widget */
-  flex: 1; 
-}
-
-/* Last child of each row should not have a right margin */
-.top-row > div:last-child, .bottom-row > div:last-child {
-  margin-right: 0;
-}
-
-/* Adjust the flex-basis for activity and calendar widgets */
-.activity {
-  flex-basis: 65%; /* Takes up a larger base space when space allows */
-}
-
-.calendar {
-  flex-basis: 35%; /* Takes up a smaller base space when space allows */
-  margin-right: 0; /* Ensures there's no margin on the right of the last element */
-}
-
-/* Responsive settings */
-
 </style>

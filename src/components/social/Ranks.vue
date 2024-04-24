@@ -5,7 +5,7 @@
         <div class="user-rank">
           <div class="rank-circle">{{ index + 1 }}</div>
         </div>
-        {{ userDetail.username }}
+        <p id="username">{{ userDetail.username }}</p>
       </div>
       <button @click="deleteFriend(userDetail)">
         <a href="#" class="clickable-img-wrapper">
@@ -96,11 +96,17 @@ export default {
   align-items: center;
   justify-content: space-between;
   flex: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #rank-and-user {
   display: flex;
   align-items: center;
+}
+
+#username {
+  margin: 0px;
+  font-weight: bold;
 }
 
 .clickable {
