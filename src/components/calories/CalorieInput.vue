@@ -289,7 +289,8 @@ ul {
 }
 
 li {
-  display: flex; 
+  display: flex;
+  justify-content: space-between;
   align-items: center; 
   padding: 0.5rem; 
   margin: 8px 0; 
@@ -300,22 +301,14 @@ li {
   gap: 10px;
 }
 
-ul li::before {
-  content: ''; 
-  width: 8px;
-  height: 8px; 
-  background-color: #335076;
-  border-radius: 50%; 
-}
-
 ul li:last-child {
   border-bottom: none; /* Removes bottom border from the last item */
 }
 
 .delete-icon {
-  display: flex;
   width: 24px; 
-  height: 24px; 
+  height: 24px;
+  float: right;
 }
 
 .total-calories { 
