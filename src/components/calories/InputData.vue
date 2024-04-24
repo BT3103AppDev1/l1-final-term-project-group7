@@ -159,6 +159,7 @@ export default {
 input {
   border-radius: 20px;
   border-width: 1px;
+  padding: 5px 10px;
 }
 
 button {

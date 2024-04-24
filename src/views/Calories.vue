@@ -66,7 +66,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 40%;
+  width: 35%;
 } 
 
 #calorie-goal {
