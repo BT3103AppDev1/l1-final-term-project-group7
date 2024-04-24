@@ -65,7 +65,7 @@
 .widgets {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 30px;
   row-gap: 30px;
 }
 

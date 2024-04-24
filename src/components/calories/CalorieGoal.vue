@@ -1,20 +1,26 @@
 <template>
   <div class="calorieGoalWidget">
-    <!--Target Icon-->
-    <img src="@/assets/Target-Icon.png" alt="Target Icon" class="goalIcon" />
-    <!--Calorie Goal Info-->
-    <div class="goalInfo">
-      <div class="calories">
-        <span>CURRENT CALORIE GOAL: </span>
-        <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / {{ userCalorieGoal }}</span>
+    <div id="target-and-info">
+      <!--Target Icon-->
+      <img src="@/assets/Target-Icon.png" alt="Target Icon" class="goalIcon" />
+      <!--Calorie Goal Info-->
+      <div class="goalInfo">
+        <div class="calories">
+          <span>CURRENT CALORIE GOAL: </span>
+          <span :class="['calories-value',{'goal-exceeded': goalExceeded }]">{{ netCalories.toFixed(1) }} / {{ userCalorieGoal }}</span>
+        </div>
       </div>
-    <!--Calorie Goal Doughnut-->
     </div>
-    <Doughnut 
-      id="CalorieGoalDoughnut"
+    <!--Calorie Goal Doughnut-->
+    <div id="doughnut">
+      <Doughnut 
       :data="progress" 
       :options="options" 
     />
+    </div>
+    <div id="percentage">
+      <span>You are {{ (netCalories / userCalorieGoal * 100).toFixed(1) }}% there to achieving your goal!</span>
+    </div>
     <!--Edit Calorie Goal-->
     <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="clickable-img-wrapper edit-goal-icon" @click="showEditGoalPopup" />
 
@@ -171,15 +177,20 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: whitesmoke;
   display: flex;
-  gap: 30px;
+  justify-content: space-between;
   align-items: center;
-  width: max-content;
   padding: 10px;
+}
+
+#target-and-info {
+  display: flex;
+  align-items: center;
 }
 
 .goalInfo {
   display: flex;
   align-items: center;
+  margin-left: 30px;
 }
 
 .goalIcon {
@@ -203,9 +214,9 @@
   color: rgb(221, 34, 78, 0.8); /* Ensures this color overrides other styles */
 }
 
-canvas {
-  width: 128px !important;
-  height: 128px !important;
+#doughnut {
+  height: 25%;
+  margin: 0px 20px;
 }
 
 .edit-goal-icon {
@@ -213,6 +224,7 @@ canvas {
   height: 2rem;
   width: 2rem; 
   align-self: flex-start;
+  margin-left: 20px;
 }
 
 .overlay {
@@ -251,6 +263,11 @@ input {
   border-width: 1px;
 }
 
+span {
+  text-wrap: wrap;
+  font-size: 1.5em;
+}
+
 button {
   border-radius: 20px;
   border-width: 0px;
@@ -262,7 +279,7 @@ button:hover {
 }
 
 h2 {
-  margin-top: 0px;
+  margin: 0px;
 }
 
 .popup-buttons {

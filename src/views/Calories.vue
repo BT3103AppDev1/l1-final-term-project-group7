@@ -3,14 +3,16 @@
     <div id="calorie-goal">
       <CalorieGoalDoughnut :net-calories="netCalories" />
     </div>
-    <div id="input-data-pop-up">
-      <InputDataPopup @recorded="updateCalories" />
-    </div>
-    <div id="calorie-input">
+
       <CalorieInput @update-calories="updateCalories" />
-    </div>
-    <div id="net-calorie-chart">
-      <NetCalorieChart :consumed="consumed" :burnt="burnt" :net-calories="netCalories" />
+
+    <div id="input-and-net">
+      <div id="input-data">
+        <InputDataPopup @recorded="updateCalories" />
+      </div>
+      <div id="net-calorie-chart">
+        <NetCalorieChart :consumed="consumed" :burnt="burnt" :net-calories="netCalories" />
+      </div>  
     </div>
   </div>
 </template>
@@ -62,19 +64,14 @@ export default {
   margin: 20px;
 }
 
-#input-data-pop-up {
-  align-self: center;
-  width: 40%;
-}
-
-.calories-container {
-  margin-top: 2%;
+#input-and-net {
   display: flex;
+  flex-direction: column;
   gap: 30px;
-}
-
-#net-calorie-chart {
-  align-self: center;
   width: 40%;
+} 
+
+#calorie-goal {
+  width: 100%;
 }
 </style>

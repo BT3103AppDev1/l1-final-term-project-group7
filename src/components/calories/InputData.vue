@@ -110,19 +110,21 @@ export default {
 }
 
 .button-record{
+  display: flex;
+  padding: 0px 20px;
   background-color: #0c457e; /* Dark blue color */
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px; 
+  border-radius: 15px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-weight: bold;
   font-size: 1.75rem;
   text-transform: uppercase;
   cursor: pointer;
   transition: 0.2s;
-  width: 100%;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-wrap: nowrap;
 }
 
 .button-record:hover {
