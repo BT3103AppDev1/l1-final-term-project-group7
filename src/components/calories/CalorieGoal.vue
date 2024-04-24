@@ -20,7 +20,7 @@
     </div>
     <div id="percentage">
       <span>
-        {{ userCalorieGoal === 0 ? 'Please set a valid calorie goal!' : `You have achievied ${(netCalories / userCalorieGoal * 100)
+        {{ userCalorieGoal === 0 ? 'Please set a valid calorie goal!' : `You have achieved ${(netCalories / userCalorieGoal * 100)
           .toFixed(1)}% of your goal!` }}
       </span>
     </div>
