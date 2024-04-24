@@ -219,7 +219,7 @@
 }
 
 #doughnut {
-  height: 70%;
+  height: 200px;
   margin: 0px 20px;
 }
 

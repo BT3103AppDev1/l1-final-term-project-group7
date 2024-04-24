@@ -82,7 +82,7 @@
 
 #calendar {
   display: flex;
-  width: 30%;
+  width: 25%;
 }
 
 #featured {
