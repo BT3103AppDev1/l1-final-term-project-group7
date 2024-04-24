@@ -19,7 +19,10 @@
     />
     </div>
     <div id="percentage">
-      <span>You are {{ (netCalories / userCalorieGoal * 100).toFixed(1) }}% there to achieving your goal!</span>
+      <span>
+        {{ userCalorieGoal === 0 ? 'Please set a valid calorie goal!' : `You have achievied ${(netCalories / userCalorieGoal * 100)
+          .toFixed(1)}% of your goal!` }}
+      </span>
     </div>
     <!--Edit Calorie Goal-->
     <img src="@/assets/Edit-Icon.png" alt="Edit Goal" class="clickable-img-wrapper edit-goal-icon" @click="showEditGoalPopup" />
@@ -265,6 +268,7 @@ input[type="number"] {
 input {
   border-radius: 20px;
   border-width: 1px;
+  padding: 0px 10px;
 }
 
 span {

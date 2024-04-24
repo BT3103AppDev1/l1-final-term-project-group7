@@ -46,13 +46,8 @@ export default {
 <style scoped>
 .item {
   padding: 20px 20px;
-  border-bottom: 5px solid transparent;
-  display: flex;
   transition: 0.3s;
-  justify-content: center;
   height: 18px;
-  width: 50px;
-
 }
 .menu {
   color: black;
@@ -65,8 +60,8 @@ export default {
 }
 
 .menu:hover {
-      background-color: #5B789F;
-    }
+  background-color: #5B789F;
+}
 
 .menu .sub-menu {
   position: absolute;

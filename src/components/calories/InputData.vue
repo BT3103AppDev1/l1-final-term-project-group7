@@ -99,11 +99,6 @@ export default {
   margin-right: 5px; /* Add margin for spacing */
 }
 
-.form-group input[type="number"] {
-  flex: 1; /* Take up remaining space */
-  margin-bottom: 10px; /* Space before the next row */
-}
-
 .button-group {
   margin-top: 10px; /* Space from the inputs to the buttons */
   text-align: center; /* Center buttons if the container width is defined */
@@ -159,7 +154,7 @@ export default {
 input {
   border-radius: 20px;
   border-width: 1px;
-  padding: 5px 10px;
+  padding: 0px 10px;
 }
 
 button {
