@@ -239,6 +239,10 @@ button {
   background-color: white;
 }
 
+li {
+  padding-bottom: 10px;
+}
+
 #workout-container-grid {
   display: flex;
   flex-wrap: wrap;
