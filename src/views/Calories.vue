@@ -3,9 +3,7 @@
     <div id="calorie-goal">
       <CalorieGoalDoughnut :net-calories="netCalories" />
     </div>
-
-      <CalorieInput @update-calories="updateCalories" />
-
+    <CalorieInput @update-calories="updateCalories" />
     <div id="input-and-net">
       <div id="input-data">
         <InputDataPopup @recorded="updateCalories" />

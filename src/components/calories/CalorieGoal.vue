@@ -180,24 +180,24 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  height: fit-content;
 }
 
 #target-and-info {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .goalInfo {
   display: flex;
   align-items: center;
-  margin-left: 30px;
 }
 
 .goalIcon {
-  width: 10vh;
   height: 10vh;
+  margin: 0 30px;
 }
-
 
 .calories {
   font-weight: bold;
@@ -214,8 +214,12 @@
   color: rgb(221, 34, 78, 0.8); /* Ensures this color overrides other styles */
 }
 
+#percentage {
+  margin: 0 20px;
+}
+
 #doughnut {
-  height: 25%;
+  height: 70%;
   margin: 0px 20px;
 }
 
@@ -265,7 +269,7 @@ input {
 
 span {
   text-wrap: wrap;
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 
 button {
