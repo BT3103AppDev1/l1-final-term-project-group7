@@ -39,7 +39,7 @@
             // Reference to the user's routines collection
             const routinesQuery = query(
               collection(db, 'users', user.uid, 'routines'),
-              orderBy('createdAt', 'desc'),
+              orderBy('date', 'desc'),
               limit(3)
             );
             // Execute the query

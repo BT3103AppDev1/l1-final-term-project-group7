@@ -93,7 +93,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 9999;
 }
 .featured-exercise-container {
   display: flex;
