@@ -94,6 +94,7 @@ body {
 
 .clickable-img-wrapper:hover {
   transform: scale(1.5);
+  cursor: pointer;
 }
 
 .search-input {
