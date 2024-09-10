@@ -161,8 +161,8 @@ export default {
       this.$emit('exerciseSelected', this.exerciseName);
       this.$emit('loading', true);
 
-      const apiURL = `https://api.api-ninjas.com/v1/exercises?name=${name}`;
-      const apiKey = 'ZoF/oFeYxXdYbJQNbzTcuw==PEEEQXeqEp2q3vxJ';
+      const apiURL = '';
+      const apiKey = '';
 
       try {
         console.log('Calling API for exercise name:', name);
