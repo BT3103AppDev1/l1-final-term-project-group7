@@ -128,8 +128,8 @@ export default {
           order: 'date'
         },
         headers: {
-          'X-RapidAPI-Key': 'ab77cb18d8msha789c05491d526cp1e5bf9jsna3322edfdf9a',
-          'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
+          'X-RapidAPI-Key': '',
+          'X-RapidAPI-Host': ''
         }
       };
 
