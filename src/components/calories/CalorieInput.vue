@@ -119,8 +119,8 @@ export default {
     },
 
     async fetchAndStoreMeal () {
-      const mealAPIURL = `https://api.api-ninjas.com/v1/nutrition?query=${this.mealQuery}`;
-      const mealAPIKEY = 'CibwpSpe9d9npdVjgS8fug==IVEsPpGMznT9fZ5N'
+      const mealAPIURL = '';
+      const mealAPIKEY = ''
 
       try {
         console.log("Calling API for meal:", this.mealQuery)
@@ -153,8 +153,8 @@ export default {
     },
 
     async fetchAndStoreExercise () {
-      const exerciseAPIURL = `https://api.api-ninjas.com/v1/caloriesburned?activity=${this.exerciseQuery}`;
-      const exerciseAPIKEY = 'CibwpSpe9d9npdVjgS8fug==IVEsPpGMznT9fZ5N'
+      const exerciseAPIURL = '';
+      const exerciseAPIKEY = ''
 
       try {
         console.log("Calling API for Exercise:", this.exerciseQuery)

@@ -94,8 +94,8 @@ export default {
         this.$emit('muscleSelected', this.muscleType);
         this.$emit('loading', true);
 
-        const apiURL = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
-        const apiKey = 'ZoF/oFeYxXdYbJQNbzTcuw==PEEEQXeqEp2q3vxJ'; 
+        const apiURL = '';
+        const apiKey = ''; 
 
         try {
             console.log('Calling API for muscle:', muscle);
