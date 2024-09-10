@@ -49,8 +49,8 @@ export default {
 
     this.randomMuscleType = selectRandomElement(exerciseList);
     //console.log("the randomly selected muscleType is:", this.randomMuscleType)
-    const apiURL = `https://api.api-ninjas.com/v1/exercises?muscle=${this.randomMuscleType}`;
-    const apiKey = 'ZoF/oFeYxXdYbJQNbzTcuw==PEEEQXeqEp2q3vxJ';
+    const apiURL = '';
+    const apiKey = '';
 
     const retrieveMuscleGroupExercises = async (muscleGroup) => {
       try {
